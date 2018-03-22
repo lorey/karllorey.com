@@ -1,29 +1,42 @@
 <!doctype html>
-<meta charset="utf-8">
-<link rel="stylesheet" href="{{ '/static/style.css'|url }}">
-<title>{% block title %}Welcome{% endblock %} — karllorey.com</title>
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}Welcome{% endblock %} — Karl Lorey</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700|Roboto:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ '/static/style.css'|url }}">
+</head>
 <body>
-  <header>
-    <h1>karllorey.com</h1>
+<header>
+    <p class="display-1"><a href="/">Karl Lorey</a></p>
     <nav>
-      <ul class="nav navbar-nav">
-        <li{% if this._path == '/' %} class="active"{% endif
-          %}><a href="{{ '/'|url }}">Welcome</a></li>
-        {% for href, title in [
-          ['/blog', 'Blog'],
-          ['/projects', 'Projects'],
-          ['/about', 'About']
-        ] %}
-          <li{% if this.is_child_of(href) %} class="active"{% endif
-            %}><a href="{{ href|url }}">{{ title }}</a></li>
-        {% endfor %}
-      </ul>
+        <ul class="nav justify-content-center">
+            {% for href, title in [
+              ['/blog', 'Blog'],
+              ['/projects', 'Projects'],
+              ['/about', 'About']
+            ] %}
+            <li class="nav-link{% if this.is_child_of(href) %} active{% endif %}">
+                <a href="{{ href|url }}">{{ title }}</a>
+            </li>
+            {% endfor %}
+        </ul>
     </nav>
-  </header>
-  <div class="page">
+</header>
+<div class="page">
+    <hr style="margin-bottom: 50px">
     {% block body %}{% endblock %}
-  </div>
-  <footer>
+    <hr style="margin-top: 50px">
+</div>
+<footer>
+    <p class="lead">
+        <a href="https://twitter.com/karllorey" target="_blank"><i class="fa fa-twitter"></i></a>
+        <a href="https://www.linkedin.com/in/karllorey" target="_blank"><i class="fa fa-linkedin"></i></a>
+        <a href="https://github.com/lorey" target="_blank"><i class="fa fa-github"></i></a>
+    </p>
     &copy; Copyright 2018 by Karl Lorey.
-  </footer>
+</footer>
 </body>
