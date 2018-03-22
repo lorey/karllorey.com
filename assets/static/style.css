@@ -1,19 +1,25 @@
 body {
     margin: 50px 25px;
     color: #777;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Lato', sans-serif;
 }
 
-.display-1, h1, h2 {
+p {
+    /* make paragraphs more spaced out */
+    margin-top: 25px;
+}
+
+.display-1, h1, h2, h3, h4, h5, h6 {
+    /* headings in serif */
     font-family: 'Playfair Display', serif;
 }
 
 a {
-    color: #555;
+    color: #333;
 }
 
 a:hover {
-    color: #333;
+    color: #000;
 }
 
 header, footer, div.page {
