@@ -1,0 +1,39 @@
+title: Programming and Computer Science
+---
+body:
+
+I am a techie, computer scientist, and researcher.
+
+## Research on human behavior in social networks
+During my time at university, I have published three papers: Two about
+human behavior in online social networks and one on integrating a database encryption into the Database Abstraction
+Layer (DBAL). I wrote my bachelor thesis about a concept very similar to Cambridge Analytica because I built an app that
+kind of tricked users into giving their permission to access Facebook API data. My masters thesis was about the impact
+of personality on the behavior of programmers. I performed a study with over 1000 developers that found significant
+impacts of personality on programmers' behavior. For example, we could show that programmers with specific traits prefer
+specific languages, libraries, stacks, and tools.
+
+### Publications
+
+I have published the following papers in scientific journals so far:
+
+- TEAL: Transparent Encryption for the Database Abstraction Layer. Proceedings of the CAiSE'16 Forum at the 28th International Conference on Advanced Information Systems Engineering, Ljubljana, Slovenia, 13-17.6.2016
+- Assessment of subjective influence and trust with an online social network game. Computers in Human Behavior, Volume 64, November 2016.
+- Gamification framework for personalized surveys on relationships in online social networks. 2013 IEEE/ACM 6th International Conference on Utility and Cloud Computing
+
+## Tech that I enjoy
+
+My technical focus is based upon the following pillars:
+- crawling and scraping
+- data analysis
+- machine learning
+- web development
+
+I enjoy working with:
+- Python: pandas, scikit-learn
+- SQL: Postgres
+- PHP: Laravel
+
+## My desktop environment
+
+Curretly, I'm running Debian with xfce and the awesome window manager. You can find [my dotfiles on GitHub](https://github.com/lorey/dotfiles).

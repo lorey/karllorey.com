@@ -15,9 +15,12 @@
     <nav>
         <ul class="nav justify-content-center">
             {% for href, title in [
-              ['/blog', 'Blog'],
-              ['/projects', 'Projects'],
-              ['/about', 'About']
+              ['/techie', 'Techie'],
+              ['/founder', 'Founder'],
+              ['/vc', 'Investor'],
+              ['/speaker', 'Speaker'],
+              ['/blog', 'Writer'],
+              ['/human', 'Human'],
             ] %}
             <li class="nav-link{% if this.is_child_of(href) %} active{% endif %}">
                 <a href="{{ href|url }}">{{ title }}</a>
@@ -36,6 +39,7 @@
         <a href="https://twitter.com/karllorey" target="_blank"><i class="fa fa-twitter"></i></a>
         <a href="https://www.linkedin.com/in/karllorey" target="_blank"><i class="fa fa-linkedin"></i></a>
         <a href="https://github.com/lorey" target="_blank"><i class="fa fa-github"></i></a>
+        <a href="https://medium.com/@karllorey" target="_blank"><i class="fa fa-medium"></i></a>
     </p>
     &copy; Copyright 2018 by Karl Lorey.
 </footer>
