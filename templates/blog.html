@@ -3,9 +3,13 @@
 {% from "macros/pagination.html" import render_pagination %}
 {% block title %}{{ this.title }}{% endblock %}
 {% block body %}
+  <h1>Blog</h1>
+  <p>Things I've written so far:</p>
+  <ul>
   {% for child in this.pagination.items %}
-    {{ render_blog_post(child, from_index=true) }}
+    <li><a href="{{ child|url }}">{{ child.title }}</a></li>
   {% endfor %}
+  </ul>
 
   {{ render_pagination(this.pagination) }}
 {% endblock %}
