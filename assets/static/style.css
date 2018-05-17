@@ -1,24 +1,26 @@
 body {
     margin: 50px 25px;
-    color: #777;
+    color: #888;
     font-family: 'Lato', sans-serif;
 }
 
 .page p {
     /* make paragraphs more spaced out */
-    margin-top: 25px;
+    margin: 20px 10px 0 0;
 }
 
 .display-1, h1, h2, h3, h4, h5, h6 {
     /* headings in serif */
     font-family: 'Playfair Display', serif;
+    color: #555555;
 }
 
 /* visually pleasing paragraphs */
-.page h1 {margin-top: 50px;}
-.page h2 {margin-top: 50px;}
-.page h3 {margin-top: 25px;}
-.page h4 {margin-top: 25px;}
+.page h1 {margin-top: 100px;}
+.page h2 {margin-top: 80px;}
+.page h3 {margin-top: 60px;}
+.page h4 {margin-top: 40px;}
+.page h1,h2,h3,h4:first-child {margin-top: 0;}
 
 a {
     color: #333;
@@ -50,4 +52,16 @@ footer {
 
 footer p a {
     margin: 0 10px;
+}
+
+code {
+    background-color: #d6d6d6;
+    color: #cd4073;
+    padding: 0 5px;
+}
+
+p.meta {
+    font-style: italic;
+    font-size: 75%;
+    margin-top: 0;
 }
