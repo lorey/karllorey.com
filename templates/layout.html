@@ -14,14 +14,7 @@
     <p class="display-1"><a href="/">Karl Lorey</a></p>
     <nav>
         <ul class="nav justify-content-center">
-            {% for href, title in [
-              ['/techie', 'Techie'],
-              ['/founder', 'Founder'],
-              ['/vc', 'Investor'],
-              ['/speaker', 'Speaker'],
-              ['/blog', 'Writer'],
-              ['/human', 'Human'],
-            ] %}
+            {% for href, title in bag('nav').items() %}
             <li class="nav-link{% if this.is_child_of(href) %} active{% endif %}">
                 <a href="{{ href|url }}">{{ title }}</a>
             </li>
