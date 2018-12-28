@@ -2,8 +2,10 @@ title: Projects and Entrepreneurship
 ---
 body:
 
-I love continuous progress and self-improvement. Probably that's why I love startups and do so many projects. Below are
-some chronological lists of startups and projects I have done.
+I love continuous progress and self-improvement. Probably that's why I love startups and do so many projects.
+Below are some chronological lists of startups and projects I have done.
+If you'd like to see a more comprehensive overview,
+take a look at [my CV](https://github.com/lorey/resume) or [Linkedin](https://www.linkedin.com/in/karllorey).
 
 ## Startups
 
@@ -22,6 +24,7 @@ Startups (or startup-like projects) I've been involved with:
 
 These are my latest projects in chronological order from new to old:
 
+- [socials](https://github.com/lorey/socials) and [social media regular expressions](https://github.com/lorey/social-media-profiles-regexs) - a Python library and a collection of regular expressions to extract social media profiles from websites/html (e.g. those in my footer).
 - [Programmer Personality](https://programmerpersonality.com) - web app for my master thesis to understand relationships between personality and programmer behavior
 - [ProgrammerMap](http://programmermap.com) - find the most influential programmers worldwide
 - [Startup Karlsruhe](http://startup-karlsruhe.de) - (german) overview of the startup ecosystem in Karlsruhe
