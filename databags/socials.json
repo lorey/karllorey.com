@@ -1,0 +1,38 @@
+{
+  "angellist": {
+    "url": "https://angel.co/karl-lorey",
+    "icon-classes": "fa fa-angellist"
+  },
+  "crunchbase": {
+    "url": "https://www.crunchbase.com/person/karl-lorey",
+    "icon-classes": "fa fa-cube"
+  },
+  "github": {
+    "url": "https://github.com/lorey",
+    "icon-classes": "fa fa-github"
+  },
+  "instagram": {
+    "url": "https://www.instagram.com/karllorey",
+    "icon-classes": "fa fa-instagram"
+  },
+  "linkedin": {
+    "url": "https://www.linkedin.com/in/karllorey",
+    "icon-classes": "fa fa-linkedin"
+  },
+  "medium": {
+    "url": "https://medium.com/@karllorey/has-recommended",
+    "icon-classes": "fa fa-medium"
+  },
+  "meetup": {
+    "url": "https://www.meetup.com/members/196097665/",
+    "icon-classes": "fa fa-meetup"
+  },
+  "producthunt": {
+    "url": "https://www.producthunt.com/@karllorey",
+    "icon-classes": "fa fa-product-hunt"
+  },
+  "twitter": {
+    "url": "https://twitter.com/karllorey",
+    "icon-classes": "fa fa-twitter"
+  }
+}
