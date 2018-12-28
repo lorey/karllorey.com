@@ -29,7 +29,7 @@ a:hover {
 header, footer, div.page {
     max-width: 760px;
     margin: 0 auto;
-    padding: 30px;
+    padding: 30px 2.5%;
 }
 
 header, footer {
