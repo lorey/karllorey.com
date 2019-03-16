@@ -44,10 +44,13 @@ footer .socials a {
     margin: 0 10px;
 }
 
-code {
-    background-color: #d6d6d6;
-    color: #cd4073;
-    padding: 0 5px;
+pre, code {
+    background-color: #eeeeee;
+    color: #212529;
+}
+
+pre {
+    padding: 5px 10px;
 }
 
 p.meta {

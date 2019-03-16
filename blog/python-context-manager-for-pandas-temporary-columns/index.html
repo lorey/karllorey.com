@@ -1,0 +1,220 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Keeping DataFrames clean by deleting temporary columns with a Context Manager — Karl Lorey</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Playfair+Display:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../static/style.css">
+    <script>
+      var dnt = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      if (dnt != "1" && dnt != "yes") {
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','__gaTracker');
+
+        __gaTracker('create', 'UA-73074199-1', 'auto');
+        __gaTracker('set', 'forceSSL', true);
+        __gaTracker('set', 'anonymizeIp', true);
+        __gaTracker('send','pageview');
+      } else {
+        console.debug("Respecting Do-Not-Track, not loading analytics. See https://www.paulfurley.com/google-analytics-dnt/");
+      }
+    </script>
+</head>
+<body>
+<header>
+    <p class="display-1"><a href="/">Karl Lorey</a></p>
+    <nav>
+        <ul class="nav justify-content-center">
+            
+            <li class="nav-link">
+                <a href="../../techie/">Techie</a>
+            </li>
+            
+            <li class="nav-link">
+                <a href="../../founder/">Founder</a>
+            </li>
+            
+            <li class="nav-link">
+                <a href="../../vc/">Investor</a>
+            </li>
+            
+            <li class="nav-link">
+                <a href="../../speaker/">Speaker</a>
+            </li>
+            
+            <li class="nav-link active">
+                <a href="../../blog/">Writer</a>
+            </li>
+            
+            <li class="nav-link">
+                <a href="../../human/">Human</a>
+            </li>
+            
+        </ul>
+    </nav>
+</header>
+<div class="page">
+    <hr style="margin-bottom: 50px">
+    
+  
+  <div class="blog-post">
+    <h1>Keeping DataFrames clean by deleting temporary columns with a Context Manager</h1>
+  <p class="meta">
+    written by
+    
+      Karl Lorey
+    
+    on 2019-03-03
+  </p>
+  <p>At <a href="https://firstmomentum.vc">First Momentum</a>, I do a lot of data analysis to find the most promising young startups.
+As a first step you always have to get the data in one place with a lot of pre-processing.
+A major part in this pre-processing is to import existing data into Pandas DataFrames, e.g. JSON data from some API.
+When doing this kind of pre-processing, you usually have a lot of temporary columns in your DataFrame that get imported but need to be dropped later in the process.
+To deal with these temporary columns, I built a custom Context Manager that keeps track of all imported columns and deletes them when you're done.
+This way, your code stays lean and you don't have to remove temporary columns yourself.
+In this short article, I will show how you can keep your pre-processing clean
+and use a ContextManager to clean up temporary columns.</p>
+<p>In this example, I will use the actual code I use for importing data from the API of our CRM, Hubspot.
+What I retrieve is a list of companies stored as a list of dicts.
+To import a a list of dictionaries in pandas you basically do:</p>
+<pre><code>from pandas.io.json import json_normalize
+
+df = json_normalize(data)
+</code></pre>
+<p>The json_normalize function generates a clean DataFrame based on the given <code>data</code> parameter and normalizes the hierarchy so you get clean column names.
+This is especially useful for nested dictionaries.</p>
+<h2>Ugly: Keeping imported columns</h2>
+<p>The problem with json_normalize is that you usually only want a subset of the imported columns,
+mostly with different names or some kind of pre-processing, too.
+So you might be tempted to do something like this:</p>
+<pre><code>from pandas.io.json import json_normalize
+
+df = json_normalize(data)
+
+df['company_id'] = df['companyId']
+df['location'] = df['properties.city.value']
+df['name'] = df['properties.name.value']
+df['domain'] = df['properties.website.value']
+//... .apply(), .as_type(int), whatever...
+</code></pre>
+<h2>Ugly: Dropping columns manually</h2>
+<p>But this keeps all the imported columns in place and might take a lot of storage.
+Afterwards, you then have to either select the columns you want or drop all columns you don't want.
+Either way, you have to somehow keep track of the temporary columns or the ones you want to keep.
+To deal with this, one solution would be to prefix temporary columns and delete them afterwards:</p>
+<pre><code>from pandas.io.json import json_normalize
+
+df = json_normalize(data)
+
+// make temporary columns
+df.columns = ['temp_' + c for c in df.columns]
+
+// pre-processing, basic calculations, etc.
+df['company_id'] = df['temp_companyId']
+df['location'] = df['temp_properties.city.value']
+df['name'] = df['temp_properties.name.value']
+df['domain'] = df['temp_properties.website.value']
+//... .apply(), .as_type(int), whatever...
+
+df.drop([c for c in df.columns if c.startswith('temp_')], axis=1, inplace=True)
+</code></pre>
+<p>While this works, it feels bad and ugly.
+You have to prefix all the value names in the code which results in bloated column names.
+You also have to keep track of column names you want in the end
+or the used prefix in different places.
+Just imagine you have to change the prefix <code>temp_</code> one day or make the code work with a different prefix.</p>
+<h2>Clean and easy: using a Context Manager</h2>
+<p>After having used the above methods for some time, it struck me that <a href="https://jeffknupp.com/blog/2016/03/07/python-with-context-managers/">Python Context Managers</a> might be a cleaner solution.
+You might know them from their most popular application <code>with open() as file:</code>.
+If not, please take a few minutes to read more about them.
+To make things short: They basically ensure that something, usually a cleanup, is executed in each exit scenario,
+whether it is a usual exit like a return or an exception.
+I thought I might use this to build a clean solution that keeps track and gets rid of temporary columns.
+So I built a Context Manager that deals with temporary columns when importing JSON data so I don't have to.
+You can basically use it like this:</p>
+<pre><code>with DataFrameFromDict(companies) as df:
+    // imported dict now in df, same result as json_normalize
+    df['company_id'] = df['companyId']
+    df['location'] = df['properties.city.value']
+    df['name'] = df['properties.name.value']
+    df['domain'] = df['properties.website.value']
+// after context exits, df contains company_id, location, name, and domain
+// but no more temporary columns
+print(df)
+</code></pre>
+<p>The benefit: You don't have to keep track anymore and the context manager handles the deletion of all temporary columns.</p>
+<h2>How it works</h2>
+<p>You can just copy and paste the following snippet to get going, I'll explain how it works below:</p>
+<pre><code>class DataFrameFromDict(object):
+    """
+    Temporarily imports data frame columns and deletes them afterwards.
+    """
+
+    def __init__(self, data):
+        self.df = json_normalize(data)
+        self.columns = list(self.df.columns.values)
+
+    def __enter__(self):
+        return self.df
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.df.drop([c for c in self.columns], axis=1, inplace=True)
+</code></pre>
+<p>When opening the context, <code>__init__</code> and <code>__enter__</code> get called.
+They create the DataFrame and remember all imported and thus temporary column names.
+When the context is exited, <code>__exit__</code> makes sure to drop all previously created columns
+and leaves only the newly created columns behind.</p>
+<p>Hope this helps you to create a clean pre-processing pipeline.
+Let me know what you think.</p>
+<p>Further reading:</p>
+<ul>
+<li><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.io.json.json_normalize.html">json_normalize</a></li>
+<li><a href="https://jeffknupp.com/blog/2016/03/07/python-with-context-managers/">Python Context Managers</a></li>
+</ul>
+
+  </div>
+
+
+    <hr style="margin-top: 50px">
+</div>
+<footer>
+    <p>I'm Karl Lorey&ndash;Techie, Founder, and Investor living in Karlsruhe, Germany. Let's get in touch.</p>
+    <p class="lead socials">
+        
+            <a href="https://angel.co/karl-lorey" target="_blank"><i class="fab fa-angellist"></i></a>
+        
+            <a href="https://www.crunchbase.com/person/karl-lorey" target="_blank"><i class="fas fa-cube"></i></a>
+        
+            <a href="https://github.com/lorey" target="_blank"><i class="fab fa-github"></i></a>
+        
+            <a href="https://gitlab.com/lorey" target="_blank"><i class="fab fa-gitlab"></i></a>
+        
+            <a href="https://www.instagram.com/karllorey" target="_blank"><i class="fab fa-instagram"></i></a>
+        
+            <a href="https://www.linkedin.com/in/karllorey" target="_blank"><i class="fab fa-linkedin"></i></a>
+        
+            <a href="https://medium.com/@karllorey/has-recommended" target="_blank"><i class="fab fa-medium"></i></a>
+        
+            <a href="https://www.meetup.com/members/196097665/" target="_blank"><i class="fab fa-meetup"></i></a>
+        
+            <a href="https://www.producthunt.com/@karllorey" target="_blank"><i class="fab fa-product-hunt"></i></a>
+        
+            <a href="https://www.researchgate.net/profile/Karl_Lorey" target="_blank"><i class="fab fa-researchgate"></i></a>
+        
+            <a href="https://twitter.com/karllorey" target="_blank"><i class="fab fa-twitter"></i></a>
+        
+    </p>
+    <p>
+        This site uses cookies and external services to improve your experience.<br>
+        At least if you don't refuse by sending <a href="http://randomwalker.info/donottrack-archive/" target="_blank">Do Not Track</a>.
+    </p>
+    <p>&copy; Copyright 2018 by Karl Lorey. <a href="http://karllorey.de/impressum" target="_blank">Legal/Imprint</a>.</p>
+</footer>
+</body>
