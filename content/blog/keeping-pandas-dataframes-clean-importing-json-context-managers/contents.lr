@@ -1,6 +1,6 @@
 _model: blog-post
 ---
-title: Keeping DataFrames clean by deleting temporary columns with a Context Manager
+title: Keeping Pandas DataFrames clean when importing JSON (with Context Managers)
 ---
 author: Karl Lorey
 ---
@@ -48,10 +48,13 @@ df['domain'] = df['properties.website.value']
 //... .apply(), .as_type(int), whatever...
 ```
 
+This works, but keeps all the imported columns inplace and might take a lot of storage.
+So what can you do?
+
 ## Ugly: Dropping columns manually
-But this keeps all the imported columns in place and might take a lot of storage.
-Afterwards, you then have to either select the columns you want or drop all columns you don't want.
-Either way, you have to somehow keep track of the temporary columns or the ones you want to keep.
+So after importing, you want to get rid of all temporary columns from the import.
+To do this, you have to either select the columns you want or drop all columns you don't want.
+In both cases, you have to somehow keep track of the temporary columns or the ones you want to keep.
 To deal with this, one solution would be to prefix temporary columns and delete them afterwards:
 ```
 from pandas.io.json import json_normalize
@@ -67,11 +70,16 @@ df['location'] = df['temp_properties.city.value']
 df['name'] = df['temp_properties.name.value']
 df['domain'] = df['temp_properties.website.value']
 //... .apply(), .as_type(int), whatever...
-
-df.drop([c for c in df.columns if c.startswith('temp_')], axis=1, inplace=True)
 ```
 
-While this works, it feels bad and ugly.
+Afterwards, you would then select all desired columns or drop all undesired columns.
+```
+df.drop([c for c in df.columns if c.startswith('temp_')], axis=1, inplace=True)
+// or
+df = df[[c for c in df.columns if not c.startswith('temp_')]]
+```
+
+While this works, it feels bloated and inefficient.
 You have to prefix all the value names in the code which results in bloated column names.
 You also have to keep track of column names you want in the end
 or the used prefix in different places.
