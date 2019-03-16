@@ -11,6 +11,10 @@
     "url": "https://github.com/lorey",
     "icon-classes": "fab fa-github"
   },
+  "gitlab": {
+    "url": "https://gitlab.com/lorey",
+    "icon-classes": "fab fa-gitlab"
+  },
   "instagram": {
     "url": "https://www.instagram.com/karllorey",
     "icon-classes": "fab fa-instagram"
