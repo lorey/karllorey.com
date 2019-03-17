@@ -15,6 +15,10 @@
     "url": "https://gitlab.com/lorey",
     "icon-classes": "fab fa-gitlab"
   },
+  "goodreads": {
+    "url": "https://www.goodreads.com/karllorey",
+    "icon-classes": "fab fa-goodreads"
+  },
   "instagram": {
     "url": "https://www.instagram.com/karllorey",
     "icon-classes": "fab fa-instagram"
