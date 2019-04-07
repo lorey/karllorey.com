@@ -9,19 +9,21 @@ pub_date: 2019-03-03
 _hidden: no
 ---
 body:
-
 At [First Momentum](https://firstmomentum.vc), I do a lot of data analysis to find the most promising young startups.
-As a first step you always have to get the data in one place with a lot of pre-processing.
-A major part in this pre-processing is to import existing data into Pandas DataFrames, e.g. JSON data from some API.
-When doing this kind of pre-processing, you usually have a lot of temporary columns in your DataFrame that get imported but need to be dropped later in the process.
-To deal with these temporary columns, I built a custom Context Manager that keeps track of all imported columns and deletes them when you're done.
+As a first step, you always have to import the desired data into a Pandas DataFrame
+and do some preprocessing, for example by importing JSON data from some API. 
+When doing this kind of pre-processing,
+you usually have a lot of temporary columns in your DataFrame that get imported but need to be dropped later in the process.
+To deal with these temporary columns,
+I built a custom Context Manager that keeps track of all imported columns
+and deletes them when you're done.
 This way, your code stays lean and you don't have to remove temporary columns yourself.
 In this short article, I will show how you can keep your pre-processing clean
-and use a ContextManager to clean up temporary columns.
+and use a Python ContextManager to clean up temporary columns.
 
-In this example, I will use the actual code I use for importing data from the API of our CRM, Hubspot.
-What I retrieve is a list of companies stored as a list of dicts.
-To import a a list of dictionaries in pandas you basically do:
+In this example I will use the actual code I use for importing data from the API of our CRM named Hubspot.
+What I retrieve is a list of companies stored as a list of Python dictionaries.
+To import a list of dictionaries in pandas you basically do:
 
 ```
 from pandas.io.json import json_normalize
@@ -136,6 +138,7 @@ and leaves only the newly created columns behind.
 
 Hope this helps you to create a clean pre-processing pipeline.
 Let me know what you think.
+You can find the [code on GitHub](https://gist.github.com/lorey/2b57b4ebfec4d45221e15a49060f80d2).
 
 
 Further reading:
