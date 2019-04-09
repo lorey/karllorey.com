@@ -74,16 +74,19 @@
     on 2019-03-03
   </p>
   <p>At <a href="https://firstmomentum.vc">First Momentum</a>, I do a lot of data analysis to find the most promising young startups.
-As a first step you always have to get the data in one place with a lot of pre-processing.
-A major part in this pre-processing is to import existing data into Pandas DataFrames, e.g. JSON data from some API.
-When doing this kind of pre-processing, you usually have a lot of temporary columns in your DataFrame that get imported but need to be dropped later in the process.
-To deal with these temporary columns, I built a custom Context Manager that keeps track of all imported columns and deletes them when you're done.
+As a first step, you always have to import the desired data into a Pandas DataFrame
+and do some preprocessing, for example by importing JSON data from some API. 
+When doing this kind of pre-processing,
+you usually have a lot of temporary columns in your DataFrame that get imported but need to be dropped later in the process.
+To deal with these temporary columns,
+I built a custom Context Manager that keeps track of all imported columns
+and deletes them when you're done.
 This way, your code stays lean and you don't have to remove temporary columns yourself.
 In this short article, I will show how you can keep your pre-processing clean
-and use a ContextManager to clean up temporary columns.</p>
-<p>In this example, I will use the actual code I use for importing data from the API of our CRM, Hubspot.
-What I retrieve is a list of companies stored as a list of dicts.
-To import a a list of dictionaries in pandas you basically do:</p>
+and use a Python ContextManager to clean up temporary columns.</p>
+<p>In this example I will use the actual code I use for importing data from the API of our CRM named Hubspot.
+What I retrieve is a list of companies stored as a list of Python dictionaries.
+To import a list of dictionaries in pandas you basically do:</p>
 <pre><code>from pandas.io.json import json_normalize
 
 df = json_normalize(data)
@@ -177,7 +180,8 @@ They create the DataFrame and remember all imported and thus temporary column na
 When the context is exited, <code>__exit__</code> makes sure to drop all previously created columns
 and leaves only the newly created columns behind.</p>
 <p>Hope this helps you to create a clean pre-processing pipeline.
-Let me know what you think.</p>
+Let me know what you think.
+You can find the <a href="https://gist.github.com/lorey/2b57b4ebfec4d45221e15a49060f80d2">code on GitHub</a>.</p>
 <p>Further reading:</p>
 <ul>
 <li><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.io.json.json_normalize.html">json_normalize</a></li>
@@ -200,6 +204,8 @@ Let me know what you think.</p>
             <a href="https://github.com/lorey" target="_blank"><i class="fab fa-github"></i></a>
         
             <a href="https://gitlab.com/lorey" target="_blank"><i class="fab fa-gitlab"></i></a>
+        
+            <a href="https://www.goodreads.com/karllorey" target="_blank"><i class="fab fa-goodreads"></i></a>
         
             <a href="https://www.instagram.com/karllorey" target="_blank"><i class="fab fa-instagram"></i></a>
         
