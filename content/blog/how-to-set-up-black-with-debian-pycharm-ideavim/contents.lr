@@ -56,7 +56,7 @@ Click the + icon to add a new external tool with the following values:
 * Name: `Black`
 * Description: `Black code formatter`
 * Program: `/usr/bin/docker`
-* Arguments: `run -v $FilePath$:/$FilePath$ jbbarth/black "$FilePath$"`
+* Arguments: `run --rm -v $FilePath$:/$FilePath$ jbbarth/black "$FilePath$"`
 * Working directory: `$ProjectFileDir$`
 
 Test it by running it with an opened python file via `Tools -> External Tools -> Black`.
