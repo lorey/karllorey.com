@@ -83,3 +83,10 @@ Now typing `:Black` will re-format the current file.
 This tutorial showed you one way to include Black into you daily development (esp. on Debian).
 If you have any questions or feedback, hit me up on Twitter [@karllorey](https://twitter.com/karllorey)
 or any of the other platforms listed below.
+
+## Notes
+### Deleting all docker containers of a specific image
+If you want to remove all containers derived from a specific image, e.g. if you forgot to add the --rm flag:
+```
+docker rm $(docker ps -a --filter ancestor=jbbarth/black -q)
+```
