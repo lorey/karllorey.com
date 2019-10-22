@@ -115,7 +115,7 @@ Click the + icon to add a new external tool with the following values:</p>
 <li>Name: <code>Black</code></li>
 <li>Description: <code>Black code formatter</code></li>
 <li>Program: <code>/usr/bin/docker</code></li>
-<li>Arguments: <code>run -v $FilePath$:/$FilePath$ jbbarth/black "$FilePath$"</code></li>
+<li>Arguments: <code>run --rm -v $FilePath$:/$FilePath$ jbbarth/black "$FilePath$"</code></li>
 <li>Working directory: <code>$ProjectFileDir$</code></li>
 </ul>
 <p>Test it by running it with an opened python file via <code>Tools -&gt; External Tools -&gt; Black</code>.
@@ -137,6 +137,11 @@ and add the following line:</p>
 <p>This tutorial showed you one way to include Black into you daily development (esp. on Debian).
 If you have any questions or feedback, hit me up on Twitter <a href="https://twitter.com/karllorey">@karllorey</a>
 or any of the other platforms listed below.</p>
+<h2>Notes</h2>
+<h3>Deleting all docker containers of a specific image</h3>
+<p>If you want to remove all containers derived from a specific image, e.g. if you forgot to add the --rm flag:</p>
+<pre><code>docker rm $(docker ps -a --filter ancestor=jbbarth/black -q)
+</code></pre>
 
   </div>
 
