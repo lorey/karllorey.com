@@ -1,0 +1,22 @@
+_model: blog-post
+---
+title: Firefox addons for powerusers
+---
+author: Karl Lorey
+---
+pub_date: 2019-07-22
+---
+_hidden: yes
+---
+body:
+
+## Windows, Tabs and Pinned Tabs
+
+## Using the keyboard as much as possible: Tridactyl
+
+## Keeping things separate: Multi-Account Containers
+
+## Keeping stuff organized: Tree Style Tab
+
+## Keeping RAM-usage low: Auto Tab Discard
+
