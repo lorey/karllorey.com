@@ -20,6 +20,7 @@ before_install:
 - git remote rm origin
 - git remote add origin git@github.com:lorey/karllorey.com.git
 # fetch current gh-pages to avoid unrelated histories error
+- git fetch origin gh-pages
 - git checkout -B gh-pages origin/gh-pages
 install:
 - pip install -U --upgrade-strategy=eager 'Nikola[extras]'
