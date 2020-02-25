@@ -13,4 +13,11 @@ make
 ```
 
 ## Build and deploy it
-t.b.d.
+If you're deploying for the first time to GitHub pages, pull the gh-pages branch first (if existing):
+```text
+git pull origin gh-pages
+```
+Then you can deploy with the following command (which will create a new commit in gh-pages):
+```text
+nikola github_deploy
+```

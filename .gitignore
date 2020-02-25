@@ -1,5 +1,14 @@
-.idea/
+# virtual environment
 venv/
+
+# nikola-specific paths
 cache/
 output/
 .doit.db.db
+
+# ide: pycharm
+.idea/
+
+# deployment
+id_rsa
+id_rsa.pub
