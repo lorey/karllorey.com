@@ -10,7 +10,7 @@ body {
     color: #555555;
 }
 
-header .display-1 {
+#header .display-1 {
     font-size: 400%;
 }
 
@@ -26,13 +26,13 @@ a:hover {
     color: #000;
 }
 
-header, footer, div.page {
+#header, footer, main {
     max-width: 760px;
     margin: 0 auto;
     padding: 30px 2.5%;
 }
 
-header, footer {
+#header, footer {
     text-align: center;
 }
 
@@ -45,7 +45,7 @@ footer .socials a {
 }
 
 pre, code {
-    background-color: #eeeeee;
+    /* background-color: #eeeeee; */
     color: #212529;
 }
 
