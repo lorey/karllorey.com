@@ -19,8 +19,8 @@ before_install:
 - ssh-add id_rsa
 - git remote rm origin
 - git remote add origin git@github.com:lorey/karllorey.com.git
-- git fetch origin master
-- git checkout -B master origin/master
+# fetch current gh-pages to avoid unrelated histories error
+- git checkout -B gh-pages origin/gh-pages
 install:
 - pip install -U --upgrade-strategy=eager 'Nikola[extras]'
 script:
