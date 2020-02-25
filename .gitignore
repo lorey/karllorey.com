@@ -2,3 +2,4 @@
 venv/
 cache/
 output/
+.doit.db.db
