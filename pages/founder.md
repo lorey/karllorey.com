@@ -14,8 +14,9 @@ Below is a selection of startups and projects I have done so far.
 If you'd like to see a more comprehensive overview,
 take a look at [my CV](https://github.com/lorey/resume) or [Linkedin](https://www.linkedin.com/in/karllorey).
 
-## Startups
+# Startups
 Startups (or startup-like projects):
+
 - [First Momentum Ventures](http://firstmomentum.vc)
   I've co-founded my own Venture Capital fund and firm, currently leading the investment and tech team. We're the first fund founded by students in Germany and probably the youngest fund all over Europe.
 - [German IT Jobs](http://germanitjobs.com)
@@ -29,7 +30,7 @@ Startups (or startup-like projects):
   [3](https://www.computerwoche.de/a/die-gewinner-des-vw-programmierwettbewerbs,3096127),
   [4](https://www.youtube.com/watch?v=1YpsJsB6Hwg).
 
-## Projects/Portfolio
+# Projects/Portfolio
 These are my latest projects in chronological order from new/updated to old/offline:
 
 - [socials](https://github.com/lorey/socials) and [social media regular expressions](https://github.com/lorey/social-media-profiles-regexs) -

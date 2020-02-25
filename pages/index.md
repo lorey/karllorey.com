@@ -1,5 +1,5 @@
 <!--
-.. title: Home
+.. title: Karl Lorey: Founder, Investor, Techie
 .. slug: index
 .. date: 2020-02-25 11:03:11 UTC+01:00
 .. tags: 

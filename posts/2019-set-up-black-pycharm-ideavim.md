@@ -32,7 +32,7 @@ There's also a more sleek image at [cytopia/docker-black](https://github.com/cyt
 
 So to run black irrespective of your local Python installation via `black main.py`,
 you run
-```
+```text
 docker run --rm -v $(pwd):/code jbbarth/black main.py
 ```
 This creates a new container, mounts the current working directory into `/code` and formats `main.py`.
@@ -43,7 +43,7 @@ So far, so good, but as this command is quote long, I had to build an alias to i
 So to avoid the cumbersome docker syntax each time, you now want an alias to just run `black main.py` everywhere.
 To do this, you have to map the black command to your black running inside docker.
 You can do this by adding
-```
+```text
 black() { docker run --rm -v $(pwd):/code jbbarth/black $*; }
 ```
 to your bashrc or zshrc.
@@ -75,7 +75,7 @@ equivalent to the [regular vim plugin](https://black.readthedocs.io/en/stable/ed
 we have to map the `:Black` command to our external command in PyCharm.
 To do this, we edit our `.ideavimrc` file where all IdeaVim configuration is stored,
 and add the following line:
-```
+```text
 command Black action Tool_External Tools_Black
 ```
 
@@ -89,6 +89,6 @@ or any of the other platforms listed below.
 ## Notes
 ### Deleting all docker containers of a specific image
 If you want to remove all containers derived from a specific image, e.g. if you forgot to add the --rm flag:
-```
+```text
 docker rm $(docker ps -a --filter ancestor=jbbarth/black -q)
 ```

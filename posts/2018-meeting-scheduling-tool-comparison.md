@@ -26,6 +26,7 @@ So we set out to find tools that automate this task.
 
 There are several services in the market which automate scheduling.
 Usually, they work as follows:
+
 1. You send a link to the person you'd like to meet/call.
 2. The person goes to a website that shows your availability or predefined slots.
 3. The person picks a convenient time slot.

@@ -22,6 +22,7 @@ So here are my reflections on this year, my learnings, and my goals for 2019.
 
 ## Overview of my 2018
 To keep things short, I will use a list to give you an overview of my 2018:
+
 - After founding the fund in 2017, we got registered with BaFin at the beginning of 2018, meaning we passed at regulatory checks. A huge milestone.
 - So it was all about fundraising as quick as possible afterwards. Making call, having meetings, presenting at events.
 - In June, we were able to to our First Closing. For funds, this is the kick-off and enabled us to actually invest for the first time.
@@ -154,6 +155,7 @@ The natural tendency is to come up with an own solution,
 but the smart solution is to stand on the shoulders of giants and learn from others.
 
 ## My Achievements
+
 - Made our first closing along with national press coverage
 - Made our first investments
 - formed a team of outstanding people. established culture and onboarding.
@@ -162,11 +164,13 @@ but the smart solution is to stand on the shoulders of giants and learn from oth
 - founded my own holding company
 
 ## 2019 by the numbers
+
 - sleep
 - work
 - challenges
 
 ## Miscellaneous
+
 - neglecting my laptop.
 - moving to the office full-time
 - making extensive use of a notebook helps a lot.
@@ -180,6 +184,7 @@ but the smart solution is to stand on the shoulders of giants and learn from oth
 - first year I'm not studying (part-time) anymore
 
 Platforms, Services and Apps I'm using regularly
+
 - Habits: tracking my habits (daily)
 - Libra: tracking my weight (daily)
 - Sleep for Android: tracking my sleep (daily)

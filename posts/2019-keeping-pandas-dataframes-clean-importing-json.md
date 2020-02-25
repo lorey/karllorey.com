@@ -25,7 +25,7 @@ In this example I will use the actual code I use for importing data from the API
 What I retrieve is a list of companies stored as a list of Python dictionaries.
 To import a list of dictionaries in pandas you basically do:
 
-```
+```python
 from pandas.io.json import json_normalize
 
 df = json_normalize(data)
@@ -38,7 +38,7 @@ This is especially useful for nested dictionaries.
 The problem with json_normalize is that you usually only want a subset of the imported columns,
 mostly with different names or some kind of pre-processing, too.
 So you might be tempted to do something like this:
-```
+```python
 from pandas.io.json import json_normalize
 
 df = json_normalize(data)
@@ -58,7 +58,7 @@ So after importing, you want to get rid of all temporary columns from the import
 To do this, you have to either select the columns you want or drop all columns you don't want.
 In both cases, you have to somehow keep track of the temporary columns or the ones you want to keep.
 To deal with this, one solution would be to prefix temporary columns and delete them afterwards:
-```
+```python
 from pandas.io.json import json_normalize
 
 df = json_normalize(data)
@@ -75,7 +75,7 @@ df['domain'] = df['temp_properties.website.value']
 ```
 
 Afterwards, you would then select all desired columns or drop all undesired columns.
-```
+```python
 df.drop([c for c in df.columns if c.startswith('temp_')], axis=1, inplace=True)
 // or
 df = df[[c for c in df.columns if not c.startswith('temp_')]]
@@ -97,7 +97,7 @@ I thought I might use this to build a clean solution that keeps track and gets r
 So I built a Context Manager that deals with temporary columns when importing JSON data so I don't have to.
 You can basically use it like this:
 
-```
+```python
 with DataFrameFromDict(companies) as df:
     // imported dict now in df, same result as json_normalize
     df['company_id'] = df['companyId']
@@ -114,7 +114,7 @@ The benefit: You don't have to keep track anymore and the context manager handle
 ## How it works
 You can just copy and paste the following snippet to get going, I'll explain how it works below:
 
-```
+```python
 class DataFrameFromDict(object):
     """
     Temporarily imports data frame columns and deletes them afterwards.
@@ -142,5 +142,6 @@ You can find the [code on GitHub](https://gist.github.com/lorey/2b57b4ebfec4d452
 
 
 Further reading:
+
 - [json_normalize](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.io.json.json_normalize.html)
 - [Python Context Managers](https://jeffknupp.com/blog/2016/03/07/python-with-context-managers/)

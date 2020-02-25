@@ -15,6 +15,7 @@ Our fund is primarily focused on founders with a university background as well a
 Having founded my own startups before and as a CTO, I focus on supporting technical co-founders.
 
 Personally, I'm especially interested in the following areas:
+
 - Machine Learning and Artificial Intelligence: As a computer scientist with an academic background, I love seeing competitive advantages through technology.
 - New Work and Human Resources: Before I co-founded First Momentum, I was CTO for an HR startup which allows me to support teams with the gained expertise in this field.
 - Programming tools and aids: As a programmer myself, I enjoy seeing new tools that solve problems in everyday work.

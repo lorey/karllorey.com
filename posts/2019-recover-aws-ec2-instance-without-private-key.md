@@ -13,6 +13,7 @@ Lost the private key for your EC2 instance and can't login via ssh anymore?
 This tutorial will show you how to recover your EC2 instance by setting a new key pair to login.
 
 What we'll do:
+
 * mount the original instance's volume (a.k.a. it's filesystem) inside another temporary EC2 instance
 * modify the keys allowed to login
 * unmount the volume from the temporary instance and re-mount it in the original instance
@@ -30,6 +31,7 @@ Go to the AWS EC2 console and find your (lost) instance.
 Make sure you're in the right availability zone.
 Note down the instance ID as well as the subnet.
 Also note the instance's volume
+
 ## Step 2: Create a temporary instance
 Launch an instance in the same availability zone.
 Make sure to use the same subnet.
@@ -43,7 +45,7 @@ Go to volumes and detach the volume with `Actions - Detach Volume`.
 Attach the volume to the temporary instance with `Actions - Attach Volume`.
 Choose one of the given options and note it down, e.g. `/dev/sdf`.
 Connect to the temporary instance via SSH and mount the volume, e.g. to `/data` via the following command:
-```
+```text
 mount /dev/sdf /data
 ```
 The volume of the original instance is now mounted to `/data`.
@@ -55,17 +57,17 @@ The keys allowed to log in are stored in a file called `~/.ssh/authorized_keys` 
 Inside this file is just a line-by-line list of authorized keys.
 Because of this, we can just append the file of our temporary instance (and thus our key from the temporary instance)
 to the file of our original instance.
-```
+```text
 cat ~/.ssh/authorized_keys >> /data/home/admin/.ssh/authorized_keys
 ```
 Make sure to swap admin with the actual user you want to sign in as (check your ssh connection command if you're unsure).
 
 ### Check if everything went right
-```
+```text
 cat /data/home/admin/.ssh/authorized_keys
 ```
 should now contain the contents of:
-```
+```text
 cat ~/.ssh/authorized_keys
 ```
 
