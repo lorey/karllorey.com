@@ -1,5 +1,0 @@
-[project]
-name = Karl Lorey
-
-[servers.ghpages]
-target = ghpages+https://lorey/karllorey.com?cname=karllorey.com
