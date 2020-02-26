@@ -11,6 +11,13 @@
 
 I love what I do and talk about it as often as I can. Here is a selection of talks and workshops I've given recently:
 
+# 2019
+
+- Guest lecture at EBS in Oestrich-Winkel on how to finance your startup.
+- Workshop on how not to fuck up your startup at Start Nuremberg-Erlangen.
+- Mentor at [3 Day Startup Germany](http://3dsgermany.de/), a startup weekend. WHU, Vallendar, Germany.
+- Jury member at [Road to Start Summit](https://www.start-nuernberg.de/rtss) in Nuremberg, Germany.
+
 # 2018
 
 - Interview on German radio at [SWR2 Tandem Rakete](https://www.swr.de/swr2/programm/sendungen/tandem/swr2-tandem-was-menschen-bewegt-ein-junges-finanz-startup-fuer-andere-junge-startups/-/id=8986864/did=20962488/nid=8986864/14bwrs7/index.html)
