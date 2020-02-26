@@ -1,6 +1,8 @@
 .RECIPEPREFIX = >
 
-all: build
+.PHONY: all build open
+
+all: build open
 
 build:
 > nikola build
