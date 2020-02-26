@@ -9,16 +9,16 @@
 .. type: text
 -->
 
-While being human is a core feature of me, I do not know yet what should be written here.
-I guess it is upon you which social media profile you choose to find out more about me...
+This is just a random collection of things about me.
+I guess it's your call which social media profile you choose to find out more about me...
 
 
-# Values
+# Core beliefs
 
 - hard work beats talent when talent doesn’t work hard, so work hard and use your talent.
-- self-reflection is the basis of personal growth.
-- simplicity beats complexity, always.
+- self-reflection is the basis for personal growth.
 - don't mistake movement for progress.
+- simplicity beats complexity, always.
 - true success requires sacrifice.
 - automation reduces mental load.
 - deep work is essential.
@@ -29,67 +29,80 @@ I guess it is upon you which social media profile you choose to find out more ab
 - rest.
 - be.
 
+> “Champions aren't made in gyms. Champions are made from something they have deep inside them-a desire, a dream, a vision. They have to have the skill, and the will. But the will must be stronger than the skill.” 
+
 # Things I enjoy
 
 - self-improvement
 - critical thinking
 - humbleness
-- automation and data
-- deep work
-- minimalism
+- automation and data analysis
+- deep work and focus
+- minimalism/essentialism
 
-# Patterns
-
-- email > voice message > unscheduled calls
-- deep work > meetings
-- keyboard > mouse
+You can find technologies I like [here](/techie).
 
 # Things that inspire me
-Here's a selection of things that inspire me categorized by medium.
+Here's a selection of things that inspire me categorized by broad topics.
 
-## Books
+Note: 
 I don't read too many books, mainly because my attention span is quite short when reading.
 Over time I've still accumulated a few favorites.
-You can see what I'm reading at [Goodreads](https://www.goodreads.com/karllorey) by the way.
-Anyway, here are my all-time favorites categorized by topic:
+You can check out everything I'm reading at [Goodreads](https://www.goodreads.com/karllorey).
 
-### Business
+## Business
+
+Startups
+
+- Blitzscaling by Reid Hoffman
+- [why new technology is a hard sell](https://www.collaborativefund.com/blog/tech/)
+- [How Super Angel Chris Sacca Made Billions, Burned Bridges And Crafted The Best Seed Portfolio Ever](https://www.forbes.com/sites/alexkonrad/2015/03/25/how-venture-cowboy-chris-sacca-made-billions/)
+- [Decisions, decisions, or Why Baskets of Options Dominate](https://medium.com/@kentbeck_7670/decisions-decisions-or-why-baskets-of-options-dominate-9ac63658b593) by Kent Beck
+
+Hard work
+
+- [10 things that require zero talent](https://mollyfletcher.com/zero-talent/)
+- [Bill Gates on making "one of the greatest mistakes of all time](https://techcrunch.com/2019/06/22/bill-gates-on-making-one-of-the-greatest-mistakes-of-all-time/)
+
+Misc
 
 - Peopleware by Tom DeMarco
-- Blitzscaling by Reid Hoffman
 - Shoe Dog by Phil Knight
+- [How to Become the Best in the World at Something](https://forge.medium.com/how-to-become-the-best-in-the-world-at-something-f1b658f93428)
+- [The ten commandments of startup success](https://mastersofscale.com/tim-ferriss-ten-commandments-of-startup-success/) by Tim Ferriss on Masters of Scale
+- [Drew Houston](https://tim.blog/2018/08/27/drew-houston/) on The Tim Ferriss Show
+- [Brian Chesky](https://mastersofscale.com/brian-chesky-handcrafted/) on Masters of Scale
 
-### Life
+## Life
+Essentialism
 
 - Essentialism by Greg McKeown
+- [It's later than you think](https://www.linkedin.com/pulse/its-later-than-you-think-j-r-storment/)
+- [How to say no](https://tim.blog/2017/11/25/how-to-say-no/) and [How to say no gracefully and uncommit](https://tim.blog/2018/07/19/essentialism/) on the Tim Ferriss Show
+
+Mindset and Communication
+
 - Nonviolent Communication by Marshall Rosenberg
+- How to think like a Roman Emperor by Donald Robertson
+- [How to Disagree](http://www.paulgraham.com/disagree.html) by Paul Graham
+- [How to succeed in high-stress situations](https://tim.blog/2018/06/10/how-to-succeed-in-high-stress-situations/) and [Stoicism 101](https://tim.blog/2009/04/13/stoicism-101-a-practical-guide-for-entrepreneurs/) by Tim Ferriss
 
-### Tech
+Communication
 
+- [getting answers](https://www.mikeash.com/getting_answers.html)
+- [dumber phone](https://nomasters.io/posts/dumber-phone/)
+
+## Tech
 - The Pragmatic Programmer by Andy Hunt
 - Refactoring by Martin Fowler
 - Design Patterns by Gamma et al
 - Code Complete by Steve McConnell
 - Patterns of Enterprise Application Architecture by Martin Fowler
+- [Your Makefiles are wrong](https://tech.davis-hansson.com/p/make/)
 
-## Articles
-
-- [why new technology is a hard sell](https://www.collaborativefund.com/blog/tech/)
-- [getting answers](https://www.mikeash.com/getting_answers.html)
-- [dumber phone](https://nomasters.io/posts/dumber-phone/)
-- [10 things that require zero talent](https://mollyfletcher.com/zero-talent/)
-- [How Super Angel Chris Sacca Made Billions, Burned Bridges And Crafted The Best Seed Portfolio Ever](https://www.forbes.com/sites/alexkonrad/2015/03/25/how-venture-cowboy-chris-sacca-made-billions/)
-
-## Podcasts
-
-- [Drew Houston](https://tim.blog/2018/08/27/drew-houston/) on The Tim Ferriss Show
-- [The ten commandments of startup success](https://mastersofscale.com/tim-ferriss-ten-commandments-of-startup-success/) by Tim Ferriss on Masters of Scale
-- [How to say no](https://tim.blog/2017/11/25/how-to-say-no/) and [How to say no gracefully and uncommit](https://tim.blog/2018/07/19/essentialism/) on the Tim Ferriss Show
-- [How to succeed in high-stress situations](https://tim.blog/2018/06/10/how-to-succeed-in-high-stress-situations/) and [Stoicism 101](https://tim.blog/2009/04/13/stoicism-101-a-practical-guide-for-entrepreneurs/) by Tim Ferriss
-- [Brian Chesky on Masters of Scale](https://mastersofscale.com/brian-chesky-handcrafted/)
-
-## Talks/Speeches
+## Talks/Speeches/Poetry
 
 - [Robert Kennedy announcing the death of MLK](https://www.youtube.com/watch?v=GoKzCff8Zbs)
 - [Steve Jobs' Stanford Commencement Address](https://www.youtube.com/watch?v=UF8uR6Z6KLc)
 - [Who do you want to be? - Arnold Schwarzenegger](https://www.youtube.com/watch?v=R1JBQMXbN2k)
+- [Go all the way - Charles Bukowski](https://www.youtube.com/watch?v=KL2T0XRzWUI)
