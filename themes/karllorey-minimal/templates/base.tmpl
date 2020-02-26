@@ -41,6 +41,19 @@
              {% block content %}{% endblock %}
              <hr style="margin-top: 50px">
          </main>
+
+         <nav><ul class="nav justify-content-center">
+             <li class="nav-link">
+                 <a href="/archive.html">Archive</a>
+             </li>
+             <li class="nav-link">
+                 <a href="/categories/">Categories</a>
+             </li>
+             <li class="nav-link">
+                 <a href="/rss.xml">RSS feed</a>
+             </li>
+         </ul></nav>
+
          {{ footer.html_footer() }}
     </div>
     {{ base.late_load_js() }}
