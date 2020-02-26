@@ -2,8 +2,8 @@
 .. title: Why every founder should use a notebook
 .. slug: reasons-to-use-a-notebook-as-a-founder
 .. date: 2018-12-28 10:30:13 UTC+01:00
-.. tags: 
-.. category: 
+.. tags: Notebook, Organization, Entrepreneurship
+.. category: Entrepreneurship
 .. link: 
 .. description: 
 .. type: text

@@ -2,8 +2,8 @@
 .. title: Automate call and meeting scheduling: a tool comparison (Meetingbird, Calendly, G Calendar)
 .. slug: meeting-scheduling-tool-comparison
 .. date: 2020-02-25 10:30:13 UTC+01:00
-.. tags: 
-.. category: 
+.. tags: Automation, Entrepreneurship
+.. category: Entrepreneurship
 .. link: 
 .. description: 
 .. type: text

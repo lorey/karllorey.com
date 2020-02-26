@@ -2,8 +2,8 @@
 .. title: Keeping Pandas DataFrames clean when importing JSON (with Context Managers)
 .. slug: keeping-pandas-dataframes-clean-importing-json
 .. date: 2019-03-03 10:30:13 UTC+01:00
-.. tags: 
-.. category: 
+.. tags: Machine Learning, Pandas, Clean Code, Python, Tech
+.. category: Tech 
 .. link: 
 .. description: 
 .. type: text

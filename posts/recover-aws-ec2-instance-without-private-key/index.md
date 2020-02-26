@@ -2,8 +2,8 @@
 .. title: How to recover an AWS EC2 instance without the private key
 .. slug: recover-aws-ec2-instance-without-private-key
 .. date: 2019-09-03 10:30:13 UTC+01:00
-.. tags: 
-.. category: 
+.. tags: AWS, Tech
+.. category: Tech
 .. link: 
 .. description: 
 .. type: text

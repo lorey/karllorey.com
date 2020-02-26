@@ -1,9 +1,9 @@
 <!--
-.. title: How to set up Black with Debain, PyCharm, and IdeaVim
+.. title: How to set up Black with Debian, PyCharm, and IdeaVim
 .. slug: set-up-black-pycharm-ideavim
 .. date: 2019-07-28 10:30:13 UTC+01:00
-.. tags: 
-.. category: 
+.. tags: Python, Black, Docker, Pycharm, IdeaVim, Tech
+.. category: Tech
 .. link: 
 .. description: 
 .. type: text

@@ -2,8 +2,8 @@
 .. title: Founding a Venture Capital Fund as a Techie: My Year 2018
 .. slug: year-in-review-2018
 .. date: 2019-01-03 10:30:13 UTC+01:00
-.. tags: 
-.. category: 
+.. tags: Entrepreneurship, Year in Review, Venture Capital
+.. category: Year in Review
 .. link: 
 .. description: 
 .. type: text

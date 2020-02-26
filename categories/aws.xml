@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Karl Lorey (Posts about AWS)</title><link>https://karllorey.com/</link><description></description><atom:link type="application/rss+xml" href="https://karllorey.com/categories/aws.xml" rel="self"></atom:link><language>en</language><copyright>Contents © 2020 &lt;a href="mailto:hello@karllorey.com"&gt;Karl Lorey&lt;/a&gt; </copyright><lastBuildDate>Wed, 26 Feb 2020 11:01:56 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>How to recover an AWS EC2 instance without the private key</title><link>https://karllorey.com/posts/recover-aws-ec2-instance-without-private-key/</link><dc:creator>Karl Lorey</dc:creator><description>&lt;div&gt;&lt;p&gt;Lost the private key for your EC2 instance and can't login via ssh anymore?
+This tutorial will show you how to recover your EC2 instance by setting a new key pair to login.&lt;/p&gt;
+&lt;p&gt;What we'll do:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;mount the original instance's volume (a.k.a. it's filesystem) inside another temporary EC2 instance&lt;/li&gt;
+&lt;li&gt;modify the keys allowed to login&lt;/li&gt;
+&lt;li&gt;unmount the volume from the temporary instance and re-mount it in the original instance&lt;/li&gt;
+&lt;li&gt;login with a new key to your original instance&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In short, this replaces the key needed for ssh to connect with a new one of your choice.&lt;/p&gt;
+&lt;h3&gt;AWS Recovery Automation&lt;/h3&gt;
+&lt;p&gt;There's an &lt;a href="https://aws.amazon.com/premiumsupport/knowledge-center/recover-access-lost-key-pair/"&gt;Amazon recovery automation thing&lt;/a&gt; available that aims to recover your instance automatically,
+it sadly did not work for me.
+So here we go.&lt;/p&gt;
+&lt;h3&gt;Step 1: Find the instance&lt;/h3&gt;
+&lt;p&gt;Go to the AWS EC2 console and find your (lost) instance.
+Make sure you're in the right availability zone.
+Note down the instance ID as well as the subnet.
+Also note the instance's volume&lt;/p&gt;
+&lt;h3&gt;Step 2: Create a temporary instance&lt;/h3&gt;
+&lt;p&gt;Launch an instance in the same availability zone.
+Make sure to use the same subnet.
+Create a new key pair with that instance
+or use the key pair you'd like to use for your original instance from now on.&lt;/p&gt;
+&lt;h3&gt;Step 3: Attach the original volume to a temporary instance&lt;/h3&gt;
+&lt;p&gt;Stop the original instance to be able to unmount the storage.
+Note the volume ID under &lt;code&gt;Attachment information&lt;/code&gt;.
+Go to volumes and detach the volume with &lt;code&gt;Actions - Detach Volume&lt;/code&gt;.
+Attach the volume to the temporary instance with &lt;code&gt;Actions - Attach Volume&lt;/code&gt;.
+Choose one of the given options and note it down, e.g. &lt;code&gt;/dev/sdf&lt;/code&gt;.
+Connect to the temporary instance via SSH and mount the volume, e.g. to &lt;code&gt;/data&lt;/code&gt; via the following command:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;mount /dev/sdf /data
+&lt;/code&gt;&lt;/pre&gt;
+
+
+&lt;p&gt;The volume of the original instance is now mounted to &lt;code&gt;/data&lt;/code&gt;.
+This allows us to now modify the allowed keys.&lt;/p&gt;
+&lt;h3&gt;Step 4: Modify the allowed keys&lt;/h3&gt;
+&lt;p&gt;We can now set the key of the current, temporary instance as an allowed key of the original instance.
+The keys allowed to log in are stored in a file called &lt;code&gt;~/.ssh/authorized_keys&lt;/code&gt; (background on &lt;a href="https://www.ssh.com/ssh/authorized_keys/"&gt;authorized_keys&lt;/a&gt;).
+Inside this file is just a line-by-line list of authorized keys.
+Because of this, we can just append the file of our temporary instance (and thus our key from the temporary instance)
+to the file of our original instance.&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;cat ~/.ssh/authorized_keys &amp;gt;&amp;gt; /data/home/admin/.ssh/authorized_keys
+&lt;/code&gt;&lt;/pre&gt;
+
+
+&lt;p&gt;Make sure to swap admin with the actual user you want to sign in as (check your ssh connection command if you're unsure).&lt;/p&gt;
+&lt;h4&gt;Check if everything went right&lt;/h4&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;cat /data/home/admin/.ssh/authorized_keys
+&lt;/code&gt;&lt;/pre&gt;
+
+
+&lt;p&gt;should now contain the contents of:&lt;/p&gt;
+&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;cat ~/.ssh/authorized_keys
+&lt;/code&gt;&lt;/pre&gt;
+
+
+&lt;h3&gt;Step 4: Bring everything back in order&lt;/h3&gt;
+&lt;p&gt;We now have set up another key for login.
+All that's left is to unmount the volume from the temporary instance and mount it to the original instance.&lt;/p&gt;
+&lt;p&gt;First, we have to unmout the storage of the original instance inside the temporary instance by
+&lt;code&gt;umount /dev/sdf&lt;/code&gt; (make sure to use the right path here).
+Afterwards, you stop the temporary instance via the AWS console under &lt;code&gt;Instances&lt;/code&gt;.
+You then attach the volume to the original instance inside the AWS console under &lt;code&gt;Volumes&lt;/code&gt; via &lt;code&gt;Actions - Attach volume&lt;/code&gt;.
+Type in the original instance ID as well as &lt;code&gt;xvda&lt;/code&gt; as the mount point.
+Otherwise, you might get an error pointing out that there's no root volume when starting the instance.
+You can now re-start the original instance and should be able to login with the new key.&lt;/p&gt;
+&lt;p&gt;Make sure to delete the temporary instance in case everything went well.&lt;/p&gt;
+&lt;h3&gt;Conclusion&lt;/h3&gt;
+&lt;p&gt;So this guide showed you how to recover an AWS EC2 instance if you lose you private key.
+We did this by using a temporary instance to swap or actually extend the authorized_keys file.
+You should now be able to login to the original instance with your new key.&lt;/p&gt;
+&lt;p&gt;There's also a slightly different &lt;a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html#replacing-lost-key-pair"&gt;guide by AWS&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;</description><category>AWS</category><category>Tech</category><guid>https://karllorey.com/posts/recover-aws-ec2-instance-without-private-key/</guid><pubDate>Tue, 03 Sep 2019 09:30:13 GMT</pubDate></item></channel></rss>
