@@ -2,8 +2,8 @@
 .. title: Django in Production with mod_wsgi and Docker
 .. slug: django-production-docker-mod-wsgi
 .. date: 2020-01-17 10:30:13 UTC+01:00
-.. tags: 
-.. category: 
+.. tags: Django, Python, Docker, Tech
+.. category: Tech 
 .. link: 
 .. description: 
 .. type: text
