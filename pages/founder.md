@@ -29,7 +29,13 @@ My technical and academic background allows me to build automated and scalable a
 - designing and implementing a crawler network spotting every early-stage startup in the DACH region resulting in a competitive advantage of our fund
 - designing, building, and launching a platform that enables investors to access our dealflow resulting in significant revenues
 - building a machine learning solution to predict relevant dealflow enabling our investing team to save more than 50% time in the screening process
-- selecting and screening promising, tech-driven, early-stage startups as well as leading the investments of and advising [Peers](https://www.peers-solutions.com/) and [Verlingo](https://www.verlingo.de/).
+- selecting and screening promising, tech-driven, early-stage startups as well as leading the investments of and advising [Peers](https://www.peers-solutions.com/) ([1](https://medium.com/first-momentum-ventures/first-momentum-ventures-is-backing-peers-492a11ce4314)) and [Verlingo](https://www.verlingo.de/) ([1](https://gruender.wiwo.de/verlingo-auftakt-fuer-die-arbeitszeugnis-analysten/), [2](https://medium.com/first-momentum-ventures/transforming-digital-recruiting-why-we-are-backing-the-startup-verlingo-386dfb9fa664)).
+
+Press: 
+[First Closing on Gründerszene](https://www.gruenderszene.de/business/kit-first-momentum-ventures-studi-vc), 
+[Frank Thelen's investment on Gründerszene](https://www.gruenderszene.de/business/frank-thelen-first-momentum),
+[First Closing on T3N](https://t3n.de/news/studenten-startups-fonds-1088286/), 
+[Florian Nöll mentioning First Momentum on T3N](https://t3n.de/news/gruenderunis-deutsches-stanford-1246203/)
 
 # CTO, German IT Jobs
 Before First Momentum and during my master studies, I co-founded an HR startup called [German IT Jobs](http://germanitjobs.com).
