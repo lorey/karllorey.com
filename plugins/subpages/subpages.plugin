@@ -1,0 +1,13 @@
+[Core]
+name = subpages
+module = subpages
+
+[Documentation]
+author = Karl Lorey
+version = 0.1
+website = https://karlloreycom
+description = List Subpages
+
+[Nikola]
+PluginCategory = SignalHandler
+MinVersion = 8.0.0
