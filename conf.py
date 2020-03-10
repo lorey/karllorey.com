@@ -423,7 +423,7 @@ HIDDEN_TAGS = ['mathjax']
 # output / TRANSLATION[lang] / CATEGORY_PATH / CATEGORY_PREFIX category RSS_EXTENSION (RSS feed for a category)
 # (translatable)
 # CATEGORY_PATH = "categories"
-# CATEGORY_PREFIX = "cat_"
+CATEGORY_PREFIX = "cat-"
 
 # By default, the list of categories is stored in
 #     output / TRANSLATION[lang] / CATEGORY_PATH / index.html
@@ -623,7 +623,12 @@ ATOM_FILENAME_BASE = "feed"
 # relative URL.
 #
 # If you don't need any of these, just set to []
-REDIRECTIONS = []
+REDIRECTIONS = [
+    (
+        "blog/keeping-pandas-dataframes-clean-importing-json-context-managers/index.html",
+        "/posts/keeping-pandas-dataframes-clean-importing-json/"
+    )
+]
 
 # Presets of commands to execute to deploy. Can be anything, for
 # example, you may use rsync:
