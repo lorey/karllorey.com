@@ -1,114 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Karl Lorey (Posts about Tech)</title><link>https://karllorey.com/</link><description></description><atom:link type="application/rss+xml" rel="self" href="https://karllorey.com/categories/tech.xml"></atom:link><language>en</language><copyright>Contents © 2020 &lt;a href="mailto:hello@karllorey.com"&gt;Karl Lorey&lt;/a&gt; </copyright><lastBuildDate>Wed, 26 Feb 2020 15:26:34 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Django in Production with mod_wsgi and Docker</title><link>https://karllorey.com/posts/django-production-docker-mod-wsgi/</link><dc:creator>Karl Lorey</dc:creator><description>&lt;div&gt;&lt;p&gt;This article will show you how to run Django in production with docker and apache2/mod_wsgi.
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"><channel><title>Karl Lorey (Posts about Tech)</title><link>https://karllorey.com/</link><description></description><atom:link type="application/rss+xml" href="https://karllorey.com/categories/tech.xml" rel="self"></atom:link><language>en</language><copyright>Contents © 2020 &lt;a href="mailto:hello@karllorey.com"&gt;Karl Lorey&lt;/a&gt; </copyright><lastBuildDate>Tue, 10 Mar 2020 16:17:02 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Switching from Lektor to Nikola (static site generators)</title><link>https://karllorey.com/posts/switch-from-lektor-to-nikola/</link><dc:creator>Karl Lorey</dc:creator><description>&lt;div&gt;&lt;p&gt;I decided to migrate this website/blog from Lektor to Nikola.
+Both are static site generators 
+implemented in Python 
+that allow you to generate a static, secure, and maintenance-free website/blog.
+Here is my experience, why I did it, how to do it, and what to expect.
+In short: While I liked Lektor for its simplicity,
+it lacked several features I needed.
+So far, Nikola has these features and many more
+which is why I'm very happy to have switched.
+Read the rest of the pros and cons here.
+&lt;/p&gt;&lt;p&gt;&lt;a href="https://karllorey.com/posts/switch-from-lektor-to-nikola/"&gt;Read more…&lt;/a&gt; (5 min remaining to read)&lt;/p&gt;&lt;/div&gt;</description><category>Lektor</category><category>Nikola</category><category>Python</category><category>Tech</category><guid>https://karllorey.com/posts/switch-from-lektor-to-nikola/</guid><pubDate>Tue, 10 Mar 2020 16:03:35 GMT</pubDate></item><item><title>Django in Production with mod_wsgi and Docker</title><link>https://karllorey.com/posts/django-production-docker-mod-wsgi/</link><dc:creator>Karl Lorey</dc:creator><description>&lt;div&gt;&lt;p&gt;This article will show you how to run Django in production with docker and apache2/mod_wsgi.
 While there are several guides on how to do it,
 I found no simple enough tutorial on how to do it
 since all of the existing solutions require a lot of configuration or a custom docker image.
-The solution I found is way quicker and requires close to no configuration.&lt;/p&gt;
-&lt;p&gt;Guides I found:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://docs.djangoproject.com/en/3.0/howto/deployment/wsgi/modwsgi/"&gt;Django with Apache and mod_wsgi&lt;/a&gt; assumes you have installed everything already and requires configuration possibly unnecessary for a dockerized version&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://modwsgi.readthedocs.io/en/develop/"&gt;mod_wsgi&lt;/a&gt; explains how to install mod_wsgi, but not how to use Django with it&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;So, let's do this.
-If you just want to see the final Dockerfile, scroll to the end of the article :)&lt;/p&gt;
-&lt;h3&gt;Prerequisites&lt;/h3&gt;
-&lt;p&gt;I assume you have some Dockerfile with Django application setup
-and run Django via the command that spins up the development server:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="s"&gt;python:3.6&lt;/span&gt;
-
-&lt;span class="k"&gt;WORKDIR&lt;/span&gt;&lt;span class="s"&gt; /code/&lt;/span&gt;
-
-&lt;span class="c"&gt;# copy and install requirements first to leverage caching&lt;/span&gt;
-&lt;span class="k"&gt;COPY&lt;/span&gt; requirements.txt /code/
-&lt;span class="k"&gt;RUN&lt;/span&gt; pip install -r requirements.txt
-
-&lt;span class="c"&gt;# copy the actual code&lt;/span&gt;
-&lt;span class="k"&gt;COPY&lt;/span&gt; . /code/
-
-&lt;span class="k"&gt;CMD&lt;/span&gt; ./manage.py runserver &lt;span class="m"&gt;0&lt;/span&gt;.0.0.0:8000
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;h3&gt;Step 1: Install Apache&lt;/h3&gt;
-&lt;p&gt;We basically need a working Apache setup to run python code via mod_wsgi.
-So in our Dockerfile, we need to install apache2 and apache2-dev.&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;RUN&lt;/span&gt; apt-get install apache2 apache2-dev
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;h3&gt;Step 2: install mod_wsgi&lt;/h3&gt;
-&lt;p&gt;We want to run our project within a container.
-The mod_wsgi documentation says the easiest and preferred using docker
-is to use mod_wsgi-express as it does not require any configuration.
-mod_wsgi-express can be used as a command after you have installed it via pip.
-So we need to add:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;RUN&lt;/span&gt; pip install mod_wsgi
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;h3&gt;Step 3: run Django inside Apache with mod_wsgi&lt;/h3&gt;
-&lt;p&gt;Lastly, we simply have to run mod_wsgi-express
-which will start an apache instance with our Django project.
-This can be achieved via:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;mod_wsgi-express start-server /code/project_name/wsgi.py --user www-data --group www-data
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;p&gt;The wsgi.py file is auto-generated by Django's &lt;code&gt;startproject&lt;/code&gt; command and inside you app's folder,
-i.e. &lt;code&gt;django-project/project_name&lt;/code&gt;.
-So, to run our project within Apache after we've set-up everything in the Dockerfile,
-we have to add a &lt;code&gt;CMD&lt;/code&gt; command at the end of the Dockerfile:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;CMD&lt;/span&gt; mod_wsgi-express start-server /code/connect_web/wsgi.py --user www-data --group www-data
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;p&gt;The &lt;code&gt;--user&lt;/code&gt; and &lt;code&gt;--group&lt;/code&gt; parameters make sure Apache isn't run as root which results in errors.
-If you want to find out, just run the command without them.&lt;/p&gt;
-&lt;h3&gt;Final Dockerfile: Installing and running Apache and mod_wsgi within Docker&lt;/h3&gt;
-&lt;p&gt;Your final Dockerfile should now look like this:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="s"&gt;python:3.6&lt;/span&gt;
-
-&lt;span class="c"&gt;# update packages&lt;/span&gt;
-&lt;span class="k"&gt;RUN&lt;/span&gt; apt-get -qq update
-&lt;span class="k"&gt;RUN&lt;/span&gt; apt-get install --yes apache2 apache2-dev
-&lt;span class="k"&gt;RUN&lt;/span&gt; pip install mod_wsgi
-
-&lt;span class="k"&gt;RUN&lt;/span&gt; mkdir /code
-&lt;span class="k"&gt;WORKDIR&lt;/span&gt;&lt;span class="s"&gt; /code&lt;/span&gt;
-
-&lt;span class="k"&gt;COPY&lt;/span&gt; . /code/
-
-&lt;span class="k"&gt;CMD&lt;/span&gt; mod_wsgi-express start-server /code/project_name/wsgi.py --user www-data --group www-data
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;h3&gt;Troubleshooting&lt;/h3&gt;
-&lt;p&gt;If you have any problems, check the logs. Their locations are outputted when starting the container:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;web_1     | Server URL         : http://localhost:8000/
-web_1     | Server Root        : /tmp/mod_wsgi-localhost:8000:0
-web_1     | Server Conf        : /tmp/mod_wsgi-localhost:8000:0/httpd.conf
-web_1     | Error Log File     : /tmp/mod_wsgi-localhost:8000:0/error_log (warn)
-web_1     | Request Capacity   : 5 (1 process * 5 threads)
-web_1     | Request Timeout    : 60 (seconds)
-web_1     | Startup Timeout    : 15 (seconds)
-web_1     | Queue Backlog      : 100 (connections)
-web_1     | Queue Timeout      : 45 (seconds)
-web_1     | Server Capacity    : 20 (event/worker), 20 (prefork)
-web_1     | Server Backlog     : 500 (connections)
-web_1     | Locale Setting     : en_US.UTF-8
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;p&gt;If you want to monitor them, just &lt;code&gt;tail -f&lt;/code&gt; them:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;tail -f /tmp/mod_wsgi-localhost:8000:0/error_log
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;h4&gt;Permission problems&lt;/h4&gt;
-&lt;p&gt;At first, I got an &lt;code&gt;Internal Server Error&lt;/code&gt; when opening the page on my machine.
-After checking the logs as described above, mod_wsgi seemed to have problems with file permissions on &lt;code&gt;.logs/debug.log&lt;/code&gt;.
-A simple &lt;code&gt;chown www-data /code/.logs/debug.log&lt;/code&gt; from within the container
-which makes www-data the owner of the file solved it for me.&lt;/p&gt;&lt;/div&gt;</description><category>Django</category><category>Docker</category><category>Python</category><category>Tech</category><guid>https://karllorey.com/posts/django-production-docker-mod-wsgi/</guid><pubDate>Fri, 17 Jan 2020 09:30:13 GMT</pubDate></item><item><title>How to recover an AWS EC2 instance without the private key</title><link>https://karllorey.com/posts/recover-aws-ec2-instance-without-private-key/</link><dc:creator>Karl Lorey</dc:creator><description>&lt;div&gt;&lt;p&gt;Lost the private key for your EC2 instance and can't login via ssh anymore?
+The solution I found is way quicker and requires close to no configuration.
+&lt;/p&gt;&lt;p&gt;&lt;a href="https://karllorey.com/posts/django-production-docker-mod-wsgi/"&gt;Read more…&lt;/a&gt; (2 min remaining to read)&lt;/p&gt;&lt;/div&gt;</description><category>Django</category><category>Docker</category><category>Python</category><category>Tech</category><guid>https://karllorey.com/posts/django-production-docker-mod-wsgi/</guid><pubDate>Fri, 17 Jan 2020 09:30:13 GMT</pubDate></item><item><title>How to recover an AWS EC2 instance without the private key</title><link>https://karllorey.com/posts/recover-aws-ec2-instance-without-private-key/</link><dc:creator>Karl Lorey</dc:creator><description>&lt;div&gt;&lt;p&gt;Lost the private key for your EC2 instance and can't login via ssh anymore?
 This tutorial will show you how to recover your EC2 instance by setting a new key pair to login.&lt;/p&gt;
 &lt;p&gt;What we'll do:&lt;/p&gt;
 &lt;ul&gt;
@@ -117,145 +23,15 @@ This tutorial will show you how to recover your EC2 instance by setting a new ke
 &lt;li&gt;unmount the volume from the temporary instance and re-mount it in the original instance&lt;/li&gt;
 &lt;li&gt;login with a new key to your original instance&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;In short, this replaces the key needed for ssh to connect with a new one of your choice.&lt;/p&gt;
-&lt;h3&gt;AWS Recovery Automation&lt;/h3&gt;
-&lt;p&gt;There's an &lt;a href="https://aws.amazon.com/premiumsupport/knowledge-center/recover-access-lost-key-pair/"&gt;Amazon recovery automation thing&lt;/a&gt; available that aims to recover your instance automatically,
-it sadly did not work for me.
-So here we go.&lt;/p&gt;
-&lt;h3&gt;Step 1: Find the instance&lt;/h3&gt;
-&lt;p&gt;Go to the AWS EC2 console and find your (lost) instance.
-Make sure you're in the right availability zone.
-Note down the instance ID as well as the subnet.
-Also note the instance's volume&lt;/p&gt;
-&lt;h3&gt;Step 2: Create a temporary instance&lt;/h3&gt;
-&lt;p&gt;Launch an instance in the same availability zone.
-Make sure to use the same subnet.
-Create a new key pair with that instance
-or use the key pair you'd like to use for your original instance from now on.&lt;/p&gt;
-&lt;h3&gt;Step 3: Attach the original volume to a temporary instance&lt;/h3&gt;
-&lt;p&gt;Stop the original instance to be able to unmount the storage.
-Note the volume ID under &lt;code&gt;Attachment information&lt;/code&gt;.
-Go to volumes and detach the volume with &lt;code&gt;Actions - Detach Volume&lt;/code&gt;.
-Attach the volume to the temporary instance with &lt;code&gt;Actions - Attach Volume&lt;/code&gt;.
-Choose one of the given options and note it down, e.g. &lt;code&gt;/dev/sdf&lt;/code&gt;.
-Connect to the temporary instance via SSH and mount the volume, e.g. to &lt;code&gt;/data&lt;/code&gt; via the following command:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;mount /dev/sdf /data
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;p&gt;The volume of the original instance is now mounted to &lt;code&gt;/data&lt;/code&gt;.
-This allows us to now modify the allowed keys.&lt;/p&gt;
-&lt;h3&gt;Step 4: Modify the allowed keys&lt;/h3&gt;
-&lt;p&gt;We can now set the key of the current, temporary instance as an allowed key of the original instance.
-The keys allowed to log in are stored in a file called &lt;code&gt;~/.ssh/authorized_keys&lt;/code&gt; (background on &lt;a href="https://www.ssh.com/ssh/authorized_keys/"&gt;authorized_keys&lt;/a&gt;).
-Inside this file is just a line-by-line list of authorized keys.
-Because of this, we can just append the file of our temporary instance (and thus our key from the temporary instance)
-to the file of our original instance.&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;cat ~/.ssh/authorized_keys &amp;gt;&amp;gt; /data/home/admin/.ssh/authorized_keys
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;p&gt;Make sure to swap admin with the actual user you want to sign in as (check your ssh connection command if you're unsure).&lt;/p&gt;
-&lt;h4&gt;Check if everything went right&lt;/h4&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;cat /data/home/admin/.ssh/authorized_keys
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;p&gt;should now contain the contents of:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;cat ~/.ssh/authorized_keys
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;h3&gt;Step 4: Bring everything back in order&lt;/h3&gt;
-&lt;p&gt;We now have set up another key for login.
-All that's left is to unmount the volume from the temporary instance and mount it to the original instance.&lt;/p&gt;
-&lt;p&gt;First, we have to unmout the storage of the original instance inside the temporary instance by
-&lt;code&gt;umount /dev/sdf&lt;/code&gt; (make sure to use the right path here).
-Afterwards, you stop the temporary instance via the AWS console under &lt;code&gt;Instances&lt;/code&gt;.
-You then attach the volume to the original instance inside the AWS console under &lt;code&gt;Volumes&lt;/code&gt; via &lt;code&gt;Actions - Attach volume&lt;/code&gt;.
-Type in the original instance ID as well as &lt;code&gt;xvda&lt;/code&gt; as the mount point.
-Otherwise, you might get an error pointing out that there's no root volume when starting the instance.
-You can now re-start the original instance and should be able to login with the new key.&lt;/p&gt;
-&lt;p&gt;Make sure to delete the temporary instance in case everything went well.&lt;/p&gt;
-&lt;h3&gt;Conclusion&lt;/h3&gt;
-&lt;p&gt;So this guide showed you how to recover an AWS EC2 instance if you lose you private key.
-We did this by using a temporary instance to swap or actually extend the authorized_keys file.
-You should now be able to login to the original instance with your new key.&lt;/p&gt;
-&lt;p&gt;There's also a slightly different &lt;a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html#replacing-lost-key-pair"&gt;guide by AWS&lt;/a&gt;.&lt;/p&gt;&lt;/div&gt;</description><category>AWS</category><category>Tech</category><guid>https://karllorey.com/posts/recover-aws-ec2-instance-without-private-key/</guid><pubDate>Tue, 03 Sep 2019 09:30:13 GMT</pubDate></item><item><title>How to set up Black with Debian, PyCharm, and IdeaVim</title><link>https://karllorey.com/posts/set-up-black-pycharm-ideavim/</link><dc:creator>Karl Lorey</dc:creator><description>&lt;div&gt;&lt;p&gt;I've come to like the code formatter &lt;a href="https://black.readthedocs.io/en/stable/index.html"&gt;Black&lt;/a&gt; for Python.
+&lt;p&gt;In short, this replaces the key needed for ssh to connect with a new one of your choice.
+&lt;/p&gt;&lt;p&gt;&lt;a href="https://karllorey.com/posts/recover-aws-ec2-instance-without-private-key/"&gt;Read more…&lt;/a&gt; (2 min remaining to read)&lt;/p&gt;&lt;/div&gt;</description><category>AWS</category><category>Tech</category><guid>https://karllorey.com/posts/recover-aws-ec2-instance-without-private-key/</guid><pubDate>Tue, 03 Sep 2019 09:30:13 GMT</pubDate></item><item><title>How to set up Black with Debian, PyCharm, and IdeaVim</title><link>https://karllorey.com/posts/set-up-black-pycharm-ideavim/</link><dc:creator>Karl Lorey</dc:creator><description>&lt;div&gt;&lt;p&gt;I've come to like the code formatter &lt;a href="https://black.readthedocs.io/en/stable/index.html"&gt;Black&lt;/a&gt; for Python.
 It's opinionated, deterministic and thus very minimalistic.
 And since I'm using it on more and more projects, I wanted to integrate it into my workflow.&lt;/p&gt;
 &lt;p&gt;So usually, you just install Black globally via &lt;code&gt;pip3 install black&lt;/code&gt;.
 But since I use Debian which still ships with Python 3.5
 this yielded some smaller challenges as Black only runs under Python 3.6+.
-This post is a small tutorial on how you can use Black on Debian and integrate it into the command line, PyCharm, and IdeaVim.&lt;/p&gt;
-&lt;h3&gt;Challenge 1: Python 3.6+ on Debian&lt;/h3&gt;
-&lt;p&gt;Since Debian currently ships with Python 3.5, I needed to get Python 3.6 running somehow.
-While installing &lt;a href="https://www.anaconda.com/distribution/"&gt;Anaconda&lt;/a&gt; or &lt;a href="https://www.python.org/downloads/"&gt;Python 3.6+ manually&lt;/a&gt;
-are other solutions &lt;a href="https://community.hortonworks.com/idea/212478/independent-python-vs-anaconda-python.html"&gt;might&lt;/a&gt; &lt;a href="https://unix.stackexchange.com/q/332641"&gt;work&lt;/a&gt;,
-I decided to simply use Docker, as this is what I use for my regular development anyhow.
-Simplest solution was to use an existing docker image,
-namely &lt;a href="https://github.com/jbbarth/docker-black"&gt;jbbarth's docker-black&lt;/a&gt;,
-which allows you to mount the current working directory into a (newly created) container, format the desired file, and throw the container away afterwards.
-Sounds more complicated than it is, you just run one single command et voila.
-This method has the additional benefit that it adheres to any &lt;a href="https://github.com/psf/black#pyprojecttoml"&gt;pyproject.toml&lt;/a&gt; which can store configuration like line length.
-There's also a more sleek image at &lt;a href="https://github.com/cytopia/docker-black"&gt;cytopia/docker-black&lt;/a&gt; which might take less space.&lt;/p&gt;
-&lt;p&gt;So to run black irrespective of your local Python installation via &lt;code&gt;black main.py&lt;/code&gt;,
-you run&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;docker run --rm -v $(pwd):/code jbbarth/black main.py
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;p&gt;This creates a new container, mounts the current working directory into &lt;code&gt;/code&lt;/code&gt; and formats &lt;code&gt;main.py&lt;/code&gt;.
-Afterwards, the &lt;code&gt;--rm&lt;/code&gt; flag will delete the container as well as the created volume.
-So far, so good, but as this command is quote long, I had to build an alias to invoke it quickly as a next step.&lt;/p&gt;
-&lt;h3&gt;Challenge 2: Black from command line&lt;/h3&gt;
-&lt;p&gt;So to avoid the cumbersome docker syntax each time, you now want an alias to just run &lt;code&gt;black main.py&lt;/code&gt; everywhere.
-To do this, you have to map the black command to your black running inside docker.
-You can do this by adding&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;black() { docker run --rm -v $(pwd):/code jbbarth/black $*; }
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;p&gt;to your bashrc or zshrc.
-After opening a new terminal, you should now be able to invoke the black formatter inside docker by running &lt;code&gt;black ...&lt;/code&gt;.&lt;/p&gt;
-&lt;h3&gt;Challenge 3: Black in PyCharm&lt;/h3&gt;
-&lt;p&gt;To now integrate this setup into PyCharm,
-you have to slightly adapt the &lt;a href="https://black.readthedocs.io/en/stable/editor_integration.html#pycharm-intellij-idea"&gt;offical installation instructions&lt;/a&gt;.
-Go to &lt;code&gt;File -&amp;gt; Settings -&amp;gt; Tools -&amp;gt; External Tools&lt;/code&gt;.
-Click the + icon to add a new external tool with the following values:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Name: &lt;code&gt;Black&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Description: &lt;code&gt;Black code formatter&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Program: &lt;code&gt;/usr/bin/docker&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Arguments: &lt;code&gt;run --rm -v $FilePath$:/$FilePath$ jbbarth/black "$FilePath$"&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Working directory: &lt;code&gt;$ProjectFileDir$&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Test it by running it with an opened python file via &lt;code&gt;Tools -&amp;gt; External Tools -&amp;gt; Black&lt;/code&gt;.
-After you made sure it works, re-open it again and untick &lt;code&gt;open console&lt;/code&gt; to avoid a new console at every run.
-You can basically mirror this guide to install a file watcher
-that formats on every save (see &lt;a href="https://black.readthedocs.io/en/stable/editor_integration.html#pycharm-intellij-idea"&gt;the docs&lt;/a&gt;).&lt;/p&gt;
-&lt;p&gt;Note: As you can see, this only mounts the current file and thus does not adhere to any config files.
-The same applies for the next step as it builds upon this one.&lt;/p&gt;
-&lt;h3&gt;Challenge 4: Black in IdeaVim&lt;/h3&gt;
-&lt;p&gt;Now for the bonus part: to trigger this setup quickly from within IdeaVim and format the current file with a single command,
-equivalent to the &lt;a href="https://black.readthedocs.io/en/stable/editor_integration.html#vim"&gt;regular vim plugin&lt;/a&gt;,
-we have to map the &lt;code&gt;:Black&lt;/code&gt; command to our external command in PyCharm.
-To do this, we edit our &lt;code&gt;.ideavimrc&lt;/code&gt; file where all IdeaVim configuration is stored,
-and add the following line:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;command Black action Tool_External Tools_Black
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;p&gt;Now typing &lt;code&gt;:Black&lt;/code&gt; will re-format the current file.&lt;/p&gt;
-&lt;h3&gt;Summary&lt;/h3&gt;
-&lt;p&gt;This tutorial showed you one way to include Black into you daily development (esp. on Debian).
-If you have any questions or feedback, hit me up on Twitter &lt;a href="https://twitter.com/karllorey"&gt;@karllorey&lt;/a&gt;
-or any of the other platforms listed below.&lt;/p&gt;
-&lt;h3&gt;Notes&lt;/h3&gt;
-&lt;h4&gt;Deleting all docker containers of a specific image&lt;/h4&gt;
-&lt;p&gt;If you want to remove all containers derived from a specific image, e.g. if you forgot to add the --rm flag:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;docker rm $(docker ps -a --filter ancestor=jbbarth/black -q)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description><category>Black</category><category>Docker</category><category>IdeaVim</category><category>Pycharm</category><category>Python</category><category>Tech</category><guid>https://karllorey.com/posts/set-up-black-pycharm-ideavim/</guid><pubDate>Sun, 28 Jul 2019 09:30:13 GMT</pubDate></item><item><title>Keeping Pandas DataFrames clean when importing JSON (with Context Managers)</title><link>https://karllorey.com/posts/keeping-pandas-dataframes-clean-importing-json/</link><dc:creator>Karl Lorey</dc:creator><description>&lt;div&gt;&lt;p&gt;At &lt;a href="https://firstmomentum.vc"&gt;First Momentum&lt;/a&gt;, I do a lot of data analysis to find the most promising young startups.
+This post is a small tutorial on how you can use Black on Debian and integrate it into the command line, PyCharm, and IdeaVim.
+&lt;/p&gt;&lt;p&gt;&lt;a href="https://karllorey.com/posts/set-up-black-pycharm-ideavim/"&gt;Read more…&lt;/a&gt; (3 min remaining to read)&lt;/p&gt;&lt;/div&gt;</description><category>Black</category><category>Docker</category><category>IdeaVim</category><category>Pycharm</category><category>Python</category><category>Tech</category><guid>https://karllorey.com/posts/set-up-black-pycharm-ideavim/</guid><pubDate>Sun, 28 Jul 2019 09:30:13 GMT</pubDate></item><item><title>Keeping Pandas DataFrames clean when importing JSON (with Context Managers)</title><link>https://karllorey.com/posts/keeping-pandas-dataframes-clean-importing-json/</link><dc:creator>Karl Lorey</dc:creator><description>&lt;div&gt;&lt;p&gt;At &lt;a href="https://firstmomentum.vc"&gt;First Momentum&lt;/a&gt;, I do a lot of data analysis to find the most promising young startups.
 As a first step, you always have to import the desired data into a Pandas DataFrame
 and do some preprocessing, for example by importing JSON data from some API. 
 When doing this kind of pre-processing,
@@ -265,119 +41,5 @@ I built a custom Context Manager that keeps track of all imported columns
 and deletes them when you're done.
 This way, your code stays lean and you don't have to remove temporary columns yourself.
 In this short article, I will show how you can keep your pre-processing clean
-and use a Python ContextManager to clean up temporary columns.&lt;/p&gt;
-&lt;p&gt;In this example I will use the actual code I use for importing data from the API of our CRM named Hubspot.
-What I retrieve is a list of companies stored as a list of Python dictionaries.
-To import a list of dictionaries in pandas you basically do:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pandas.io.json&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;json_normalize&lt;/span&gt;
-
-&lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;json_normalize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;p&gt;The json_normalize function generates a clean DataFrame based on the given &lt;code&gt;data&lt;/code&gt; parameter and normalizes the hierarchy so you get clean column names.
-This is especially useful for nested dictionaries.&lt;/p&gt;
-&lt;h3&gt;Ugly: Keeping imported columns&lt;/h3&gt;
-&lt;p&gt;The problem with json_normalize is that you usually only want a subset of the imported columns,
-mostly with different names or some kind of pre-processing, too.
-So you might be tempted to do something like this:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pandas.io.json&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;json_normalize&lt;/span&gt;
-
-&lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;json_normalize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'company_id'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'companyId'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'location'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'properties.city.value'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'name'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'properties.name.value'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'domain'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'properties.website.value'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;span class="o"&gt;//...&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apply&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;as_type&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;whatever&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;p&gt;This works, but keeps all the imported columns inplace and might take a lot of storage.
-So what can you do?&lt;/p&gt;
-&lt;h3&gt;Ugly: Dropping columns manually&lt;/h3&gt;
-&lt;p&gt;So after importing, you want to get rid of all temporary columns from the import.
-To do this, you have to either select the columns you want or drop all columns you don't want.
-In both cases, you have to somehow keep track of the temporary columns or the ones you want to keep.
-To deal with this, one solution would be to prefix temporary columns and delete them afterwards:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pandas.io.json&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;json_normalize&lt;/span&gt;
-
-&lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;json_normalize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-&lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="n"&gt;make&lt;/span&gt; &lt;span class="n"&gt;temporary&lt;/span&gt; &lt;span class="n"&gt;columns&lt;/span&gt;
-&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;columns&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'temp_'&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;columns&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-
-&lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="n"&gt;pre&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;processing&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;basic&lt;/span&gt; &lt;span class="n"&gt;calculations&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
-&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'company_id'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'temp_companyId'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'location'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'temp_properties.city.value'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'name'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'temp_properties.name.value'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'domain'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'temp_properties.website.value'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;span class="o"&gt;//...&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apply&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;as_type&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;int&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;whatever&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;p&gt;Afterwards, you would then select all desired columns or drop all undesired columns.&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;drop&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;columns&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;startswith&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'temp_'&lt;/span&gt;&lt;span class="p"&gt;)],&lt;/span&gt; &lt;span class="n"&gt;axis&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;inplace&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="ow"&gt;or&lt;/span&gt;
-&lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[[&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;columns&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;startswith&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'temp_'&lt;/span&gt;&lt;span class="p"&gt;)]]&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;p&gt;While this works, it feels bloated and inefficient.
-You have to prefix all the value names in the code which results in bloated column names.
-You also have to keep track of column names you want in the end
-or the used prefix in different places.
-Just imagine you have to change the prefix &lt;code&gt;temp_&lt;/code&gt; one day or make the code work with a different prefix.&lt;/p&gt;
-&lt;h3&gt;Clean and easy: using a Context Manager&lt;/h3&gt;
-&lt;p&gt;After having used the above methods for some time, it struck me that &lt;a href="https://jeffknupp.com/blog/2016/03/07/python-with-context-managers/"&gt;Python Context Managers&lt;/a&gt; might be a cleaner solution.
-You might know them from their most popular application &lt;code&gt;with open() as file:&lt;/code&gt;.
-If not, please take a few minutes to read more about them.
-To make things short: They basically ensure that something, usually a cleanup, is executed in each exit scenario,
-whether it is a usual exit like a return or an exception.
-I thought I might use this to build a clean solution that keeps track and gets rid of temporary columns.
-So I built a Context Manager that deals with temporary columns when importing JSON data so I don't have to.
-You can basically use it like this:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="n"&gt;DataFrameFromDict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;companies&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-    &lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="n"&gt;imported&lt;/span&gt; &lt;span class="nb"&gt;dict&lt;/span&gt; &lt;span class="n"&gt;now&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;same&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;json_normalize&lt;/span&gt;
-    &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'company_id'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'companyId'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-    &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'location'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'properties.city.value'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-    &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'name'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'properties.name.value'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-    &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'domain'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'properties.website.value'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="n"&gt;after&lt;/span&gt; &lt;span class="n"&gt;context&lt;/span&gt; &lt;span class="n"&gt;exits&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="n"&gt;contains&lt;/span&gt; &lt;span class="n"&gt;company_id&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;location&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;domain&lt;/span&gt;
-&lt;span class="o"&gt;//&lt;/span&gt; &lt;span class="n"&gt;but&lt;/span&gt; &lt;span class="n"&gt;no&lt;/span&gt; &lt;span class="n"&gt;more&lt;/span&gt; &lt;span class="n"&gt;temporary&lt;/span&gt; &lt;span class="n"&gt;columns&lt;/span&gt;
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;p&gt;The benefit: You don't have to keep track anymore and the context manager handles the deletion of all temporary columns.&lt;/p&gt;
-&lt;h3&gt;How it works&lt;/h3&gt;
-&lt;p&gt;You can just copy and paste the following snippet to get going, I'll explain how it works below:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;DataFrameFromDict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="sd"&gt;"""&lt;/span&gt;
-&lt;span class="sd"&gt;    Temporarily imports data frame columns and deletes them afterwards.&lt;/span&gt;
-&lt;span class="sd"&gt;    """&lt;/span&gt;
-
-    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;json_normalize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;columns&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;columns&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;values&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-
-    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__enter__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;
-
-    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="fm"&gt;__exit__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;exc_type&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;exc_val&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;exc_tb&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;drop&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;columns&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;axis&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;inplace&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;p&gt;When opening the context, &lt;code&gt;__init__&lt;/code&gt; and &lt;code&gt;__enter__&lt;/code&gt; get called.
-They create the DataFrame and remember all imported and thus temporary column names.
-When the context is exited, &lt;code&gt;__exit__&lt;/code&gt; makes sure to drop all previously created columns
-and leaves only the newly created columns behind.&lt;/p&gt;
-&lt;p&gt;Hope this helps you to create a clean pre-processing pipeline.
-Let me know what you think.
-You can find the &lt;a href="https://gist.github.com/lorey/2b57b4ebfec4d45221e15a49060f80d2"&gt;code on GitHub&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Further reading:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.io.json.json_normalize.html"&gt;json_normalize&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://jeffknupp.com/blog/2016/03/07/python-with-context-managers/"&gt;Python Context Managers&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/div&gt;</description><category>Clean Code</category><category>Machine Learning</category><category>Pandas</category><category>Python</category><category>Tech</category><guid>https://karllorey.com/posts/keeping-pandas-dataframes-clean-importing-json/</guid><pubDate>Sun, 03 Mar 2019 09:30:13 GMT</pubDate></item></channel></rss>
+and use a Python ContextManager to clean up temporary columns.
+&lt;/p&gt;&lt;p&gt;&lt;a href="https://karllorey.com/posts/keeping-pandas-dataframes-clean-importing-json/"&gt;Read more…&lt;/a&gt; (3 min remaining to read)&lt;/p&gt;&lt;/div&gt;</description><category>Clean Code</category><category>Machine Learning</category><category>Pandas</category><category>Python</category><category>Tech</category><guid>https://karllorey.com/posts/keeping-pandas-dataframes-clean-importing-json/</guid><pubDate>Sun, 03 Mar 2019 09:30:13 GMT</pubDate></item></channel></rss>

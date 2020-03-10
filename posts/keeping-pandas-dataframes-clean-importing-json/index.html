@@ -63,10 +63,13 @@ and do some preprocessing,">
                 <a href="../../human/">Human</a>
             </li>
             <li class="nav-link">
-                <a href="../../techie/">Techie</a>
+                <a href="../../founder/">Founder</a>
             </li>
             <li class="nav-link">
-                <a href="../../founder/">Founder</a>
+                <a href="../../portfolio/">Maker</a>
+            </li>
+            <li class="nav-link">
+                <a href="../../techie/">Techie</a>
             </li>
             <li class="nav-link">
                 <a href="../../vc/">Investor</a>
@@ -104,7 +107,8 @@ I built a custom Context Manager that keeps track of all imported columns
 and deletes them when you're done.
 This way, your code stays lean and you don't have to remove temporary columns yourself.
 In this short article, I will show how you can keep your pre-processing clean
-and use a Python ContextManager to clean up temporary columns.</p>
+and use a Python ContextManager to clean up temporary columns.
+<!-- TEASER_END --></p>
 <p>In this example I will use the actual code I use for importing data from the API of our CRM named Hubspot.
 What I retrieve is a list of companies stored as a list of Python dictionaries.
 To import a list of dictionaries in pandas you basically do:</p>

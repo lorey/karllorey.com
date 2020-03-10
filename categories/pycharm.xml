@@ -1,76 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Karl Lorey (Posts about Pycharm)</title><link>https://karllorey.com/</link><description></description><atom:link type="application/rss+xml" rel="self" href="https://karllorey.com/categories/pycharm.xml"></atom:link><language>en</language><copyright>Contents © 2020 &lt;a href="mailto:hello@karllorey.com"&gt;Karl Lorey&lt;/a&gt; </copyright><lastBuildDate>Wed, 26 Feb 2020 15:26:33 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>How to set up Black with Debian, PyCharm, and IdeaVim</title><link>https://karllorey.com/posts/set-up-black-pycharm-ideavim/</link><dc:creator>Karl Lorey</dc:creator><description>&lt;div&gt;&lt;p&gt;I've come to like the code formatter &lt;a href="https://black.readthedocs.io/en/stable/index.html"&gt;Black&lt;/a&gt; for Python.
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"><channel><title>Karl Lorey (Posts about Pycharm)</title><link>https://karllorey.com/</link><description></description><atom:link type="application/rss+xml" href="https://karllorey.com/categories/pycharm.xml" rel="self"></atom:link><language>en</language><copyright>Contents © 2020 &lt;a href="mailto:hello@karllorey.com"&gt;Karl Lorey&lt;/a&gt; </copyright><lastBuildDate>Tue, 10 Mar 2020 16:17:02 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>How to set up Black with Debian, PyCharm, and IdeaVim</title><link>https://karllorey.com/posts/set-up-black-pycharm-ideavim/</link><dc:creator>Karl Lorey</dc:creator><description>&lt;div&gt;&lt;p&gt;I've come to like the code formatter &lt;a href="https://black.readthedocs.io/en/stable/index.html"&gt;Black&lt;/a&gt; for Python.
 It's opinionated, deterministic and thus very minimalistic.
 And since I'm using it on more and more projects, I wanted to integrate it into my workflow.&lt;/p&gt;
 &lt;p&gt;So usually, you just install Black globally via &lt;code&gt;pip3 install black&lt;/code&gt;.
 But since I use Debian which still ships with Python 3.5
 this yielded some smaller challenges as Black only runs under Python 3.6+.
-This post is a small tutorial on how you can use Black on Debian and integrate it into the command line, PyCharm, and IdeaVim.&lt;/p&gt;
-&lt;h3&gt;Challenge 1: Python 3.6+ on Debian&lt;/h3&gt;
-&lt;p&gt;Since Debian currently ships with Python 3.5, I needed to get Python 3.6 running somehow.
-While installing &lt;a href="https://www.anaconda.com/distribution/"&gt;Anaconda&lt;/a&gt; or &lt;a href="https://www.python.org/downloads/"&gt;Python 3.6+ manually&lt;/a&gt;
-are other solutions &lt;a href="https://community.hortonworks.com/idea/212478/independent-python-vs-anaconda-python.html"&gt;might&lt;/a&gt; &lt;a href="https://unix.stackexchange.com/q/332641"&gt;work&lt;/a&gt;,
-I decided to simply use Docker, as this is what I use for my regular development anyhow.
-Simplest solution was to use an existing docker image,
-namely &lt;a href="https://github.com/jbbarth/docker-black"&gt;jbbarth's docker-black&lt;/a&gt;,
-which allows you to mount the current working directory into a (newly created) container, format the desired file, and throw the container away afterwards.
-Sounds more complicated than it is, you just run one single command et voila.
-This method has the additional benefit that it adheres to any &lt;a href="https://github.com/psf/black#pyprojecttoml"&gt;pyproject.toml&lt;/a&gt; which can store configuration like line length.
-There's also a more sleek image at &lt;a href="https://github.com/cytopia/docker-black"&gt;cytopia/docker-black&lt;/a&gt; which might take less space.&lt;/p&gt;
-&lt;p&gt;So to run black irrespective of your local Python installation via &lt;code&gt;black main.py&lt;/code&gt;,
-you run&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;docker run --rm -v $(pwd):/code jbbarth/black main.py
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;p&gt;This creates a new container, mounts the current working directory into &lt;code&gt;/code&lt;/code&gt; and formats &lt;code&gt;main.py&lt;/code&gt;.
-Afterwards, the &lt;code&gt;--rm&lt;/code&gt; flag will delete the container as well as the created volume.
-So far, so good, but as this command is quote long, I had to build an alias to invoke it quickly as a next step.&lt;/p&gt;
-&lt;h3&gt;Challenge 2: Black from command line&lt;/h3&gt;
-&lt;p&gt;So to avoid the cumbersome docker syntax each time, you now want an alias to just run &lt;code&gt;black main.py&lt;/code&gt; everywhere.
-To do this, you have to map the black command to your black running inside docker.
-You can do this by adding&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;black() { docker run --rm -v $(pwd):/code jbbarth/black $*; }
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;p&gt;to your bashrc or zshrc.
-After opening a new terminal, you should now be able to invoke the black formatter inside docker by running &lt;code&gt;black ...&lt;/code&gt;.&lt;/p&gt;
-&lt;h3&gt;Challenge 3: Black in PyCharm&lt;/h3&gt;
-&lt;p&gt;To now integrate this setup into PyCharm,
-you have to slightly adapt the &lt;a href="https://black.readthedocs.io/en/stable/editor_integration.html#pycharm-intellij-idea"&gt;offical installation instructions&lt;/a&gt;.
-Go to &lt;code&gt;File -&amp;gt; Settings -&amp;gt; Tools -&amp;gt; External Tools&lt;/code&gt;.
-Click the + icon to add a new external tool with the following values:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Name: &lt;code&gt;Black&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Description: &lt;code&gt;Black code formatter&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Program: &lt;code&gt;/usr/bin/docker&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Arguments: &lt;code&gt;run --rm -v $FilePath$:/$FilePath$ jbbarth/black "$FilePath$"&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Working directory: &lt;code&gt;$ProjectFileDir$&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Test it by running it with an opened python file via &lt;code&gt;Tools -&amp;gt; External Tools -&amp;gt; Black&lt;/code&gt;.
-After you made sure it works, re-open it again and untick &lt;code&gt;open console&lt;/code&gt; to avoid a new console at every run.
-You can basically mirror this guide to install a file watcher
-that formats on every save (see &lt;a href="https://black.readthedocs.io/en/stable/editor_integration.html#pycharm-intellij-idea"&gt;the docs&lt;/a&gt;).&lt;/p&gt;
-&lt;p&gt;Note: As you can see, this only mounts the current file and thus does not adhere to any config files.
-The same applies for the next step as it builds upon this one.&lt;/p&gt;
-&lt;h3&gt;Challenge 4: Black in IdeaVim&lt;/h3&gt;
-&lt;p&gt;Now for the bonus part: to trigger this setup quickly from within IdeaVim and format the current file with a single command,
-equivalent to the &lt;a href="https://black.readthedocs.io/en/stable/editor_integration.html#vim"&gt;regular vim plugin&lt;/a&gt;,
-we have to map the &lt;code&gt;:Black&lt;/code&gt; command to our external command in PyCharm.
-To do this, we edit our &lt;code&gt;.ideavimrc&lt;/code&gt; file where all IdeaVim configuration is stored,
-and add the following line:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;command Black action Tool_External Tools_Black
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;p&gt;Now typing &lt;code&gt;:Black&lt;/code&gt; will re-format the current file.&lt;/p&gt;
-&lt;h3&gt;Summary&lt;/h3&gt;
-&lt;p&gt;This tutorial showed you one way to include Black into you daily development (esp. on Debian).
-If you have any questions or feedback, hit me up on Twitter &lt;a href="https://twitter.com/karllorey"&gt;@karllorey&lt;/a&gt;
-or any of the other platforms listed below.&lt;/p&gt;
-&lt;h3&gt;Notes&lt;/h3&gt;
-&lt;h4&gt;Deleting all docker containers of a specific image&lt;/h4&gt;
-&lt;p&gt;If you want to remove all containers derived from a specific image, e.g. if you forgot to add the --rm flag:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;docker rm $(docker ps -a --filter ancestor=jbbarth/black -q)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description><category>Black</category><category>Docker</category><category>IdeaVim</category><category>Pycharm</category><category>Python</category><category>Tech</category><guid>https://karllorey.com/posts/set-up-black-pycharm-ideavim/</guid><pubDate>Sun, 28 Jul 2019 09:30:13 GMT</pubDate></item></channel></rss>
+This post is a small tutorial on how you can use Black on Debian and integrate it into the command line, PyCharm, and IdeaVim.
+&lt;/p&gt;&lt;p&gt;&lt;a href="https://karllorey.com/posts/set-up-black-pycharm-ideavim/"&gt;Read more…&lt;/a&gt; (3 min remaining to read)&lt;/p&gt;&lt;/div&gt;</description><category>Black</category><category>Docker</category><category>IdeaVim</category><category>Pycharm</category><category>Python</category><category>Tech</category><guid>https://karllorey.com/posts/set-up-black-pycharm-ideavim/</guid><pubDate>Sun, 28 Jul 2019 09:30:13 GMT</pubDate></item></channel></rss>

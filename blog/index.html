@@ -48,10 +48,13 @@
                 <a href="../human/">Human</a>
             </li>
             <li class="nav-link">
-                <a href="../techie/">Techie</a>
+                <a href="../founder/">Founder</a>
             </li>
             <li class="nav-link">
-                <a href="../founder/">Founder</a>
+                <a href="../portfolio/">Maker</a>
+            </li>
+            <li class="nav-link">
+                <a href="../techie/">Techie</a>
             </li>
             <li class="nav-link">
                 <a href="../vc/">Investor</a>
@@ -64,7 +67,33 @@
             </li>
         </ul></nav></header><main id="content" class="page"><hr style="margin-bottom: 50px">
 <div class="postindex">
-    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="../posts/django-production-docker-mod-wsgi/" class="u-url">Django in Production with mod_wsgi and Docker</a></h1>
+    <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="../posts/switch-from-lektor-to-nikola/" class="u-url">Switching from Lektor to Nikola (static site generators)</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                Karl Lorey
+            </span></p>
+            <p class="dateline">
+            <a href="../posts/switch-from-lektor-to-nikola/" rel="bookmark">
+            <time class="published dt-published" datetime="2020-03-10T17:03:35+01:00" itemprop="datePublished" title="2020-03-10">2020-03-10</time></a>
+            </p>
+        </div>
+    </header><div class="p-summary entry-summary">
+    <div>
+<p>I decided to migrate this website/blog from Lektor to Nikola.
+Both are static site generators 
+implemented in Python 
+that allow you to generate a static, secure, and maintenance-free website/blog.
+Here is my experience, why I did it, how to do it, and what to expect.
+In short: While I liked Lektor for its simplicity,
+it lacked several features I needed.
+So far, Nikola has these features and many more
+which is why I'm very happy to have switched.
+Read the rest of the pros and cons here.
+</p>
+<p class="more"><a href="../posts/switch-from-lektor-to-nikola/">Read more…</a></p>
+</div>
+    </div>
+    </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="../posts/django-production-docker-mod-wsgi/" class="u-url">Django in Production with mod_wsgi and Docker</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
                 Karl Lorey
@@ -74,120 +103,15 @@
             <time class="published dt-published" datetime="2020-01-17T10:30:13+01:00" itemprop="datePublished" title="2020-01-17">2020-01-17</time></a>
             </p>
         </div>
-    </header><div class="e-content entry-content">
+    </header><div class="p-summary entry-summary">
     <div>
 <p>This article will show you how to run Django in production with docker and apache2/mod_wsgi.
 While there are several guides on how to do it,
 I found no simple enough tutorial on how to do it
 since all of the existing solutions require a lot of configuration or a custom docker image.
-The solution I found is way quicker and requires close to no configuration.</p>
-<p>Guides I found:</p>
-<ul>
-<li>
-<a href="https://docs.djangoproject.com/en/3.0/howto/deployment/wsgi/modwsgi/">Django with Apache and mod_wsgi</a> assumes you have installed everything already and requires configuration possibly unnecessary for a dockerized version</li>
-<li>
-<a href="https://modwsgi.readthedocs.io/en/develop/">mod_wsgi</a> explains how to install mod_wsgi, but not how to use Django with it</li>
-</ul>
-<p>So, let's do this.
-If you just want to see the final Dockerfile, scroll to the end of the article :)</p>
-<h3>Prerequisites</h3>
-<p>I assume you have some Dockerfile with Django application setup
-and run Django via the command that spins up the development server:</p>
-<pre class="code literal-block"><span></span><code><span class="k">FROM</span> <span class="s">python:3.6</span>
-
-<span class="k">WORKDIR</span><span class="s"> /code/</span>
-
-<span class="c"># copy and install requirements first to leverage caching</span>
-<span class="k">COPY</span> requirements.txt /code/
-<span class="k">RUN</span> pip install -r requirements.txt
-
-<span class="c"># copy the actual code</span>
-<span class="k">COPY</span> . /code/
-
-<span class="k">CMD</span> ./manage.py runserver <span class="m">0</span>.0.0.0:8000
-</code></pre>
-
-
-<h3>Step 1: Install Apache</h3>
-<p>We basically need a working Apache setup to run python code via mod_wsgi.
-So in our Dockerfile, we need to install apache2 and apache2-dev.</p>
-<pre class="code literal-block"><span></span><code><span class="k">RUN</span> apt-get install apache2 apache2-dev
-</code></pre>
-
-
-<h3>Step 2: install mod_wsgi</h3>
-<p>We want to run our project within a container.
-The mod_wsgi documentation says the easiest and preferred using docker
-is to use mod_wsgi-express as it does not require any configuration.
-mod_wsgi-express can be used as a command after you have installed it via pip.
-So we need to add:</p>
-<pre class="code literal-block"><span></span><code><span class="k">RUN</span> pip install mod_wsgi
-</code></pre>
-
-
-<h3>Step 3: run Django inside Apache with mod_wsgi</h3>
-<p>Lastly, we simply have to run mod_wsgi-express
-which will start an apache instance with our Django project.
-This can be achieved via:</p>
-<pre class="code literal-block"><span></span><code>mod_wsgi-express start-server /code/project_name/wsgi.py --user www-data --group www-data
-</code></pre>
-
-
-<p>The wsgi.py file is auto-generated by Django's <code>startproject</code> command and inside you app's folder,
-i.e. <code>django-project/project_name</code>.
-So, to run our project within Apache after we've set-up everything in the Dockerfile,
-we have to add a <code>CMD</code> command at the end of the Dockerfile:</p>
-<pre class="code literal-block"><span></span><code><span class="k">CMD</span> mod_wsgi-express start-server /code/connect_web/wsgi.py --user www-data --group www-data
-</code></pre>
-
-
-<p>The <code>--user</code> and <code>--group</code> parameters make sure Apache isn't run as root which results in errors.
-If you want to find out, just run the command without them.</p>
-<h3>Final Dockerfile: Installing and running Apache and mod_wsgi within Docker</h3>
-<p>Your final Dockerfile should now look like this:</p>
-<pre class="code literal-block"><span></span><code><span class="k">FROM</span> <span class="s">python:3.6</span>
-
-<span class="c"># update packages</span>
-<span class="k">RUN</span> apt-get -qq update
-<span class="k">RUN</span> apt-get install --yes apache2 apache2-dev
-<span class="k">RUN</span> pip install mod_wsgi
-
-<span class="k">RUN</span> mkdir /code
-<span class="k">WORKDIR</span><span class="s"> /code</span>
-
-<span class="k">COPY</span> . /code/
-
-<span class="k">CMD</span> mod_wsgi-express start-server /code/project_name/wsgi.py --user www-data --group www-data
-</code></pre>
-
-
-<h3>Troubleshooting</h3>
-<p>If you have any problems, check the logs. Their locations are outputted when starting the container:</p>
-<pre class="code literal-block"><span></span><code>web_1     | Server URL         : http://localhost:8000/
-web_1     | Server Root        : /tmp/mod_wsgi-localhost:8000:0
-web_1     | Server Conf        : /tmp/mod_wsgi-localhost:8000:0/httpd.conf
-web_1     | Error Log File     : /tmp/mod_wsgi-localhost:8000:0/error_log (warn)
-web_1     | Request Capacity   : 5 (1 process * 5 threads)
-web_1     | Request Timeout    : 60 (seconds)
-web_1     | Startup Timeout    : 15 (seconds)
-web_1     | Queue Backlog      : 100 (connections)
-web_1     | Queue Timeout      : 45 (seconds)
-web_1     | Server Capacity    : 20 (event/worker), 20 (prefork)
-web_1     | Server Backlog     : 500 (connections)
-web_1     | Locale Setting     : en_US.UTF-8
-</code></pre>
-
-
-<p>If you want to monitor them, just <code>tail -f</code> them:</p>
-<pre class="code literal-block"><span></span><code>tail -f /tmp/mod_wsgi-localhost:8000:0/error_log
-</code></pre>
-
-
-<h4>Permission problems</h4>
-<p>At first, I got an <code>Internal Server Error</code> when opening the page on my machine.
-After checking the logs as described above, mod_wsgi seemed to have problems with file permissions on <code>.logs/debug.log</code>.
-A simple <code>chown www-data /code/.logs/debug.log</code> from within the container
-which makes www-data the owner of the file solved it for me.</p>
+The solution I found is way quicker and requires close to no configuration.
+</p>
+<p class="more"><a href="../posts/django-production-docker-mod-wsgi/">Read more…</a></p>
 </div>
     </div>
     </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="../posts/recover-aws-ec2-instance-without-private-key/" class="u-url">How to recover an AWS EC2 instance without the private key</a></h1>
@@ -200,7 +124,7 @@ which makes www-data the owner of the file solved it for me.</p>
             <time class="published dt-published" datetime="2019-09-03T10:30:13+01:00" itemprop="datePublished" title="2019-09-03">2019-09-03</time></a>
             </p>
         </div>
-    </header><div class="e-content entry-content">
+    </header><div class="p-summary entry-summary">
     <div>
 <p>Lost the private key for your EC2 instance and can't login via ssh anymore?
 This tutorial will show you how to recover your EC2 instance by setting a new key pair to login.</p>
@@ -211,71 +135,9 @@ This tutorial will show you how to recover your EC2 instance by setting a new ke
 <li>unmount the volume from the temporary instance and re-mount it in the original instance</li>
 <li>login with a new key to your original instance</li>
 </ul>
-<p>In short, this replaces the key needed for ssh to connect with a new one of your choice.</p>
-<h3>AWS Recovery Automation</h3>
-<p>There's an <a href="https://aws.amazon.com/premiumsupport/knowledge-center/recover-access-lost-key-pair/">Amazon recovery automation thing</a> available that aims to recover your instance automatically,
-it sadly did not work for me.
-So here we go.</p>
-<h3>Step 1: Find the instance</h3>
-<p>Go to the AWS EC2 console and find your (lost) instance.
-Make sure you're in the right availability zone.
-Note down the instance ID as well as the subnet.
-Also note the instance's volume</p>
-<h3>Step 2: Create a temporary instance</h3>
-<p>Launch an instance in the same availability zone.
-Make sure to use the same subnet.
-Create a new key pair with that instance
-or use the key pair you'd like to use for your original instance from now on.</p>
-<h3>Step 3: Attach the original volume to a temporary instance</h3>
-<p>Stop the original instance to be able to unmount the storage.
-Note the volume ID under <code>Attachment information</code>.
-Go to volumes and detach the volume with <code>Actions - Detach Volume</code>.
-Attach the volume to the temporary instance with <code>Actions - Attach Volume</code>.
-Choose one of the given options and note it down, e.g. <code>/dev/sdf</code>.
-Connect to the temporary instance via SSH and mount the volume, e.g. to <code>/data</code> via the following command:</p>
-<pre class="code literal-block"><span></span><code>mount /dev/sdf /data
-</code></pre>
-
-
-<p>The volume of the original instance is now mounted to <code>/data</code>.
-This allows us to now modify the allowed keys.</p>
-<h3>Step 4: Modify the allowed keys</h3>
-<p>We can now set the key of the current, temporary instance as an allowed key of the original instance.
-The keys allowed to log in are stored in a file called <code>~/.ssh/authorized_keys</code> (background on <a href="https://www.ssh.com/ssh/authorized_keys/">authorized_keys</a>).
-Inside this file is just a line-by-line list of authorized keys.
-Because of this, we can just append the file of our temporary instance (and thus our key from the temporary instance)
-to the file of our original instance.</p>
-<pre class="code literal-block"><span></span><code>cat ~/.ssh/authorized_keys &gt;&gt; /data/home/admin/.ssh/authorized_keys
-</code></pre>
-
-
-<p>Make sure to swap admin with the actual user you want to sign in as (check your ssh connection command if you're unsure).</p>
-<h4>Check if everything went right</h4>
-<pre class="code literal-block"><span></span><code>cat /data/home/admin/.ssh/authorized_keys
-</code></pre>
-
-
-<p>should now contain the contents of:</p>
-<pre class="code literal-block"><span></span><code>cat ~/.ssh/authorized_keys
-</code></pre>
-
-
-<h3>Step 4: Bring everything back in order</h3>
-<p>We now have set up another key for login.
-All that's left is to unmount the volume from the temporary instance and mount it to the original instance.</p>
-<p>First, we have to unmout the storage of the original instance inside the temporary instance by
-<code>umount /dev/sdf</code> (make sure to use the right path here).
-Afterwards, you stop the temporary instance via the AWS console under <code>Instances</code>.
-You then attach the volume to the original instance inside the AWS console under <code>Volumes</code> via <code>Actions - Attach volume</code>.
-Type in the original instance ID as well as <code>xvda</code> as the mount point.
-Otherwise, you might get an error pointing out that there's no root volume when starting the instance.
-You can now re-start the original instance and should be able to login with the new key.</p>
-<p>Make sure to delete the temporary instance in case everything went well.</p>
-<h3>Conclusion</h3>
-<p>So this guide showed you how to recover an AWS EC2 instance if you lose you private key.
-We did this by using a temporary instance to swap or actually extend the authorized_keys file.
-You should now be able to login to the original instance with your new key.</p>
-<p>There's also a slightly different <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html#replacing-lost-key-pair">guide by AWS</a>.</p>
+<p>In short, this replaces the key needed for ssh to connect with a new one of your choice.
+</p>
+<p class="more"><a href="../posts/recover-aws-ec2-instance-without-private-key/">Read more…</a></p>
 </div>
     </div>
     </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="../posts/set-up-black-pycharm-ideavim/" class="u-url">How to set up Black with Debian, PyCharm, and IdeaVim</a></h1>
@@ -288,7 +150,7 @@ You should now be able to login to the original instance with your new key.</p>
             <time class="published dt-published" datetime="2019-07-28T10:30:13+01:00" itemprop="datePublished" title="2019-07-28">2019-07-28</time></a>
             </p>
         </div>
-    </header><div class="e-content entry-content">
+    </header><div class="p-summary entry-summary">
     <div>
 <p>I've come to like the code formatter <a href="https://black.readthedocs.io/en/stable/index.html">Black</a> for Python.
 It's opinionated, deterministic and thus very minimalistic.
@@ -296,80 +158,9 @@ And since I'm using it on more and more projects, I wanted to integrate it into 
 <p>So usually, you just install Black globally via <code>pip3 install black</code>.
 But since I use Debian which still ships with Python 3.5
 this yielded some smaller challenges as Black only runs under Python 3.6+.
-This post is a small tutorial on how you can use Black on Debian and integrate it into the command line, PyCharm, and IdeaVim.</p>
-<h3>Challenge 1: Python 3.6+ on Debian</h3>
-<p>Since Debian currently ships with Python 3.5, I needed to get Python 3.6 running somehow.
-While installing <a href="https://www.anaconda.com/distribution/">Anaconda</a> or <a href="https://www.python.org/downloads/">Python 3.6+ manually</a>
-are other solutions <a href="https://community.hortonworks.com/idea/212478/independent-python-vs-anaconda-python.html">might</a> <a href="https://unix.stackexchange.com/q/332641">work</a>,
-I decided to simply use Docker, as this is what I use for my regular development anyhow.
-Simplest solution was to use an existing docker image,
-namely <a href="https://github.com/jbbarth/docker-black">jbbarth's docker-black</a>,
-which allows you to mount the current working directory into a (newly created) container, format the desired file, and throw the container away afterwards.
-Sounds more complicated than it is, you just run one single command et voila.
-This method has the additional benefit that it adheres to any <a href="https://github.com/psf/black#pyprojecttoml">pyproject.toml</a> which can store configuration like line length.
-There's also a more sleek image at <a href="https://github.com/cytopia/docker-black">cytopia/docker-black</a> which might take less space.</p>
-<p>So to run black irrespective of your local Python installation via <code>black main.py</code>,
-you run</p>
-<pre class="code literal-block"><span></span><code>docker run --rm -v $(pwd):/code jbbarth/black main.py
-</code></pre>
-
-
-<p>This creates a new container, mounts the current working directory into <code>/code</code> and formats <code>main.py</code>.
-Afterwards, the <code>--rm</code> flag will delete the container as well as the created volume.
-So far, so good, but as this command is quote long, I had to build an alias to invoke it quickly as a next step.</p>
-<h3>Challenge 2: Black from command line</h3>
-<p>So to avoid the cumbersome docker syntax each time, you now want an alias to just run <code>black main.py</code> everywhere.
-To do this, you have to map the black command to your black running inside docker.
-You can do this by adding</p>
-<pre class="code literal-block"><span></span><code>black() { docker run --rm -v $(pwd):/code jbbarth/black $*; }
-</code></pre>
-
-
-<p>to your bashrc or zshrc.
-After opening a new terminal, you should now be able to invoke the black formatter inside docker by running <code>black ...</code>.</p>
-<h3>Challenge 3: Black in PyCharm</h3>
-<p>To now integrate this setup into PyCharm,
-you have to slightly adapt the <a href="https://black.readthedocs.io/en/stable/editor_integration.html#pycharm-intellij-idea">offical installation instructions</a>.
-Go to <code>File -&gt; Settings -&gt; Tools -&gt; External Tools</code>.
-Click the + icon to add a new external tool with the following values:</p>
-<ul>
-<li>Name: <code>Black</code>
-</li>
-<li>Description: <code>Black code formatter</code>
-</li>
-<li>Program: <code>/usr/bin/docker</code>
-</li>
-<li>Arguments: <code>run --rm -v $FilePath$:/$FilePath$ jbbarth/black "$FilePath$"</code>
-</li>
-<li>Working directory: <code>$ProjectFileDir$</code>
-</li>
-</ul>
-<p>Test it by running it with an opened python file via <code>Tools -&gt; External Tools -&gt; Black</code>.
-After you made sure it works, re-open it again and untick <code>open console</code> to avoid a new console at every run.
-You can basically mirror this guide to install a file watcher
-that formats on every save (see <a href="https://black.readthedocs.io/en/stable/editor_integration.html#pycharm-intellij-idea">the docs</a>).</p>
-<p>Note: As you can see, this only mounts the current file and thus does not adhere to any config files.
-The same applies for the next step as it builds upon this one.</p>
-<h3>Challenge 4: Black in IdeaVim</h3>
-<p>Now for the bonus part: to trigger this setup quickly from within IdeaVim and format the current file with a single command,
-equivalent to the <a href="https://black.readthedocs.io/en/stable/editor_integration.html#vim">regular vim plugin</a>,
-we have to map the <code>:Black</code> command to our external command in PyCharm.
-To do this, we edit our <code>.ideavimrc</code> file where all IdeaVim configuration is stored,
-and add the following line:</p>
-<pre class="code literal-block"><span></span><code>command Black action Tool_External Tools_Black
-</code></pre>
-
-
-<p>Now typing <code>:Black</code> will re-format the current file.</p>
-<h3>Summary</h3>
-<p>This tutorial showed you one way to include Black into you daily development (esp. on Debian).
-If you have any questions or feedback, hit me up on Twitter <a href="https://twitter.com/karllorey">@karllorey</a>
-or any of the other platforms listed below.</p>
-<h3>Notes</h3>
-<h4>Deleting all docker containers of a specific image</h4>
-<p>If you want to remove all containers derived from a specific image, e.g. if you forgot to add the --rm flag:</p>
-<pre class="code literal-block"><span></span><code>docker rm $(docker ps -a --filter ancestor=jbbarth/black -q)
-</code></pre>
+This post is a small tutorial on how you can use Black on Debian and integrate it into the command line, PyCharm, and IdeaVim.
+</p>
+<p class="more"><a href="../posts/set-up-black-pycharm-ideavim/">Read more…</a></p>
 </div>
     </div>
     </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="../posts/keeping-pandas-dataframes-clean-importing-json/" class="u-url">Keeping Pandas DataFrames clean when importing JSON (with Context Managers)</a></h1>
@@ -382,7 +173,7 @@ or any of the other platforms listed below.</p>
             <time class="published dt-published" datetime="2019-03-03T10:30:13+01:00" itemprop="datePublished" title="2019-03-03">2019-03-03</time></a>
             </p>
         </div>
-    </header><div class="e-content entry-content">
+    </header><div class="p-summary entry-summary">
     <div>
 <p>At <a href="https://firstmomentum.vc">First Momentum</a>, I do a lot of data analysis to find the most promising young startups.
 As a first step, you always have to import the desired data into a Pandas DataFrame
@@ -394,122 +185,9 @@ I built a custom Context Manager that keeps track of all imported columns
 and deletes them when you're done.
 This way, your code stays lean and you don't have to remove temporary columns yourself.
 In this short article, I will show how you can keep your pre-processing clean
-and use a Python ContextManager to clean up temporary columns.</p>
-<p>In this example I will use the actual code I use for importing data from the API of our CRM named Hubspot.
-What I retrieve is a list of companies stored as a list of Python dictionaries.
-To import a list of dictionaries in pandas you basically do:</p>
-<pre class="code literal-block"><span></span><code><span class="kn">from</span> <span class="nn">pandas.io.json</span> <span class="kn">import</span> <span class="n">json_normalize</span>
-
-<span class="n">df</span> <span class="o">=</span> <span class="n">json_normalize</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</code></pre>
-
-
-<p>The json_normalize function generates a clean DataFrame based on the given <code>data</code> parameter and normalizes the hierarchy so you get clean column names.
-This is especially useful for nested dictionaries.</p>
-<h3>Ugly: Keeping imported columns</h3>
-<p>The problem with json_normalize is that you usually only want a subset of the imported columns,
-mostly with different names or some kind of pre-processing, too.
-So you might be tempted to do something like this:</p>
-<pre class="code literal-block"><span></span><code><span class="kn">from</span> <span class="nn">pandas.io.json</span> <span class="kn">import</span> <span class="n">json_normalize</span>
-
-<span class="n">df</span> <span class="o">=</span> <span class="n">json_normalize</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-
-<span class="n">df</span><span class="p">[</span><span class="s1">'company_id'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'companyId'</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">'location'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'properties.city.value'</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'properties.name.value'</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">'domain'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'properties.website.value'</span><span class="p">]</span>
-<span class="o">//...</span> <span class="o">.</span><span class="n">apply</span><span class="p">(),</span> <span class="o">.</span><span class="n">as_type</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span> <span class="n">whatever</span><span class="o">...</span>
-</code></pre>
-
-
-<p>This works, but keeps all the imported columns inplace and might take a lot of storage.
-So what can you do?</p>
-<h3>Ugly: Dropping columns manually</h3>
-<p>So after importing, you want to get rid of all temporary columns from the import.
-To do this, you have to either select the columns you want or drop all columns you don't want.
-In both cases, you have to somehow keep track of the temporary columns or the ones you want to keep.
-To deal with this, one solution would be to prefix temporary columns and delete them afterwards:</p>
-<pre class="code literal-block"><span></span><code><span class="kn">from</span> <span class="nn">pandas.io.json</span> <span class="kn">import</span> <span class="n">json_normalize</span>
-
-<span class="n">df</span> <span class="o">=</span> <span class="n">json_normalize</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-
-<span class="o">//</span> <span class="n">make</span> <span class="n">temporary</span> <span class="n">columns</span>
-<span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'temp_'</span> <span class="o">+</span> <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
-
-<span class="o">//</span> <span class="n">pre</span><span class="o">-</span><span class="n">processing</span><span class="p">,</span> <span class="n">basic</span> <span class="n">calculations</span><span class="p">,</span> <span class="n">etc</span><span class="o">.</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">'company_id'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'temp_companyId'</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">'location'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'temp_properties.city.value'</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'temp_properties.name.value'</span><span class="p">]</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">'domain'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'temp_properties.website.value'</span><span class="p">]</span>
-<span class="o">//...</span> <span class="o">.</span><span class="n">apply</span><span class="p">(),</span> <span class="o">.</span><span class="n">as_type</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span> <span class="n">whatever</span><span class="o">...</span>
-</code></pre>
-
-
-<p>Afterwards, you would then select all desired columns or drop all undesired columns.</p>
-<pre class="code literal-block"><span></span><code><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'temp_'</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="o">//</span> <span class="ow">or</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">c</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'temp_'</span><span class="p">)]]</span>
-</code></pre>
-
-
-<p>While this works, it feels bloated and inefficient.
-You have to prefix all the value names in the code which results in bloated column names.
-You also have to keep track of column names you want in the end
-or the used prefix in different places.
-Just imagine you have to change the prefix <code>temp_</code> one day or make the code work with a different prefix.</p>
-<h3>Clean and easy: using a Context Manager</h3>
-<p>After having used the above methods for some time, it struck me that <a href="https://jeffknupp.com/blog/2016/03/07/python-with-context-managers/">Python Context Managers</a> might be a cleaner solution.
-You might know them from their most popular application <code>with open() as file:</code>.
-If not, please take a few minutes to read more about them.
-To make things short: They basically ensure that something, usually a cleanup, is executed in each exit scenario,
-whether it is a usual exit like a return or an exception.
-I thought I might use this to build a clean solution that keeps track and gets rid of temporary columns.
-So I built a Context Manager that deals with temporary columns when importing JSON data so I don't have to.
-You can basically use it like this:</p>
-<pre class="code literal-block"><span></span><code><span class="k">with</span> <span class="n">DataFrameFromDict</span><span class="p">(</span><span class="n">companies</span><span class="p">)</span> <span class="k">as</span> <span class="n">df</span><span class="p">:</span>
-    <span class="o">//</span> <span class="n">imported</span> <span class="nb">dict</span> <span class="n">now</span> <span class="ow">in</span> <span class="n">df</span><span class="p">,</span> <span class="n">same</span> <span class="n">result</span> <span class="k">as</span> <span class="n">json_normalize</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">'company_id'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'companyId'</span><span class="p">]</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">'location'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'properties.city.value'</span><span class="p">]</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'properties.name.value'</span><span class="p">]</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">'domain'</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">'properties.website.value'</span><span class="p">]</span>
-<span class="o">//</span> <span class="n">after</span> <span class="n">context</span> <span class="n">exits</span><span class="p">,</span> <span class="n">df</span> <span class="n">contains</span> <span class="n">company_id</span><span class="p">,</span> <span class="n">location</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="ow">and</span> <span class="n">domain</span>
-<span class="o">//</span> <span class="n">but</span> <span class="n">no</span> <span class="n">more</span> <span class="n">temporary</span> <span class="n">columns</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-</code></pre>
-
-
-<p>The benefit: You don't have to keep track anymore and the context manager handles the deletion of all temporary columns.</p>
-<h3>How it works</h3>
-<p>You can just copy and paste the following snippet to get going, I'll explain how it works below:</p>
-<pre class="code literal-block"><span></span><code><span class="k">class</span> <span class="nc">DataFrameFromDict</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">"""</span>
-<span class="sd">    Temporarily imports data frame columns and deletes them afterwards.</span>
-<span class="sd">    """</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">json_normalize</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span>
-
-    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_val</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</code></pre>
-
-
-<p>When opening the context, <code>__init__</code> and <code>__enter__</code> get called.
-They create the DataFrame and remember all imported and thus temporary column names.
-When the context is exited, <code>__exit__</code> makes sure to drop all previously created columns
-and leaves only the newly created columns behind.</p>
-<p>Hope this helps you to create a clean pre-processing pipeline.
-Let me know what you think.
-You can find the <a href="https://gist.github.com/lorey/2b57b4ebfec4d45221e15a49060f80d2">code on GitHub</a>.</p>
-<p>Further reading:</p>
-<ul>
-<li><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.io.json.json_normalize.html">json_normalize</a></li>
-<li><a href="https://jeffknupp.com/blog/2016/03/07/python-with-context-managers/">Python Context Managers</a></li>
-</ul>
+and use a Python ContextManager to clean up temporary columns.
+</p>
+<p class="more"><a href="../posts/keeping-pandas-dataframes-clean-importing-json/">Read more…</a></p>
 </div>
     </div>
     </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="../posts/year-in-review-2018/" class="u-url">Founding a Venture Capital Fund as a Techie: My Year 2018</a></h1>
@@ -522,7 +200,7 @@ You can find the <a href="https://gist.github.com/lorey/2b57b4ebfec4d45221e15a49
             <time class="published dt-published" datetime="2019-01-03T10:30:13+01:00" itemprop="datePublished" title="2019-01-03">2019-01-03</time></a>
             </p>
         </div>
-    </header><div class="e-content entry-content">
+    </header><div class="p-summary entry-summary">
     <div>
 <p>I have long been thinking about writing a summary of my year
 to reflect on things and to be able to see how I saw the world in a few years.
@@ -531,178 +209,9 @@ Also, if you haven't heard of me in 2018, this is the one article you should pro
 Gladly, I graduated last year while getting the fund running, so this year was all about getting traction.
 Most notably this year, we managed to do our first closing and could since do our first investments.
 Personally, I started to lead the investing team at First Momentum, currently consisting of five people.</p>
-<p>So here are my reflections on this year, my learnings, and my goals for 2019.</p>
-<h3>Overview of my 2018</h3>
-<p>To keep things short, I will use a list to give you an overview of my 2018:</p>
-<ul>
-<li>After founding the fund in 2017, we got registered with BaFin at the beginning of 2018, meaning we passed at regulatory checks. A huge milestone.</li>
-<li>So it was all about fundraising as quick as possible afterwards. Making call, having meetings, presenting at events.</li>
-<li>In June, we were able to to our First Closing. For funds, this is the kick-off and enabled us to actually invest for the first time.</li>
-<li>Quickly afterwards, we announced our first investment in August.</li>
-<li>After the first closing, I switched from fundraising over to investing and started to lead the investing team.</li>
-<li>We managed to grow our investment funnel radically until the end of the year and will announce several investments soon.</li>
-</ul>
-<h3>My Challanges</h3>
-<p>To start the actual review of 2018, I will begin with my main challenges this year.</p>
-<h4>Callenge 1: less tech, more management</h4>
-<p>First and foremost, the thing that was really hard this year was the switch from tech to management.
-Since I've mostly had CTO or programmer roles before, I always dealt with a lot of tech.
-This year, when building the fund I mostly did fundraising, consisting of calls and meetings.
-Later on, when looking for our first investments, I had to build a team, manage it, and still do meetings and calls.
-While I like that very much, too, my passion is to build technology.
-And most importantly, coding just feels like my personal ikigai.
-It doesn't bother me to be coding and thus working 16 hours a day.
-I don't get tired, I don't get bored, and I feel extremely satisfied in the evening.
-Even after 16 hours of coding, I have to push myself to stop and go sleeping to be able to retain my run the next day.
-With other work, especially management, it just does not feel the same.
-You don't single-task one thing, you're multitasking &gt;10 things a day.
-A while I was able to maintain a solid workload without much coding this year,
-I just miss the feeling of complete focus and being in the zone for extended periods of time.</p>
-<h4>Challenge 2: letting fires burn</h4>
-<p>The main challenge at First Momentum has been the constant struggle to do the right thing.
-There are always more things you should be fixing than you can actually fix.
-Reid Hoffman's Masters of Scale podcast even has <a href="https://www.reidhoffman.org/why-the-best-entrepreneurs-let-fires-burn/">an own episode</a> on it.
-It can be compared with several fires burning around you at once.
-While you natural reaction would be to try to extinguish all fires,
-your best reaction is to assess the fires and only deal with the ones, that will kill you within the next month,
-so you still have time to think about your actual strategy.
-In reality, there are so many distractions and seemingly urgent things that shoot at you every day.
-Usually, your reaction would be to react and deal with everything (put out fires).
-What you actually should be doing is assessing their importance and to say NO more often (letting fires burn).
-In conclusion, the challenge often was to act instead of react and thus have and keep a clear strategy.
-This takes practice, a lot of effort, and you have to remind yourself over and over again.</p>
-<h4>Challenge 3: ageing, staying healthy</h4>
-<p>Most of people reading this will probably laugh.
-But age has been an important aspect of my life this year.
-Not only was it the first year I have actually noticed to age,
-but it was also an the first year not being a student anymore which also makes me feel older.
-On top of that, I'm the second-oldest at First Momentum and get reminded from time to time.
-Furthermore, its quite a challenge to stay healthy when working more than 60 hours over extended periods of time.
-To deal with age and health, I've started to do more sports, eat healthy, and sleep more.
-Not that I did not do it before, I now do it with more purpose and not only just for fun when I feel like it.</p>
-<h4>Challenge 4: staying social when stakes are high</h4>
-<p>Because of the workload this year, staying social has been quite a challenge.
-I mean, its easy to be social during university:
-daily classes, lots of parties, enough time to socialize.
-But since the workload has risen this year,
-I have to actually focus on keeping in touch with friends for the first time in my life.
-It's just not as easy to have a beer or make a call after a long work-day.</p>
-<h3>My Learnings</h3>
-<p>2018 has not only been about challenges of course.
-When founding a startup, it's basically all about learning, fast!
-So here are my top learnings this year:</p>
-<h4>Learning 1: say no. let fires burn.</h4>
-<p>As a founder, your first priority is to act strategically.
-To do this, you need to have time, be relaxed, and focus.
-Like mentioned in my 2nd challenge this year, distractions are everywhere:
-events with pitches or networking, people asking you for calls and meetings, startup competitions, you name it.
-While not all of these activities are a waste of time in general, they can become one quickly.
-The one main question to ask yourself is: what is the best way to spend these eight hours?
-Is it really the conference?
-Or rather a one-on-one with a key employee and six calls with excellent founders you already know?
-So this year was all about learning to say no.
-Saying no to pitches where our target audiences (founders or investors) are not present.
-Saying no to calls and meetings without a clear purpose or benefit.
-And saying no to startup competitions without huge monetary or marketing benefits.
-This way, you will have a calendar with much more space to focus on the actually important things.</p>
-<p>If you'd like to learn more:
-There's a great article on <a href="https://www.fastcompany.com/3009536/why-productive-people-have-empty-schedules">Why productive people have empty schedules</a> including Warren Buffet.
-Tim Ferris also has two great episodes on saying no (<a href="https://tim.blog/2017/11/25/how-to-say-no/">#282</a> and <a href="https://tim.blog/2018/07/19/essentialism/">#328</a>)</p>
-<h4>Learning 2: focus on what's really important</h4>
-<p>So after having cleared your schedule by saying no more often and by letting fires burn the question remains:
-What is the most important thing I should be working on?
-I don't know.
-And I'm often still not sure.
-I guess nobody launching a startup is and can be sure because of the intrinsic uncertainty.
-But what I learned in 2018 is that you can learn to focus on what's really important.
-I basically started to take more time to re-think our status quo, week after week.
-If you hear it, it may sound obvious, but things get ugly when you have a tight schedule, an unbearable workload, or deadlines to meet.
-But still: nothing is more important than to reflect and to re-adjust your strategy.
-For these strategy sessions, these are some of the questions I think about:</p>
-<ul>
-<li>what brings you one step closer to your vision?</li>
-<li>what is the task with the most leverage?</li>
-<li>which low-risk experiment could yield huge wins?</li>
-<li>which are the things that take most of your time? could they be more efficient? could they be replaced or even left out?</li>
-<li>what is the one hurdle that makes your life hard right now?</li>
-</ul>
-<p>Beside these questions, here are some topics I learned to focus on more:
-- continuous self-improvement: your priority is to grow
-- thinking in long-term games: what can you do today to win in one year?
-- startup culture: will keep your team together in tough times
-- learning from others (podcasts, articles, mentors): others had your problems before and already solved them.</p>
-<p>Naval Ravikant has great tweetstorms on stuff like this, for example <a href="https://twitter.com/naval/status/1002103360646823936">How to Get Rich (without getting lucky)</a>.
-There's also a great <a href="https://medium.com/@noahmadden/navalism-quotes-perceptions-by-naval-ravikant-a5fd60ac5788">overview article on Medium</a>.
-If you want to learn more about strategy and deriving tasks, I can highly recommend to look into OKRs and everything around them.
-Also there's is a great episode on <a href="https://mastersofscale.com/#/mark-pincus-how-to-kill-your-bad-ideas-masters-of-scale-podcast/">Masters of Scale: How to kill your bad ideas</a>.
-And my friend Feliks has written a great article on <a href="https://medium.com/@feliks/the-biggest-startup-strategy-myth-and-how-to-deal-with-it-455b034e93e8">strategy vs. execution</a>.</p>
-<h4>Learning 3: growing your team is hard work</h4>
-<p>My company, First Momentum, grew from five founders to twelve employees this year.
-While this might not seem a lot, it is hard work.
-Firstly, you have to make sure your company culture stays on track.
-While the founders may have a common sense of what the company stands for, new employees don't und you thus have to make sure you communicate these values well and often.
-Secondly, the amount of work required to manage a team is underestimated.
-You have to guide employees, explain things, and simply catch up with the emotionally from time to time.
-Especially when new employees join the team, your deep work as a founder is reduced drastically.</p>
-<h4>Learning 4: others had your problems before</h4>
-<p>It's easy to bury one's head in the sand when working hard and to forget to look left and right.
-But in fact, you should do the opposite:
-Many other founders had the same problems as you before.
-So you can either try to come up with a solution yourself which takes a lot of time and effort.
-Or you can simply approach others and get feedback.
-The natural tendency is to come up with an own solution,
-but the smart solution is to stand on the shoulders of giants and learn from others.</p>
-<h3>My Achievements</h3>
-<ul>
-<li>Made our first closing along with national press coverage</li>
-<li>Made our first investments</li>
-<li>formed a team of outstanding people. established culture and onboarding.</li>
-<li>competitive technological advantage. scrapers and reporting.</li>
-<li>released my first OSS library and re-launched my personal website</li>
-<li>founded my own holding company</li>
-</ul>
-<h3>2019 by the numbers</h3>
-<ul>
-<li>sleep</li>
-<li>work</li>
-<li>challenges</li>
-</ul>
-<h3>Miscellaneous</h3>
-<ul>
-<li>neglecting my laptop.</li>
-<li>moving to the office full-time</li>
-<li>making extensive use of a notebook helps a lot.</li>
-<li>best hike of my life.</li>
-<li>pitching one billionaire</li>
-<li>closing a deal at the first call</li>
-<li>best talk this year at Let's Hack in Münster</li>
-<li>started to form an awesome team</li>
-<li>buying a new bike and doing more sports to relax</li>
-<li>part of jury with frank thelen.</li>
-<li>first year I'm not studying (part-time) anymore</li>
-</ul>
-<p>Platforms, Services and Apps I'm using regularly</p>
-<ul>
-<li>Habits: tracking my habits (daily)</li>
-<li>Libra: tracking my weight (daily)</li>
-<li>Sleep for Android: tracking my sleep (daily)</li>
-<li>Instagram: keeping in touch with friends, getting inspired (daily)</li>
-<li>Twitter: getting news, networking (every other day)</li>
-<li>Linkedin: networking (weekly)</li>
-<li>Audible: listening to audiobooks (every other day)</li>
-<li>Netflix: watching TV (every other day)</li>
-<li>Spotify: listening to music (daily)</li>
-</ul>
-<h3>The next year</h3>
-<p>Thank god, it's 2019.</p>
-<hr>
-<h3>Appendix</h3>
-<p>To improve my reflection, I have used <a href="../posts/year-in-review-2018/">YearCompass</a>.
-It's a 20-page PDF with many questions about your past year that helps you to structure your self-reflection a lot.</p>
-<p>This post was inspired by <a href="https://martin-thoma.com/new-year-2019/">Martin Thoma's new year blogs</a>
-and <a href="https://medium.com/speedinvest/our-first-year-ef1558dc081e">Mathias Ockenfels' first year at Speedinvest X</a>.
-Thank you so much.
-I later found out that <a href="https://tim.blog/2018/12/28/past-year-review/">Tim Ferris is proposing to do a year-review instad of new year resolutions</a>.</p>
+<p>So here are my reflections on this year, my learnings, and my goals for 2019.
+</p>
+<p class="more"><a href="../posts/year-in-review-2018/">Read more…</a></p>
 </div>
     </div>
     </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="../posts/reasons-to-use-a-notebook-as-a-founder/" class="u-url">Why every founder should use a notebook</a></h1>
@@ -715,7 +224,7 @@ I later found out that <a href="https://tim.blog/2018/12/28/past-year-review/">T
             <time class="published dt-published" datetime="2018-12-28T10:30:13+01:00" itemprop="datePublished" title="2018-12-28">2018-12-28</time></a>
             </p>
         </div>
-    </header><div class="e-content entry-content">
+    </header><div class="p-summary entry-summary">
     <div>
 <p>For some time I have been using a notebook now.
 It's simple, analogue, and convenient nonetheless.
@@ -726,74 +235,9 @@ And I think every founder should use one.</p>
 And I would like to help you get started using one.
 First, by talking about my usage.
 Secondly, by summarizing the benefits.
-And lastly, by giving some recommendations on which notebook to choose and how to structure it.</p>
-<h3>How I use my notebook</h3>
-<p>I basically carry my notebook with me all the time.
-Anywhere.
-As soon as something comes to my mind: I write it down.
-For every meeting: I create a meeting note.
-For every call: I write a note.
-For every task that comes to my mind: I add a task to my ToDo note.
-For every thought or self-reflection: I make a note.
-As a result, if I need to recall something, I can just look it up.
-No more searching across different places.
-And since everything is chronological, you find things quickly.</p>
-<h3>My top 5 reasons to use a notebook</h3>
-<p>So here are my top reasons to use a notebook in order of importance,
-probably biased by my viewpoint from founder/investor perspective.</p>
-<h4>1. Compendium Character</h4>
-<p>The most important reasons for me is that all of my notes are in one place.
-This has two significant advantages.
-One being that you do not have to switch between tools and write everything down in one notebook.
-The other being that you also don't have to search in different places.
-While digital solutions offer this too, nothing keeps your notes together like one notebook.</p>
-<h4>2. Portable anywhere</h4>
-<p>Another important reason for an analogue solution and thus a notebook is that you can carry a notebook anywhere.
-Sure, you can take your phone anywhere, too.
-But what about meetings, dinners, long travels, vacations, or nature?
-A notebook needs no power, no internet connection and is always available.
-I think the major advantage over a phone or tablet is that nothing will distract you when using it.
-And if everything else has an empty battery, your notebook is still there.</p>
-<h4>3. Unobtrusive usage</h4>
-<p>Building upon the last point, I would like to emphasize that analogue solutions still are more broadly accepted by society.
-I found this to be especially useful for business meetings or lunches where the usage of a smartphone or tablet would be frowned upon.
-On the contrary, writing in your notebook shows that you take the other person seriously and consider their advice.</p>
-<h4>4. One-handed sketching and note-taking</h4>
-<p>Another big advantage for me is that handwriting is the fastest way (known to me) to take one-haded notes or make sketches.
-But why is this important?
-While people might be able to type faster with a keyboard or even with a phone,
-when I take notes I often include sketches, layouts, or even drawings.
-The benefit of handwritten notes and a notebook is that you can do it one-handed,
-for example while being on the phone.</p>
-<h4>5. Digitizable later</h4>
-<p>While many digital solutions to take notes exist,
-to me, none have all of the aforementioned benefits.
-So if you still want to use notes in a digital format later-on,
-you can always digitize specific pages or the whole book if you like.</p>
-<h3>My Recommendations</h3>
-<p>Finally, some recommandations on structuring and choosing your notebook.</p>
-<h4>Structuring your notebook</h4>
-<p>To dive deeper into the topic, I can highly recommend the <a href="https://bulletjournal.com/pages/learn">bullet journal method</a>
-as a starting point to structure your thoughts.
-First and foremost, simply make it a habit to take your notebook with you all the time.
-The rest will follow automatically by using it.</p>
-<h4>Choosing a notebook</h4>
-<p>If you're thinking about buying a notebook, I would recommend the following:
-My go-to format would be something close to DinA5 as is very portable and not too bulky.
-Keep in mind that you need to choose a smaller format if you want to carry it around in your pocket.
-For the layout, I prefer a dotted layout over a squared one,
-as it gives you equally good orientation but more freedom.
-Thus, I think the most popular choice would be a <a href="http://a.co/d/6W1PsBp">Moleskine</a>.
-Personally, I prefer the <a href="http://a.co/d/cTNSIV5">Lechtturm1917</a> version though.
-The design is solid and very similar to a Moleskine, but it offers two significant benefits:
-Firstly, the pages are numbered, which is essential for me for later reference.
-Secondly, it comes with two bookmarks instead of one.
-Also make sure to use the same pen everytime, it makes writing so much simpler.</p>
-<p>If you have any questions, additions, comments, thoughts, let me know!
-Have fun with your notebook.</p>
-<p>Further reading:
-- <a href="https://news.ycombinator.com/item?id=18837345">HN: How do you keep track of your creative thoughts?</a>
-- If you are into digital solutions, I can highly recommend <a href="https://notion.so">notion.so</a> and some <a href="https://www.youtube.com/watch?v=w_mh91IRLL8">advanced Notion.so setups</a></p>
+And lastly, by giving some recommendations on which notebook to choose and how to structure it.
+</p>
+<p class="more"><a href="../posts/reasons-to-use-a-notebook-as-a-founder/">Read more…</a></p>
 </div>
     </div>
     </article>
