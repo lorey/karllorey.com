@@ -65,6 +65,7 @@ Communication
 - Code Complete by Steve McConnell
 - Patterns of Enterprise Application Architecture by Martin Fowler
 - [Your Makefiles are wrong](https://tech.davis-hansson.com/p/make/)
+- [Path, File, Filename](https://stackoverflow.com/a/2235762/1275778)
 
 ## Talks/Speeches/Poetry
 

@@ -46,7 +46,7 @@ class CategoryNav(SignalHandler):
         # Update prev_post and next_post
         for page in site.pages:  # type: Post
             subpages = [p for p in site.pages if p != page and self._is_subpage(p, page)]
-            page.subpages = subpages
+            page.subpages = sorted(subpages, key=lambda sp: sp.title())
             page.parent = next(iter([p for p in site.pages if p != page and self._is_subpage(page, p)]), None)
 
     def _is_subpage(self, subpage: Post, page: Post):

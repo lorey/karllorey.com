@@ -11,7 +11,12 @@
             {{ pheader.html_title() }}
             {{ pheader.html_translations(post) }}
         </header>
-        <div class="mb-5 ml-5 float-right w-25">
+        <div class="e-content entry-content" itemprop="articleBody text">
+            {{ post.text() }}
+        </div>
+
+        <hr class="mt-5 mb-5">
+        <div>
             {% if post.parent and post.parent.permalink() != '/' %}
                 <p>Parent: <a href="{{ post.parent.permalink() }}">{{ post.parent.title() }}</a></p>
             {% endif %}
@@ -19,17 +24,15 @@
             {% if post.subpages %}
                 Subpages:
                 <ul>
-                {% for page in post.subpages %}
-                    <li><a href="{{ page.permalink() }}">{{ page.title()|e }}</a></li>
-                {% endfor %}
+                    {% for page in post.subpages %}
+                        <li><a href="{{ page.permalink() }}">{{ page.title()|e }}</a></li>
+                    {% endfor %}
                 </ul>
             {% else %}
                 <p>No subpages</p>
             {% endif %}
         </div>
-        <div class="e-content entry-content" itemprop="articleBody text">
-            {{ post.text() }}
-        </div>
+
         {% if site_has_comments and enable_comments and not post.meta('nocomments') %}
             <section class="comments">
                 <h2>{{ messages("Comments") }}</h2>
