@@ -5,27 +5,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
-<title>G Suite for your personal domain and email | Karl Lorey</title>
+<title>Install and run Django completely inside Docker | Karl Lorey</title>
 <link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
 <meta name="theme-color" content="#5670d4">
 <meta name="generator" content="Nikola (getnikola.com)">
 <link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="../../rss.xml">
-<link rel="canonical" href="https://karllorey.com/posts/g-suite-for-personal-personal-domain-and-email/">
+<link rel="canonical" href="https://karllorey.com/posts/install-and-run-django-inside-docker/">
 <!--[if lt IE 9]><script src="../../assets/js/html5shiv-printshiv.min.js"></script><![endif]--><meta name="author" content="Karl Lorey">
-<link rel="prev" href="../add-all-models-to-django-admin-automatically/" title="Add all models to Django admin automatically" type="text/html">
-<link rel="next" href="../install-and-run-django-inside-docker/" title="Install and run Django completely inside Docker" type="text/html">
+<link rel="prev" href="../g-suite-for-personal-personal-domain-and-email/" title="G Suite for your personal domain and email" type="text/html">
 <meta property="og:site_name" content="Karl Lorey">
-<meta property="og:title" content="G Suite for your personal domain and email">
-<meta property="og:url" content="https://karllorey.com/posts/g-suite-for-personal-personal-domain-and-email/">
-<meta property="og:description" content="Using Google's G Suite for your personal domain allows you to use your domain with all of Google's tools.
-It includes Gmail (without ads), Meet, Calendar, Drive with &gt; 30 GB, Docs, etc.
-What different">
+<meta property="og:title" content="Install and run Django completely inside Docker">
+<meta property="og:url" content="https://karllorey.com/posts/install-and-run-django-inside-docker/">
+<meta property="og:description" content="This guide will show you how to install Django inside Docker with docker-compose 
+and without installing any dependencies on the host system.
+Since there are a few quirks and I have to look it up myse">
 <meta property="og:type" content="article">
-<meta property="article:published_time" content="2020-04-29T12:38:37+02:00">
-<meta property="article:tag" content="G Suite">
-<meta property="article:tag" content="Google">
-<meta property="article:tag" content="Hosting">
-<meta property="article:tag" content="Organization">
+<meta property="article:published_time" content="2020-05-03T13:33:57+02:00">
+<meta property="article:tag" content="Django">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="Tech">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700%7CPlayfair+Display:400,700" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -80,7 +79,7 @@ What different">
                 <a href="../../blog/">Lorey Ipsum</a>
             </li>
         </ul></nav></header><main id="content" class="page"><hr style="margin-bottom: 50px">
-<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">G Suite for your personal domain and email</a></h1>
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Install and run Django completely inside Docker</a></h1>
 
         <div class="metadata">
             <p class="byline author vcard p-author h-card"><span class="byline-name fn p-name" itemprop="author">
@@ -88,7 +87,7 @@ What different">
             </span></p>
             <p class="dateline">
             <a href="." rel="bookmark">
-            <time class="published dt-published" datetime="2020-04-29T12:38:37+02:00" itemprop="datePublished" title="2020-04-29">2020-04-29</time></a>
+            <time class="published dt-published" datetime="2020-05-03T13:33:57+02:00" itemprop="datePublished" title="2020-05-03">2020-05-03</time></a>
             </p>
                     <p class="sourceline"><a href="index.md" class="sourcelink">Source</a></p>
 
@@ -96,68 +95,86 @@ What different">
         
     </header><div class="e-content entry-content" itemprop="articleBody text">
         <div>
-<p>Using Google's <a href="https://gsuite.google.com/">G Suite</a> for your personal domain allows you to use your domain with all of Google's tools.
-It includes Gmail (without ads), Meet, Calendar, Drive with &gt; 30 GB, Docs, etc.
-What differentiates it from a regular Google account is that you can use your personal domain and thus your own email, e.g. mail@yourname.com.
-After having used a G Suite of my company for a while, I wanted to have it for my personal email and domain, too.
-<!-- TEASER_END --></p>
-<h2>Benefits</h2>
-<p>Besides being able to use your personal email for everything and as a Google account, you get:</p>
-<ul>
-<li>event/calendar invites sent to your email will be added to your calendar automatically</li>
-<li>people can invite you to events/docs/drive with your private email</li>
-<li>your Android phone has all the Google tools built in and provides a seamless experience</li>
-<li>and so on, I mean, everybody has a Google account nowadays</li>
-</ul>
-<h2>Costs/Pricing</h2>
-<p>If you G-Suite use it for your personal domain, you'll be needing one user only.
-So the price is between 6 and 25 USD per month.
-You'll be needing the basic version for 6 USD only, I think.</p>
-<h2>Getting started</h2>
-<p>So I basically signed up for a free trial.
-Google asked me for my main email, i.e. the one used for your Google account.
-I choose mail@mydomain.com (say hello if you like :) ).</p>
-<p>There are only a few steps to take and the experience is seamless:</p>
-<ul>
-<li>create a G Suite account</li>
-<li>set up your <a href="https://en.wikipedia.org/wiki/MX_record">MX records</a> to point at Google's mailservers
-  (Google provided a tutorial for my registrar automatically)</li>
-<li>wait a little, and you're ready to go</li>
-<li>notify contacts of your (new) email</li>
-</ul>
-<h2>Set up</h2>
-<p>Personally, I didn't change much, but here's what I found useful:</p>
-<ul>
-<li>Gmail: set up a signature, change GMail's layout</li>
-<li>Calendar: set up default notifications for events 30 and 3 minutes ahead 
-  (allows me to get notified early during deep work and just before calls)</li>
-<li>Drive: Migrate folders/files to your new personal Google Drive. 
-  You can do this by sharing files and folders from your old account to your new account.</li>
-</ul>
-<h2>Misc</h2>
-<p>Some random notes:</p>
-<ul>
-<li>somehow you automatically become a business customer and can't change that, which is weird but isn't a problem in my case</li>
-<li>site verification, a part of the setup process, took a long time. Just give it a few minutes for the DNS records to update.</li>
-</ul>
+<p>This guide will show you how to install Django inside Docker with docker-compose 
+and without installing any dependencies on the host system.
+Since there are a few quirks and I have to look it up myself every damn time,
+here's a guide hopefully helping me and other the next time.</p>
+<p>This guide will:
+- help you install the newest version of django inside your docker container
+- be independent of your host OS and python version, so you can always get the newest version inside docker
+- provide a basic setup of django inside docker with docker-compose to build upon</p>
+<h2>Basic requirements file</h2>
+<p>Start with a requirements.txt file containing only:</p>
+<pre class="code literal-block"><span></span><code><span class="err">django</span>
+</code></pre>
+
+
+<p>Save it as <code>requirements.txt</code>.</p>
+<h2>Basic Dockerfile</h2>
+<p>In your <code>Dockerfile</code>:</p>
+<pre class="code literal-block"><span></span><code><span class="k">FROM</span> <span class="s">python:3.8</span>
+
+<span class="k">WORKDIR</span><span class="s"> /code</span>
+<span class="k">COPY</span> requirements.txt /code/
+<span class="k">RUN</span> pip install -r requirements.txt
+
+<span class="k">COPY</span> . /code/
+</code></pre>
+
+
+<h2>Basic docker-compose</h2>
+<p>In <code>docker-compose.yml</code>:</p>
+<pre class="code literal-block"><span></span><code><span class="nt">version</span><span class="p">:</span> <span class="s">'3'</span>
+
+<span class="nt">services</span><span class="p">:</span>
+  <span class="nt">web</span><span class="p">:</span>
+    <span class="nt">build</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">.</span>
+    <span class="nt">volumes</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">.:/code/</span>
+    <span class="nt">command</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bash</span>
+    <span class="nt">tty</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="nt">ports</span><span class="p">:</span>
+    <span class="c1"># external is the port you use on your host, i.e. localhost:8000</span>
+    <span class="c1"># internal is the port django uses inside the container</span>
+    <span class="c1"># format: external:internal </span>
+    <span class="p p-Indicator">-</span> <span class="s">"8000:8000"</span>
+</code></pre>
+
+
+<h2>Running it all</h2>
+<p>After having set up the above files, run the following steps:</p>
+<ol>
+<li>Run <code>docker-compose build</code> to build the images.</li>
+<li>Run <code>docker-compose up</code> to start the container, leave it running.</li>
+<li>Run <code>docker-compose exec web pip freeze &gt; requirements.txt</code> to pin the installed dependencies to their actual version. <code>requirements.txt</code> should now contain version numbers.</li>
+<li>Run <code>docker-compose exec web django-admin startproject YOURNAME .</code> (mind the dot!) to start a new django project in the current directory.</li>
+<li>
+<p>Run <code>sudo chown -R $USER ./</code> to own the docker-generated files. Otherwise you'll get file permission problems when working with the generated files on your host (outside of docker).</p>
+</li>
+<li>
+<p>Run <code>docker-compose exec web python ./manage.py runserver 0.0.0.0:8000</code>.</p>
+</li>
+</ol>
+<p>You should now be able to access a congratulations page at <code>localhost:8000</code>.</p>
+<h2>Next steps</h2>
+<p>If you're interested in setting up Django for production, 
+feel free to check out my guide on 
+<a href="http://karllorey.com/posts/django-production-docker-mod-wsgi/">how to set up Django deployment for production</a> for the same stack.</p>
 </div>
     </div>
 
     <hr class="mt-5 mb-5">
 <aside class="postpromonav"><nav><p class="mb-0">Tags:</p>
                     <ul itemprop="keywords" class="tags">
-<li><a class="tag p-category" href="../../categories/g-suite/" rel="tag">G Suite</a></li>
-            <li><a class="tag p-category" href="../../categories/google/" rel="tag">Google</a></li>
-            <li><a class="tag p-category" href="../../categories/hosting/" rel="tag">Hosting</a></li>
-            <li><a class="tag p-category" href="../../categories/organization/" rel="tag">Organization</a></li>
+<li><a class="tag p-category" href="../../categories/django/" rel="tag">Django</a></li>
+            <li><a class="tag p-category" href="../../categories/docker/" rel="tag">Docker</a></li>
+            <li><a class="tag p-category" href="../../categories/python/" rel="tag">Python</a></li>
+            <li><a class="tag p-category" href="../../categories/tech/" rel="tag">Tech</a></li>
         </ul>
 <p class="mb-0">Posts:</p>
                     <ul class="pager hidden-print">
 <li class="previous">
-                <a href="../add-all-models-to-django-admin-automatically/" rel="prev" title="Add all models to Django admin automatically">Previous post</a>
-            </li>
-            <li class="next">
-                <a href="../install-and-run-django-inside-docker/" rel="next" title="Install and run Django completely inside Docker">Next post</a>
+                <a href="../g-suite-for-personal-personal-domain-and-email/" rel="prev" title="G Suite for your personal domain and email">Previous post</a>
             </li>
         </ul></nav></aside></article><hr style="margin-top: 50px"></main><nav><ul class="nav justify-content-center">
 <li class="nav-link">
