@@ -18,6 +18,7 @@ This guide will:
 - help you install the newest version of django inside your docker container
 - be independent of your host OS and python version, so you can always get the newest version inside docker
 - provide a basic setup of django inside docker with docker-compose to build upon
+<!-- TEASER_END -->
 
 # Basic requirements file
 Start with a requirements.txt file containing only:

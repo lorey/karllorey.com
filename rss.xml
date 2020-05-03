@@ -1,69 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Karl Lorey</title><link>https://karllorey.com/</link><description>Personal website of Karl Lorey</description><atom:link type="application/rss+xml" rel="self" href="https://karllorey.com/rss.xml"></atom:link><language>en</language><copyright>Contents © 2020 &lt;a href="mailto:hello@karllorey.com"&gt;Karl Lorey&lt;/a&gt; </copyright><lastBuildDate>Sun, 03 May 2020 17:52:22 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Install and run Django completely inside Docker</title><link>https://karllorey.com/posts/install-and-run-django-inside-docker/</link><dc:creator>Karl Lorey</dc:creator><description>&lt;div&gt;&lt;p&gt;This guide will show you how to install Django inside Docker with docker-compose 
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Karl Lorey</title><link>https://karllorey.com/</link><description>Personal website of Karl Lorey</description><atom:link rel="self" href="https://karllorey.com/rss.xml" type="application/rss+xml"></atom:link><language>en</language><copyright>Contents © 2020 &lt;a href="mailto:hello@karllorey.com"&gt;Karl Lorey&lt;/a&gt; </copyright><lastBuildDate>Sun, 03 May 2020 18:08:59 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Install and run Django completely inside Docker</title><link>https://karllorey.com/posts/install-and-run-django-inside-docker/</link><dc:creator>Karl Lorey</dc:creator><description>&lt;div&gt;&lt;p&gt;This guide will show you how to install Django inside Docker with docker-compose 
 and without installing any dependencies on the host system.
 Since there are a few quirks and I have to look it up myself every damn time,
 here's a guide hopefully helping me and other the next time.&lt;/p&gt;
 &lt;p&gt;This guide will:
 - help you install the newest version of django inside your docker container
 - be independent of your host OS and python version, so you can always get the newest version inside docker
-- provide a basic setup of django inside docker with docker-compose to build upon&lt;/p&gt;
-&lt;h2&gt;Basic requirements file&lt;/h2&gt;
-&lt;p&gt;Start with a requirements.txt file containing only:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="err"&gt;django&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;p&gt;Save it as &lt;code&gt;requirements.txt&lt;/code&gt;.&lt;/p&gt;
-&lt;h2&gt;Basic Dockerfile&lt;/h2&gt;
-&lt;p&gt;In your &lt;code&gt;Dockerfile&lt;/code&gt;:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;FROM&lt;/span&gt; &lt;span class="s"&gt;python:3.8&lt;/span&gt;
-
-&lt;span class="k"&gt;WORKDIR&lt;/span&gt;&lt;span class="s"&gt; /code&lt;/span&gt;
-&lt;span class="k"&gt;COPY&lt;/span&gt; requirements.txt /code/
-&lt;span class="k"&gt;RUN&lt;/span&gt; pip install -r requirements.txt
-
-&lt;span class="k"&gt;COPY&lt;/span&gt; . /code/
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;h2&gt;Basic docker-compose&lt;/h2&gt;
-&lt;p&gt;In &lt;code&gt;docker-compose.yml&lt;/code&gt;:&lt;/p&gt;
-&lt;pre class="code literal-block"&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nt"&gt;version&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;'3'&lt;/span&gt;
-
-&lt;span class="nt"&gt;services&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-  &lt;span class="nt"&gt;web&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-    &lt;span class="nt"&gt;build&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;.&lt;/span&gt;
-    &lt;span class="nt"&gt;volumes&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-      &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;.:/code/&lt;/span&gt;
-    &lt;span class="nt"&gt;command&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;bash&lt;/span&gt;
-    &lt;span class="nt"&gt;tty&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;True&lt;/span&gt;
-    &lt;span class="nt"&gt;ports&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-    &lt;span class="c1"&gt;# external is the port you use on your host, i.e. localhost:8000&lt;/span&gt;
-    &lt;span class="c1"&gt;# internal is the port django uses inside the container&lt;/span&gt;
-    &lt;span class="c1"&gt;# format: external:internal &lt;/span&gt;
-    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="s"&gt;"8000:8000"&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;h2&gt;Running it all&lt;/h2&gt;
-&lt;p&gt;After having set up the above files, run the following steps:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Run &lt;code&gt;docker-compose build&lt;/code&gt; to build the images.&lt;/li&gt;
-&lt;li&gt;Run &lt;code&gt;docker-compose up&lt;/code&gt; to start the container, leave it running.&lt;/li&gt;
-&lt;li&gt;Run &lt;code&gt;docker-compose exec web pip freeze &amp;gt; requirements.txt&lt;/code&gt; to pin the installed dependencies to their actual version. &lt;code&gt;requirements.txt&lt;/code&gt; should now contain version numbers.&lt;/li&gt;
-&lt;li&gt;Run &lt;code&gt;docker-compose exec web django-admin startproject YOURNAME .&lt;/code&gt; (mind the dot!) to start a new django project in the current directory.&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Run &lt;code&gt;sudo chown -R $USER ./&lt;/code&gt; to own the docker-generated files. Otherwise you'll get file permission problems when working with the generated files on your host (outside of docker).&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Run &lt;code&gt;docker-compose exec web python ./manage.py runserver 0.0.0.0:8000&lt;/code&gt;.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;You should now be able to access a congratulations page at &lt;code&gt;localhost:8000&lt;/code&gt;.&lt;/p&gt;
-&lt;h2&gt;Next steps&lt;/h2&gt;
-&lt;p&gt;If you're interested in setting up Django for production, 
-feel free to check out my guide on 
-&lt;a href="http://karllorey.com/posts/django-production-docker-mod-wsgi/"&gt;how to set up Django deployment for production&lt;/a&gt; for the same stack.&lt;/p&gt;&lt;/div&gt;</description><category>Django</category><category>Docker</category><category>Python</category><category>Tech</category><guid>https://karllorey.com/posts/install-and-run-django-inside-docker/</guid><pubDate>Sun, 03 May 2020 11:33:57 GMT</pubDate></item><item><title>G Suite for your personal domain and email</title><link>https://karllorey.com/posts/g-suite-for-personal-personal-domain-and-email/</link><dc:creator>Karl Lorey</dc:creator><description>&lt;div&gt;&lt;p&gt;Using Google's &lt;a href="https://gsuite.google.com/"&gt;G Suite&lt;/a&gt; for your personal domain allows you to use your domain with all of Google's tools.
+- provide a basic setup of django inside docker with docker-compose to build upon
+&lt;/p&gt;&lt;p&gt;&lt;a href="https://karllorey.com/posts/install-and-run-django-inside-docker/"&gt;Read more…&lt;/a&gt; (1 min remaining to read)&lt;/p&gt;&lt;/div&gt;</description><category>Django</category><category>Docker</category><category>Python</category><category>Tech</category><guid>https://karllorey.com/posts/install-and-run-django-inside-docker/</guid><pubDate>Sun, 03 May 2020 11:33:57 GMT</pubDate></item><item><title>G Suite for your personal domain and email</title><link>https://karllorey.com/posts/g-suite-for-personal-personal-domain-and-email/</link><dc:creator>Karl Lorey</dc:creator><description>&lt;div&gt;&lt;p&gt;Using Google's &lt;a href="https://gsuite.google.com/"&gt;G Suite&lt;/a&gt; for your personal domain allows you to use your domain with all of Google's tools.
 It includes Gmail (without ads), Meet, Calendar, Drive with &amp;gt; 30 GB, Docs, etc.
 What differentiates it from a regular Google account is that you can use your personal domain and thus your own email, e.g. mail@yourname.com.
 After having used a G Suite of my company for a while, I wanted to have it for my personal email and domain, too.
