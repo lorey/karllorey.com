@@ -99,11 +99,14 @@ Since there are a few quirks and I have to look it up myse">
 and without installing any dependencies on the host system.
 Since there are a few quirks and I have to look it up myself every damn time,
 here's a guide hopefully helping me and other the next time.</p>
-<p>This guide will:
-- help you install the newest version of django inside your docker container
-- be independent of your host OS and python version, so you can always get the newest version inside docker
-- provide a basic setup of django inside docker with docker-compose to build upon
-<!-- TEASER_END --></p>
+<p>This guide will:</p>
+<ul>
+<li>help you install the newest version of django inside your docker container</li>
+<li>be independent of your host OS and python version, so you can always get the newest version inside docker</li>
+<li>provide a basic setup of django inside docker with docker-compose to build upon
+<!-- TEASER_END -->
+</li>
+</ul>
 <h2>Basic requirements file</h2>
 <p>Start with a requirements.txt file containing only:</p>
 <pre class="code literal-block"><span></span><code><span class="err">django</span>
@@ -112,13 +115,23 @@ here's a guide hopefully helping me and other the next time.</p>
 
 <p>Save it as <code>requirements.txt</code>.</p>
 <h2>Basic Dockerfile</h2>
-<p>In your <code>Dockerfile</code>:</p>
+<p>Firstly, a Dockerfile is needed to set up and run our project.
+We'll use a basic version you can expand later.
+It uses Python 3.8, installs all dependencies from your <code>requirements.txt</code> file,
+and then copies your project files into the image.</p>
+<p>So copy this in your <code>Dockerfile</code>:</p>
 <pre class="code literal-block"><span></span><code><span class="k">FROM</span> <span class="s">python:3.8</span>
 
 <span class="k">WORKDIR</span><span class="s"> /code</span>
+
+<span class="c"># copy and install requirements first </span>
+<span class="c"># -&gt; speeds up build if requirements haven't changed</span>
 <span class="k">COPY</span> requirements.txt /code/
 <span class="k">RUN</span> pip install -r requirements.txt
 
+<span class="c"># copy rest of files</span>
+<span class="c"># (not needed since we also mount a volume, </span>
+<span class="c"># but you won't mount in production)</span>
 <span class="k">COPY</span> . /code/
 </code></pre>
 
@@ -149,18 +162,24 @@ here's a guide hopefully helping me and other the next time.</p>
 <li>Run <code>docker-compose up</code> to start the container, leave it running.</li>
 <li>Run <code>docker-compose exec web pip freeze &gt; requirements.txt</code> to pin the installed dependencies to their actual version. <code>requirements.txt</code> should now contain version numbers.</li>
 <li>Run <code>docker-compose exec web django-admin startproject YOURNAME .</code> (mind the dot!) to start a new django project in the current directory.</li>
-<li>
-<p>Run <code>sudo chown -R $USER ./</code> to own the docker-generated files. Otherwise you'll get file permission problems when working with the generated files on your host (outside of docker).</p>
-</li>
-<li>
-<p>Run <code>docker-compose exec web python ./manage.py runserver 0.0.0.0:8000</code>.</p>
-</li>
+<li>Run <code>sudo chown -R $USER ./</code> to own the docker-generated files. Otherwise you'll get file permission problems when working with the generated files on your host (outside of docker).</li>
+<li>Run <code>docker-compose exec web python ./manage.py runserver 0.0.0.0:8000</code>.</li>
 </ol>
 <p>You should now be able to access a congratulations page at <code>localhost:8000</code>.</p>
 <h2>Next steps</h2>
 <p>If you're interested in setting up Django for production, 
 feel free to check out my guide on 
 <a href="http://karllorey.com/posts/django-production-docker-mod-wsgi/">how to set up Django deployment for production</a> for the same stack.</p>
+<h2>Note: Changing ports</h2>
+<p>If you want to change the port to access your Django application, 
+you only have to change the external port, i.e. the <code>docker-compose.yml</code> file.
+So to switch to port 80, change the line below <code>ports:</code> to</p>
+<pre class="code literal-block"><span></span><code><span class="nt">ports</span><span class="p">:</span>
+<span class="p p-Indicator">-</span> <span class="s">"80:8000"</span>
+</code></pre>
+
+
+<p>Then the container can be accessed with <code>localhost:80</code> or just <code>localhost</code> (as 80 is the default).</p>
 </div>
     </div>
 
