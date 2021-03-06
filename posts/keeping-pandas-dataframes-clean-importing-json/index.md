@@ -9,7 +9,7 @@
 .. type: text
 -->
 
-At [First Momentum](https://firstmomentum.vc), I do a lot of data analysis to find the most promising young startups.
+For work, I do a lot of data analysis to find the most promising young startups.
 As a first step, you always have to import the desired data into a Pandas DataFrame
 and do some preprocessing, for example by importing JSON data from some API. 
 When doing this kind of pre-processing,
