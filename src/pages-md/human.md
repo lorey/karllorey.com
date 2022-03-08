@@ -1,13 +1,13 @@
-<!--
-.. title: About me
-.. slug: human
-.. date: 2020-02-25 11:03:11 UTC+01:00
-.. tags: 
-.. category: 
-.. link: 
-.. description: 
-.. type: text
--->
+---
+title: About me
+slug: human
+date: 2020-02-25T11:03:11+01:00
+tags: 
+category: 
+link: 
+description: 
+type: text
+---
 
 This is just a random collection of things about me.
 I guess it's your call which social media profile you choose to find out more about me...
@@ -40,4 +40,4 @@ I guess it's your call which social media profile you choose to find out more ab
 - deep work and focus
 - minimalism/essentialism
 
-You can find technologies I like [here](/techie).
+You can find technologies I like [here](/src/pages-md/techie.md.md).

@@ -1,13 +1,13 @@
-<!--
-.. title: Pre-seed Investor
-.. slug: vc
-.. date: 2020-02-25 11:03:11 UTC+01:00
-.. tags: 
-.. category: 
-.. link: 
-.. description: 
-.. type: text
--->
+---
+title: Pre-seed Investor
+slug: vc
+date: 2020-02-25T11:03:11+01:00
+tags: 
+category: 
+link: 
+description: 
+type: text
+---
 
 As a co-founder of [First Momentum](http://firstmomentum.vc), Germany's first Venture Capital fund founded by students,
 I invest in young, ambitious, and technical startups (mostly through pre-seed investments).

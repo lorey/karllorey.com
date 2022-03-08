@@ -1,13 +1,13 @@
-<!--
-.. title: Karl Lorey: Founder, Investor, Techie
-.. slug: index
-.. date: 2020-02-25 11:03:11 UTC+01:00
-.. tags: 
-.. category: 
-.. link: 
-.. description: 
-.. type: text
--->
+---
+title: "Karl Lorey: Founder, Investor, Techie"
+slug: "/"
+date: 2020-02-25T11:03:11+01:00
+tags: 
+category: 
+link: 
+description: 
+type: text
+---
 
 Karl Lorey is a computer scientist, entrepreneur, and venture capitalist. He has studied computer science at the
 university of Würzburg and at Karlsruhe Institute of Technology. During his studies he published three scientific papers

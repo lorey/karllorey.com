@@ -1,13 +1,13 @@
-<!--
-.. title: Inspiration
-.. slug: human/inspiration
-.. date: 2020-02-25 11:03:11 UTC+01:00
-.. tags: 
-.. category: 
-.. link: 
-.. description: 
-.. type: text
--->
+---
+title: Inspiration
+slug: human/inspiration
+date: 2020-02-25T11:03:11+01:00
+tags: 
+category: 
+link: 
+description: 
+type: text
+---
 
 Here's a selection of things that inspire me categorized by broad topics.
 

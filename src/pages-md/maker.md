@@ -1,16 +1,16 @@
-<!--
-.. title: Projects and Portfolio
-.. slug: portfolio
-.. date: 2020-02-26 19:10:11 UTC+01:00
-.. tags: 
-.. category: 
-.. link: 
-.. description: 
-.. type: text
--->
+---
+title: Projects and Portfolio
+slug: portfolio
+date: 2020-02-26T19:10:11+01:00
+tags: 
+category: 
+link: 
+description: 
+type: text
+---
 
 These are my latest projects in chronological order from new/updated to old/offline.
-If you're interested in my work experience, check out [Founder](/founder).
+If you're interested in my work experience, check out [Founder](/src/pages-md/founder.md.md).
 
 # Social Media Profile Extraction
 Since I'm doing a lot of social network analysis, esp. for university and First Momentum, I've always been interested to extract social profiles.

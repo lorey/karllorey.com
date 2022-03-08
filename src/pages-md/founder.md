@@ -1,13 +1,13 @@
-<!--
-.. title: Work Experience
-.. slug: founder
-.. date: 2020-02-25 11:03:11 UTC+01:00
-.. tags: 
-.. category: 
-.. link: 
-.. description: 
-.. type: text
--->
+---
+title: Work Experience
+slug: "founder"
+date: 2020-02-25T11:03:11+01:00
+tags: 
+category: 
+link: 
+description: 
+type: text
+---
 
 I believe in a world where data-driven decisions form the basis of business strategies.
 In my career so far,

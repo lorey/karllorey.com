@@ -1,19 +1,19 @@
-<!--
-.. title: My technical background
-.. slug: techie
-.. date: 2020-02-25 11:03:11 UTC+01:00
-.. tags: 
-.. category: 
-.. link: 
-.. description: 
-.. type: text
--->
+---
+title: My technical background
+slug: techie
+date: 2020-02-25T11:03:11+01:00
+tags: 
+category: 
+link: 
+description: 
+type: text
+---
 
 I've studied computer science, 
 did a lot of research during university in machine learning and databases but also touching psychology, 
 and love to build things with the help of technology.
 This page is about my academic and technical background, 
-projects [can be found elsewhere](/founder).
+projects [can be found elsewhere](/src/pages-md/founder.md.md).
 
 # Academic background and computer science
 During my time as a student at university, I published three papers:
@@ -56,7 +56,7 @@ My technical focus is build upon the following pillars:
 - data analysis and machine learning to perform automated decisions (natural language processing, classification)
 - web development to build an interface for training data and data exploration
 
-You can find projects I can talk about publicly [in my portfolio](/founder).
+You can find projects I can talk about publicly [in my portfolio](/src/pages-md/founder.md.md).
 
 ## Technologies
 In the last years, Python has become my main stack.

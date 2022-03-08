@@ -1,13 +1,13 @@
-<!--
-.. title: Talks and workshops
-.. slug: speaker
-.. date: 2020-02-25 11:03:11 UTC+01:00
-.. tags: 
-.. category: 
-.. link: 
-.. description: 
-.. type: text
--->
+---
+title: Talks and workshops
+slug: speaker
+date: 2020-02-25T11:03:11+01:00
+tags: 
+category: 
+link: 
+description: 
+type: text
+---
 
 I love what I do and talk about it as often as I can. Here is a selection of talks and workshops I've given recently:
 
