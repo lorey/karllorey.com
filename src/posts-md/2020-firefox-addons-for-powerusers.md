@@ -1,14 +1,14 @@
-<!--
-.. title: Firefox addons for powerusers
-.. slug: firefox-addons-for-powerusers
-.. date: 2020-02-25 10:30:13 UTC+01:00
-.. tags: 
-.. category: 
-.. link: 
-.. description: 
-.. type: text
-.. status: draft
--->
+---
+title: Firefox addons for powerusers
+slug: firefox-addons-for-powerusers
+date: 2020-02-25T10:30:13+01:00
+tags: 
+category: 
+link: 
+description: 
+type: text
+status: draft
+---
 
 ## Windows, Tabs and Pinned Tabs
 

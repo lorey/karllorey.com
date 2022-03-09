@@ -1,13 +1,13 @@
-<!--
-.. title: Django in Production with mod_wsgi and Docker
-.. slug: django-production-docker-mod-wsgi
-.. date: 2020-01-17 10:30:13 UTC+01:00
-.. tags: Django, Python, Docker, Tech
-.. category: Tech 
-.. link: 
-.. description: 
-.. type: text
--->
+---
+title: Django in Production with mod_wsgi and Docker
+slug: django-production-docker-mod-wsgi
+date: 2020-01-17T10:30:13+01:00
+tags: Django, Python, Docker, Tech
+category: Tech 
+link: 
+description: 
+type: text
+---
 
 This article will show you how to run Django in production with docker and apache2/mod_wsgi.
 While there are several guides on how to do it,

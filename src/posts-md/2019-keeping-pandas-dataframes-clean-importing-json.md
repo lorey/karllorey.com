@@ -1,13 +1,13 @@
-<!--
-.. title: Keeping Pandas DataFrames clean when importing JSON (with Context Managers)
-.. slug: keeping-pandas-dataframes-clean-importing-json
-.. date: 2019-03-03 10:30:13 UTC+01:00
-.. tags: Machine Learning, Pandas, Clean Code, Python, Tech
-.. category: Tech 
-.. link: 
-.. description: 
-.. type: text
--->
+---
+title: Keeping Pandas DataFrames clean when importing JSON (with Context Managers)
+slug: keeping-pandas-dataframes-clean-importing-json
+date: 2019-03-03T10:30:13+01:00
+tags: Machine Learning, Pandas, Clean Code, Python, Tech
+category: Tech 
+link: 
+description: 
+type: text
+---
 
 For work, I do a lot of data analysis to find the most promising young startups.
 As a first step, you always have to import the desired data into a Pandas DataFrame
@@ -48,7 +48,7 @@ df['company_id'] = df['companyId']
 df['location'] = df['properties.city.value']
 df['name'] = df['properties.name.value']
 df['domain'] = df['properties.website.value']
-//... .apply(), .as_type(int), whatever...
+//..apply(), .as_type(int), whatever...
 ```
 
 This works, but keeps all the imported columns inplace and might take a lot of storage.
@@ -72,7 +72,7 @@ df['company_id'] = df['temp_companyId']
 df['location'] = df['temp_properties.city.value']
 df['name'] = df['temp_properties.name.value']
 df['domain'] = df['temp_properties.website.value']
-//... .apply(), .as_type(int), whatever...
+//..apply(), .as_type(int), whatever...
 ```
 
 Afterwards, you would then select all desired columns or drop all undesired columns.

@@ -1,13 +1,13 @@
-<!--
-.. title: Founding a Venture Capital Fund as a Techie: My Year 2018
-.. slug: year-in-review-2018
-.. date: 2019-01-03 10:30:13 UTC+01:00
-.. tags: Entrepreneurship, Year in Review, Venture Capital
-.. category: Year in Review
-.. link: 
-.. description: 
-.. type: text
--->
+---
+title: Founding a Venture Capital Fund as a Techie: My Year 2018
+slug: year-in-review-2018
+date: 2019-01-03T10:30:13+01:00
+tags: Entrepreneurship, Year in Review, Venture Capital
+category: Year in Review
+link: 
+description: 
+type: text
+---
 
 I have long been thinking about writing a summary of my year
 to reflect on things and to be able to see how I saw the world in a few years.

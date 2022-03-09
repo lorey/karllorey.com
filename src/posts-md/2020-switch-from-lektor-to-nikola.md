@@ -1,14 +1,14 @@
-<!--
-.. title: Switching from Lektor to Nikola (static site generators)
-.. slug: switch-from-lektor-to-nikola
-.. date: 2020-03-10 17:03:35 UTC+01:00
-.. tags: Python, Lektor, Nikola, Tech
-.. category: Tech 
-.. link: 
-.. description: 
-.. type: text
-.. status:
--->
+---
+title: Switching from Lektor to Nikola (static site generators)
+slug: switch-from-lektor-to-nikola
+date: 2020-03-10T17:03:35+01:00
+tags: Python, Lektor, Nikola, Tech
+category: Tech 
+link: 
+description: 
+type: text
+status:
+---
 
 I decided to migrate this website/blog from Lektor to Nikola.
 Both are static site generators 
@@ -105,7 +105,7 @@ hint: not have locally. This is usually caused by another repository pushing
 hint: to the same ref. You may want to first integrate the remote changes
 hint: (e.g., 'git pull ...') before pushing again.
 hint: See the 'Note about fast-forwards' in 'git push --help' for details.
-# ... stacktrace
+# .stacktrace
 [2020-02-25T15:12:28Z] ERROR: github_deploy: Failed GitHub deployment -- command ['ghp-import', '-n', '-m', 'Nikola auto commit.\n\nSource commit: 5d74f162affaf80691de1d7c7b0d8728addea96a\nNikola version: 8.0.4', '-p', '-r', 'origin', '-b', 'gh-pages', 'output'] returned 1
 ```
 Obviously, I forgot to pull the gh-pages branch first, so the new commit could be added on top.

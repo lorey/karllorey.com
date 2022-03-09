@@ -1,13 +1,13 @@
-<!--
-.. title: Why every founder should use a notebook
-.. slug: reasons-to-use-a-notebook-as-a-founder
-.. date: 2018-12-28 10:30:13 UTC+01:00
-.. tags: Notebook, Organization, Entrepreneurship
-.. category: Entrepreneurship
-.. link: 
-.. description: 
-.. type: text
--->
+---
+title: Why every founder should use a notebook
+slug: reasons-to-use-a-notebook-as-a-founder
+date: 2018-12-28T10:30:13+01:00
+tags: Notebook, Organization, Entrepreneurship
+category: Entrepreneurship
+link: 
+description: 
+type: text
+---
 
 For some time I have been using a notebook now.
 It's simple, analogue, and convenient nonetheless.

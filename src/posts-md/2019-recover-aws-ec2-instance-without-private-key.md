@@ -1,13 +1,13 @@
-<!--
-.. title: How to recover an AWS EC2 instance without the private key
-.. slug: recover-aws-ec2-instance-without-private-key
-.. date: 2019-09-03 10:30:13 UTC+01:00
-.. tags: AWS, Tech
-.. category: Tech
-.. link: 
-.. description: 
-.. type: text
--->
+---
+title: How to recover an AWS EC2 instance without the private key
+slug: recover-aws-ec2-instance-without-private-key
+date: 2019-09-03T10:30:13+01:00
+tags: AWS, Tech
+category: Tech
+link: 
+description: 
+type: text
+---
 
 Lost the private key for your EC2 instance and can't login via ssh anymore?
 This tutorial will show you how to recover your EC2 instance by setting a new key pair to login.

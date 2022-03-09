@@ -1,13 +1,13 @@
-<!--
-.. title: G Suite for your personal domain and email
-.. slug: g-suite-for-personal-personal-domain-and-email
-.. date: 2020-04-29 12:38:37 UTC+02:00
-.. tags: Google, Hosting, Organization, G Suite
-.. category: Tech
-.. link: 
-.. description: 
-.. type: text
--->
+---
+title: G Suite for your personal domain and email
+slug: g-suite-for-personal-personal-domain-and-email
+date: 2020-04-29T12:38:37+02:00
+tags: Google, Hosting, Organization, G Suite
+category: Tech
+link: 
+description: 
+type: text
+---
 
 Using Google's [G Suite](https://gsuite.google.com/) for your personal domain allows you to use your domain with all of Google's tools.
 It includes Gmail (without ads), Meet, Calendar, Drive with > 30 GB, Docs, etc.

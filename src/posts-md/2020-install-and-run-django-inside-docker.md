@@ -1,13 +1,13 @@
-<!--
-.. title: Install and run Django completely inside Docker
-.. slug: install-and-run-django-inside-docker
-.. date: 2020-05-03 13:33:57 UTC+02:00
-.. tags: Django, Docker, Python, Tech
-.. category: Tech
-.. link: 
-.. description: 
-.. type: text
--->
+---
+title: Install and run Django completely inside Docker
+slug: install-and-run-django-inside-docker
+date: 2020-05-03T13:33:57+02:00
+tags: Django, Docker, Python, Tech
+category: Tech
+link: 
+description: 
+type: text
+---
 
 This guide will show you how to install Django inside Docker with docker-compose 
 and without installing any dependencies on the host system.

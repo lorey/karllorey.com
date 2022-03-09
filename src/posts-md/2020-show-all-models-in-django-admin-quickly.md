@@ -1,13 +1,13 @@
-<!--
-.. title: Add all models to Django admin automatically
-.. slug: add-all-models-to-django-admin-automatically
-.. date: 2020-03-24 11:01:51 UTC+01:00
-.. tags: Python, Django, Tech, Clean Code
-.. category: Tech
-.. link: 
-.. description: 
-.. type: text
--->
+---
+title: Add all models to Django admin automatically
+slug: add-all-models-to-django-admin-automatically
+date: 2020-03-24T11:01:51+01:00
+tags: Python, Django, Tech, Clean Code
+category: Tech
+link: 
+description: 
+type: text
+---
 
 To show, edit, and work with a model inside the Django admin site,
 you usually have to add each desired model manually by adding a line to `{your app}/admin.py`.

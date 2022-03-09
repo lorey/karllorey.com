@@ -1,13 +1,13 @@
-<!--
-.. title: How to set up Black with Debian, PyCharm, and IdeaVim
-.. slug: set-up-black-pycharm-ideavim
-.. date: 2019-07-28 10:30:13 UTC+01:00
-.. tags: Python, Black, Docker, Pycharm, IdeaVim, Tech
-.. category: Tech
-.. link: 
-.. description: 
-.. type: text
--->
+---
+title: How to set up Black with Debian, PyCharm, and IdeaVim
+slug: set-up-black-pycharm-ideavim
+date: 2019-07-28T10:30:13+01:00
+tags: Python, Black, Docker, Pycharm, IdeaVim, Tech
+category: Tech
+link: 
+description: 
+type: text
+---
 
 I've come to like the code formatter [Black](https://black.readthedocs.io/en/stable/index.html) for Python.
 It's opinionated, deterministic and thus very minimalistic.
