@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'gatsby'
 import {FaAngellist, FaCube, FaGithub, FaGitlab, FaGoodreads, FaInstagram, FaLinkedin, FaMedium, FaMeetup, FaProductHunt, FaResearchgate, FaTwitter} from 'react-icons/fa'
 
 export default function Footer() {
@@ -20,11 +21,12 @@ export default function Footer() {
                 <a href="https://twitter.com/karllorey" target="_blank"><FaTwitter className="inline" /></a>
             </p>
             <p className="mt-5">
-                This site uses cookies and external services to improve your experience.<br/>
-                At least if you don't refuse by sending <a href="http://randomwalker.info/donottrack-archive/" target="_blank">Do Not Track</a>.
+                This site does not use cookies or other services to improve your experience.<br/>
+                No data is stored.
             </p>
             <p className="mt-5">
-                © Copyright 2022 Karl Lorey. <a href="http://karllorey.de/impressum" target="_blank">Legal/Imprint</a>.
+                © Copyright 2022 Karl Lorey.<br />
+                <Link to="/legal">Legal/Imprint</Link>. <Link to="/privacy">Privacy Policy</Link>.
             </p>
         </footer>
 )

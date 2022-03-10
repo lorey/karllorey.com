@@ -4,13 +4,17 @@ import Page from "../components/page";
 const LegalPage = () => {
     return (
         <Page>
-            <main className="p-10">
+            <main>
                 <title>Legal Notice</title>
 
                 <h1>Legal Notice</h1>
+                <p>
+                    This is private information and you do not have my consent to use or store this information.
+                    Failing to do so will lead to prosecution under GDPR, I'm sick of it.
+                </p>
                 <h3>Information according to § 5 TMG</h3>
                 <p>
-                    Lorey Ventures UG (haftungsbeschränkt)<br/>
+                    Karl Lorey<br/>
                     Sperrlohestr. 29<br/>
                     97996 Niederstetten<br/>
                     Germany
@@ -26,16 +30,6 @@ const LegalPage = () => {
                     Phone: +49 (O) I52 / O84O 784O<br/>
                     Fax: it's 2022<br/>
                     E-Mail: mail (ät) karllorey (dot) com
-                </p>
-
-                <p>
-                    Entry in (German) Handelsregister<br/>
-                    Register Court: Local Court of Stuttgart (Amtsgericht Stuttgart)<br/>
-                    Register Number: HRB 780286
-                </p>
-
-                <p>
-                    VAT ID: DE343048233
                 </p>
 
                 <h2>Disclaimer</h2>
