@@ -5,7 +5,8 @@ import Page from "../components/page";
 function BlogList(props) {
     const listItems = props.items.map((node) =>
         <li key={node.fields.slug} className="py-3">
-            {node.frontmatter.date}: <br/><a href={"/blog/" + node.fields.slug}>{node.frontmatter.title}</a>
+            {node.frontmatter.date}: <br/>
+            <a href={"/posts/" + node.fields.slug}>{node.frontmatter.title}</a>
         </li>
     );
     return <ul>{listItems}</ul>
@@ -20,7 +21,8 @@ export default function Blog({
         <Page>
             <div className="blog-post-container">
                 <div className="blog-post">
-                    <h1>Blog</h1>
+                    <h1>Lorey Ipsum</h1>
+                    <p>Blogging mostly about tech.</p>
                     <BlogList items={items}/>
                 </div>
             </div>
@@ -29,7 +31,7 @@ export default function Blog({
 }
 export const pageQuery = graphql`
     query {
-        allMarkdownRemark(sort: {fields: frontmatter___date, order: DESC}) {
+        allMarkdownRemark(sort: {fields: frontmatter___date, order: DESC}, filter: {frontmatter: {status: {ne: "draft"}}}) {
             nodes {
                 html
                 fields {
@@ -39,6 +41,7 @@ export const pageQuery = graphql`
                     title
                     date(formatString: "MMMM DD, YYYY")
                     slug
+                    status
                 }
                 parent {
                     ... on File {

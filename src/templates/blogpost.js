@@ -9,8 +9,10 @@ export default function BlogPost({ data }) {
         <Page>
             <div>
                 <h1>{post.frontmatter.title}</h1>
-                <small>{post.frontmatter.date}</small>
                 <div dangerouslySetInnerHTML={{ __html: post.html }} />
+                <p className="mt-5">
+                    <small>created {post.frontmatter.date}</small>
+                </p>
             </div>
         </Page>
     )
@@ -21,7 +23,7 @@ export const query = graphql`
             html
             frontmatter {
                 title
-                date
+                date(formatString: "MMMM DD, YYYY")
             }
         }
     }

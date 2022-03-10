@@ -39,7 +39,7 @@ exports.createPages = async ({ graphql, actions }) => {
   `)
 
     result.data.allMarkdownRemark.edges.forEach(({ node }) => {
-        const dir = node.parent.sourceInstanceName === "markdown-posts" ? 'blog' : ''
+        const dir = node.parent.sourceInstanceName === "markdown-posts" ? 'posts' : ''
         const slug = node.frontmatter.slug ? node.frontmatter.slug : node.fields.slug;
         createPage({
             path: dir ? dir + '/' + slug : slug,

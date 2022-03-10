@@ -4,7 +4,7 @@ import {FaAngellist, FaCube, FaGithub, FaGitlab, FaGoodreads, FaInstagram, FaLin
 export default function Footer() {
     return (
         <footer className="text-center text-sm py-10">
-            <p className="">I'm Karl Lorey–Techie, Founder, and Investor living in Karlsruhe, Germany. Let's get in touch.</p>
+            <p className="">I'm Karl Lorey–Techie, Founder, and Investor living in Karlsruhe, Germany.<br/>Let's get in touch.</p>
             <p className="flex justify-center gap-5 flex-wrap text-xl">
                 <a href="https://angel.co/karllorey" target="_blank"><FaAngellist className="inline" /></a>
                 <a href="https://www.crunchbase.com/person/karl-lorey" target="_blank"><FaCube className="inline" /></a>
