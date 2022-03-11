@@ -4,13 +4,11 @@ services:
   app:
     build:
       context: .
-    tty: False
+    tty: True
     ports:
-      - '8000:8000'
+      - '3000:3000'
     volumes:
-      - /code/.cache
-      - /code/node_modules
       - .:/code
     environment:
       NODE_ENV: development
-      GATSBY_WEBPACK_PUBLICPATH: /
+    user: "1000" # required for npm

@@ -1,25 +1,27 @@
 # karllorey.com
 
-[![Build Status](https://travis-ci.org/lorey/karllorey.com.svg?branch=master)](https://travis-ci.org/lorey/karllorey.com)
+The [personal website of Karl Lorey](https://karllorey.com). That would be me.
+Built with minimalism in mind, Next.js, and Taildwind.
 
-The [personal site of Karl Lorey](https://karllorey.com). That would be me.
-Built with minimalism in mind and Gatsby.
-
+- based on next.js' [blog starter](https://github.com/vercel/next.js/tree/bc0816f936213f81d2fae4cad8f15c9dd1087d1c/examples/blog-starter)
 - locally hosted fonts with Fontsource
 
 ## Test it
-Install the requirements inside `requirements.txt` and run
+Run it locally with docker:
+```
+docker-compse build
+docker-compose up
 
-```
-make
+// although dependencies are installed, 
+// this will make sure to add node_modules to your working directory
+// so the IDE and commands work properly
+docker-compose exec app npm install
 ```
 
-## Build and deploy it
-If you're deploying for the first time to GitHub pages, pull the gh-pages branch first (if existing):
-```text
-git pull origin gh-pages
-```
-Then you can deploy with the following command (which will create a new commit in gh-pages):
-```text
-nikola github_deploy
-```
+## Deployment
+Deployment is done via Github Pages, see .github/workflows.
+To set up:
+- point your domain to Github servers
+- set CNAME file in public
+- enable gh-pages deployment
+- set up access token used in deploy.yml
