@@ -1,4 +1,0 @@
-Sitemap: https://karllorey.com/sitemapindex.xml
-
-User-Agent: *
-Host: karllorey.com
