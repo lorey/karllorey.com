@@ -13,7 +13,7 @@ This is just a random collection of things about me.
 I guess it's your call which social media profile you choose to find out more about me...
 
 
-# Core beliefs
+## Core beliefs
 
 - hard work beats talent when talent doesn’t work hard, so work hard and use your talent.
 - self-reflection is the basis for personal growth.
@@ -31,7 +31,7 @@ I guess it's your call which social media profile you choose to find out more ab
 
 > “Champions aren't made in gyms. Champions are made from something they have deep inside them-a desire, a dream, a vision. They have to have the skill, and the will. But the will must be stronger than the skill.” 
 
-# Things I enjoy
+## Things I enjoy
 
 - self-improvement
 - critical thinking
