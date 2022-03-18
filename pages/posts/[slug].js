@@ -3,6 +3,8 @@ import ErrorPage from 'next/error'
 import { getPostBySlug, getAllPosts } from '../../lib/api'
 import markdownToHtml from '../../lib/markdownToHtml'
 import PageLayout from '../../components/page-layout'
+import Markdown from "../../components/markdown";
+import DateFormatter from "../../components/date-formatter";
 
 export default function Post({ post, morePosts, preview }) {
   const router = useRouter()
@@ -12,11 +14,12 @@ export default function Post({ post, morePosts, preview }) {
   return (
         <PageLayout>
           <article>
-            <h1>{post.title}</h1>
-            <div dangerouslySetInnerHTML={{ __html: post.content }} />
-            <p className="mt-5">
-              <small>created {post.date}</small>
+            <h1 className="mb-0">{post.title}</h1>
+            <p className="mt-0 mb-1">
+              <small>created <DateFormatter dateString={post.date} /></small>
             </p>
+
+            <Markdown html={post.content} />
           </article>
         </PageLayout>
       )

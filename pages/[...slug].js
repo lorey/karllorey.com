@@ -3,6 +3,7 @@ import ErrorPage from "next/error";
 import {getAllPages, getPageBySlug} from "../lib/api";
 import markdownToHtml from "../lib/markdownToHtml";
 import PageLayout from "../components/page-layout";
+import Markdown from "../components/markdown";
 
 export default function Page({page}) {
     const router = useRouter()
@@ -13,13 +14,14 @@ export default function Page({page}) {
     return (
         <PageLayout>
             <h1>{page.title}</h1>
-            <div dangerouslySetInnerHTML={{__html: page.content}} />
+            <Markdown html={page.content} />
         </PageLayout>
     )
 }
 
 export async function getStaticProps({ params }) {
-    const page = getPageBySlug(params.slug, [
+    const slug = params.slug.join("/");
+    const page = getPageBySlug(slug, [
         'title',
         'slug',
         'author',
@@ -45,7 +47,7 @@ export async function getStaticPaths() {
         paths: posts.map((post) => {
             return {
                 params: {
-                    slug: post.slug,
+                    slug: post.slug.split("/"),
                 },
             }
         }),

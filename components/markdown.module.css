@@ -1,0 +1,14 @@
+.markdown ul {
+    @apply list-disc list-outside
+
+}
+
+
+.markdown ol {
+    @apply list-decimal list-outside
+
+}
+
+.markdown li {
+    @apply ml-5
+}
