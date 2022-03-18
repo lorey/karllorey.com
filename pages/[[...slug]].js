@@ -20,7 +20,7 @@ export default function Page({page}) {
 }
 
 export async function getStaticProps({ params }) {
-    const slug = params.slug.join("/");
+    const slug = params.slug ? params.slug.join("/") : '/';
     const page = getPageBySlug(slug, [
         'title',
         'slug',
@@ -45,10 +45,20 @@ export async function getStaticPaths() {
 
     return {
         paths: posts.map((post) => {
-            return {
-                params: {
-                    slug: post.slug.split("/"),
-                },
+            if(post.slug !== "/") {
+                // regular page
+                return {
+                    params: {
+                        slug: post.slug.split("/"),
+                    },
+                }
+            } else {
+                // index
+                return {
+                    params: {
+                        slug: []
+                    },
+                }
             }
         }),
         fallback: false,
