@@ -20,8 +20,9 @@ export default function Footer() {
                 <a href="https://twitter.com/karllorey" target="_blank"><FaTwitter className="inline" /></a>
             </p>
             <p className="mt-5">
-                This site does not use cookies or other services to improve your experience.<br/>
+                This site does not use cookies or other services to improve your experience.
                 No data is stored.
+                It is released as <Link href="https://github.com/lorey/karllorey.com">Open Source on Github</Link>.
             </p>
             <p className="mt-5">
                 © Copyright 2022 Karl Lorey.<br />
