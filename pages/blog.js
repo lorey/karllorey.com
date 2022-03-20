@@ -17,6 +17,7 @@ function BlogList(props) {
 export default function Blog({posts}) {
     return (
         <PageLayout>
+            <title>Lorey Ipsum: Blog of Karl Lorey</title>
             <main className="page">
                 <div className="blog-post-container">
                     <div className="blog-post">

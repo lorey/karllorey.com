@@ -13,6 +13,7 @@ export default function Page({page}) {
     }
     return (
         <PageLayout>
+            <title>{page.title}</title>
             <h1>{page.title}</h1>
             <Markdown html={page.content} />
         </PageLayout>

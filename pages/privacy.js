@@ -5,6 +5,7 @@ const PrivacyPolicyPage = () => {
     return (
         <PageLayout>
             <main>
+                <title>Privacy Policy</title>
                 <h1>Privacy Policy</h1>
                 <p>
                     We are very delighted that you have shown interest in our enterprise.

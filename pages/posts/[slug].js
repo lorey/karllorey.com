@@ -13,6 +13,7 @@ export default function Post({ post, morePosts, preview }) {
   }
   return (
         <PageLayout>
+          <title>{post.title} - Lorey Ipsum</title>
           <article>
             <h1 className="mb-0">{post.title}</h1>
             <p className="mt-0 mb-1">
