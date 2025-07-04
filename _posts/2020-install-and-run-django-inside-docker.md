@@ -60,7 +60,7 @@ COPY . /code/
 In `docker-compose.yml`:
 
 ```yaml
-version: '3'
+version: "3"
 
 services:
   web:
@@ -73,7 +73,7 @@ services:
       # external is the port you use on your host, i.e. localhost:8000
       # internal is the port django uses inside the container
       # format: external:internal
-      - '8000:8000'
+      - "8000:8000"
 ```
 
 # Running it all
@@ -103,7 +103,7 @@ So to switch to port 80, change the line below `ports:` to
 
 ```yaml
 ports:
-  - '80:8000'
+  - "80:8000"
 ```
 
 Then the container can be accessed with `localhost:80` or just `localhost` (as 80 is the default).

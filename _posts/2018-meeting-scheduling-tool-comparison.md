@@ -1,5 +1,5 @@
 ---
-title: 'Automate call and meeting scheduling: a tool comparison (Meetingbird, Calendly, G Calendar)'
+title: "Automate call and meeting scheduling: a tool comparison (Meetingbird, Calendly, G Calendar)"
 slug: meeting-scheduling-tool-comparison
 date: 2020-02-25T10:30:13+01:00
 tags: Automation, Entrepreneurship

@@ -1,10 +1,10 @@
-import { useRouter } from 'next/router';
-import ErrorPage from 'next/error';
-import { getAllPosts, getPostBySlug } from '../../lib/api';
-import PageLayout from '../../components/PageLayout';
-import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
-import { serialize } from 'next-mdx-remote/serialize';
-import remarkFrontmatter from 'remark-frontmatter';
+import { useRouter } from "next/router";
+import ErrorPage from "next/error";
+import { getAllPosts, getPostBySlug } from "../../lib/api";
+import PageLayout from "../../components/PageLayout";
+import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
+import { serialize } from "next-mdx-remote/serialize";
+import remarkFrontmatter from "remark-frontmatter";
 
 interface PostProps {
   post: {
@@ -46,7 +46,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
     };
   }
 
-  const mdxSource = await serialize(post.content || '', {
+  const mdxSource = await serialize(post.content || "", {
     mdxOptions: {
       remarkPlugins: [remarkFrontmatter],
     },

@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   app:
@@ -6,10 +6,10 @@ services:
       context: .
     tty: True
     ports:
-      - '3000:3000'
+      - "3000:3000"
     volumes:
       - .:/code
     environment:
       NODE_ENV: development
-    user: '1000' # required for npm
+    user: "1000" # required for npm
     command: npm run dev

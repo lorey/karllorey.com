@@ -1,9 +1,9 @@
-import fs from 'fs';
-import { join } from 'path';
-import matter from 'gray-matter';
+import fs from "fs";
+import { join } from "path";
+import matter from "gray-matter";
 
-const pagesDirectory = join(process.cwd(), '_pages');
-const postsDirectory = join(process.cwd(), '_posts');
+const pagesDirectory = join(process.cwd(), "_pages");
+const postsDirectory = join(process.cwd(), "_posts");
 
 function getMarkdownFilesBySlug(directory) {
   // read all files
@@ -13,13 +13,13 @@ function getMarkdownFilesBySlug(directory) {
   const dataBySlug = {};
   filenames.forEach((filename) => {
     // read file
-    const fileContents = fs.readFileSync(join(directory, filename), 'utf8');
+    const fileContents = fs.readFileSync(join(directory, filename), "utf8");
     const { data, content } = matter(fileContents);
-    const slug = data.slug ? data.slug : filename.replace(/\.md$/, '');
+    const slug = data.slug ? data.slug : filename.replace(/\.md$/, "");
     // store at slug: data
     dataBySlug[slug] = {
       ...data,
-      date: data['date'] ? new Date(data['date']).toISOString() : null, // manually overwrite
+      date: data["date"] ? new Date(data["date"]).toISOString() : null, // manually overwrite
       content: content, // add raw markdown
       slug: slug,
     };
@@ -62,7 +62,7 @@ export function getAllPosts() {
   const posts = slugs
     .map((slug) => getPostBySlug(slug))
     // filter out drafts
-    .filter((post) => post.status !== 'draft')
+    .filter((post) => post.status !== "draft")
     // sort posts by date in descending order
     .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
   return posts;

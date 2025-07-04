@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from "next/link";
 import {
   FaAngellist,
   FaCube,
@@ -12,7 +12,7 @@ import {
   FaProductHunt,
   FaResearchgate,
   FaTwitter,
-} from 'react-icons/fa';
+} from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -66,7 +66,7 @@ export default function Footer() {
       </p>
       <p className="mt-5">
         This site does not use cookies or other services to improve your
-        experience. No data is stored. It is released as{' '}
+        experience. No data is stored. It is released as{" "}
         <Link href="https://github.com/lorey/karllorey.com">
           Open Source on Github
         </Link>
@@ -75,7 +75,7 @@ export default function Footer() {
       <p className="mt-5">
         © Copyright 2025 Karl Lorey.
         <br />
-        <Link href="/legal">Legal/Imprint</Link>.{' '}
+        <Link href="/legal">Legal/Imprint</Link>.{" "}
         <Link href="/privacy">Privacy Policy</Link>.
       </p>
     </footer>

@@ -1,11 +1,11 @@
-@import '@fontsource/playfair-display';
-@import '@fontsource/lato';
-@import 'tailwindcss';
+@import "@fontsource/playfair-display";
+@import "@fontsource/lato";
+@import "tailwindcss";
 
 @layer base {
   body {
     @apply bg-white text-gray-400;
-    font-family: 'Lato', sans-serif;
+    font-family: "Lato", sans-serif;
   }
 
   a {
@@ -19,7 +19,7 @@
   h5,
   h6 {
     @apply text-gray-700 mt-3;
-    font-family: 'Playfair Display', serif;
+    font-family: "Playfair Display", serif;
   }
 
   h1 {
@@ -48,7 +48,7 @@
 
   header .title {
     @apply text-7xl;
-    font-family: 'Playfair Display', serif;
+    font-family: "Playfair Display", serif;
   }
 }
 

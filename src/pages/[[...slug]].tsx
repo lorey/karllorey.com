@@ -1,10 +1,10 @@
-import { useRouter } from 'next/router';
-import ErrorPage from 'next/error';
-import { getAllPages, getPageBySlug } from '../lib/api';
-import PageLayout from '../components/PageLayout';
-import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
-import { serialize } from 'next-mdx-remote/serialize';
-import remarkFrontmatter from 'remark-frontmatter';
+import { useRouter } from "next/router";
+import ErrorPage from "next/error";
+import { getAllPages, getPageBySlug } from "../lib/api";
+import PageLayout from "../components/PageLayout";
+import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
+import { serialize } from "next-mdx-remote/serialize";
+import remarkFrontmatter from "remark-frontmatter";
 
 interface PageProps {
   page: {
@@ -37,7 +37,7 @@ export async function getStaticProps({
 }: {
   params: { slug?: string[] };
 }) {
-  const slug = params?.slug ? params.slug.join('/') : '/';
+  const slug = params?.slug ? params.slug.join("/") : "/";
   const page = getPageBySlug(slug);
 
   if (!page) {
@@ -46,7 +46,7 @@ export async function getStaticProps({
     };
   }
 
-  const mdxSource = await serialize(page.content || '', {
+  const mdxSource = await serialize(page.content || "", {
     mdxOptions: {
       remarkPlugins: [remarkFrontmatter],
     },
@@ -65,11 +65,11 @@ export async function getStaticPaths() {
 
   return {
     paths: pages.map((page) => {
-      if (page.slug !== '/') {
+      if (page.slug !== "/") {
         // regular page
         return {
           params: {
-            slug: page.slug.split('/'),
+            slug: page.slug.split("/"),
           },
         };
       } else {

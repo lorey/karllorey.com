@@ -1,6 +1,6 @@
-import { getAllPosts } from '../lib/api';
-import PageLayout from '../components/PageLayout';
-import Link from 'next/link';
+import { getAllPosts } from "../lib/api";
+import PageLayout from "../components/PageLayout";
+import Link from "next/link";
 
 interface Post {
   title: string;
@@ -16,7 +16,7 @@ function BlogList({ items }: BlogListProps) {
   const listItems = items.map((post) => (
     <li key={post.slug} className="py-3">
       {new Date(post.date).toLocaleDateString()}: <br />
-      <Link href={'/posts/' + post.slug}>{post.title}</Link>
+      <Link href={"/posts/" + post.slug}>{post.title}</Link>
     </li>
   ));
   return <ul>{listItems}</ul>;
