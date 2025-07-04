@@ -5,6 +5,7 @@ import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 
 const nextConfig: NextConfig = {
   /* config options here */
+  output: 'export',
   reactStrictMode: true,
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
 };
