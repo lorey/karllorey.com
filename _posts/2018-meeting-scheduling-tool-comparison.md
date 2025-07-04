@@ -21,7 +21,6 @@ Since my calendar is rather full, scheduling a call or meeting is rather cumbers
 Typically, you have to suggest one to three slots, sometimes for several iterations.
 Writing emails back and forth takes time and delays the actual communication.
 So we set out to find tools that automate this task.
-<!-- TEASER_END -->
 
 ### How automated scheduling works
 

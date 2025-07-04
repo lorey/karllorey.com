@@ -20,7 +20,6 @@ it lacked several features I needed.
 So far, Nikola has these features and many more
 which is why I'm very happy to have switched.
 Read the rest of the pros and cons here.
-<!-- TEASER_END -->
 
 # Background: Static Site Generators
 Both Lektor and Nikola are Static Site Generators (SSG) implemented in Python.

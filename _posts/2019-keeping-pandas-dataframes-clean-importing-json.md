@@ -20,7 +20,6 @@ and deletes them when you're done.
 This way, your code stays lean and you don't have to remove temporary columns yourself.
 In this short article, I will show how you can keep your pre-processing clean
 and use a Python ContextManager to clean up temporary columns.
-<!-- TEASER_END -->
 
 In this example I will use the actual code I use for importing data from the API of our CRM named Hubspot.
 What I retrieve is a list of companies stored as a list of Python dictionaries.

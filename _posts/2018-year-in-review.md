@@ -19,7 +19,6 @@ Most notably this year, we managed to do our first closing and could since do ou
 Personally, I started to lead the investing team at First Momentum, currently consisting of five people.
 
 So here are my reflections on this year, my learnings, and my goals for 2019.
-<!-- TEASER_END -->
 
 ## Overview of my 2018
 To keep things short, I will use a list to give you an overview of my 2018:

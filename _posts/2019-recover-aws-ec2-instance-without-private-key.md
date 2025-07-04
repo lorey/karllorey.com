@@ -20,7 +20,6 @@ What we'll do:
 * login with a new key to your original instance
 
 In short, this replaces the key needed for ssh to connect with a new one of your choice.
-<!-- TEASER_END -->
 
 ## AWS Recovery Automation
 There's an [Amazon recovery automation thing](https://aws.amazon.com/premiumsupport/knowledge-center/recover-access-lost-key-pair/) available that aims to recover your instance automatically,

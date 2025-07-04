@@ -17,7 +17,6 @@ So usually, you just install Black globally via `pip3 install black`.
 But since I use Debian which still ships with Python 3.5
 this yielded some smaller challenges as Black only runs under Python 3.6+.
 This post is a small tutorial on how you can use Black on Debian and integrate it into the command line, PyCharm, and IdeaVim.
-<!-- TEASER_END -->
 
 ## Challenge 1: Python 3.6+ on Debian
 Since Debian currently ships with Python 3.5, I needed to get Python 3.6 running somehow.

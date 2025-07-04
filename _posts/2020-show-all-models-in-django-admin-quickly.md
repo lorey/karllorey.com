@@ -24,7 +24,6 @@ admin.site.register(Project)
 Over time, especially during development when you create new objects a lot,
 this can become quite tedious.
 So I cam up with a quick hack to add all models to your Django admin site automatically.
-<!-- TEASER_END -->
 Instead of registering all classes manually, 
 we simply use inspection to add all classes of our models module.
 This is what you need to add to the `admin.py` file inside your app:

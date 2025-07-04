@@ -20,7 +20,6 @@ And I would like to help you get started using one.
 First, by talking about my usage.
 Secondly, by summarizing the benefits.
 And lastly, by giving some recommendations on which notebook to choose and how to structure it.
-<!-- TEASER_END -->
 
 ## How I use my notebook
 I basically carry my notebook with me all the time.

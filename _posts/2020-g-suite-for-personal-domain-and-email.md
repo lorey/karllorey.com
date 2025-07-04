@@ -13,7 +13,6 @@ Using Google's [G Suite](https://gsuite.google.com/) for your personal domain al
 It includes Gmail (without ads), Meet, Calendar, Drive with > 30 GB, Docs, etc.
 What differentiates it from a regular Google account is that you can use your personal domain and thus your own email, e.g. mail@yourname.com.
 After having used a G Suite of my company for a while, I wanted to have it for my personal email and domain, too.
-<!-- TEASER_END -->
 
 # Benefits
 Besides being able to use your personal email for everything and as a Google account, you get:
