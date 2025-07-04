@@ -2,16 +2,15 @@
 title: About me
 slug: human
 date: 2020-02-25T11:03:11+01:00
-tags: 
-category: 
-link: 
-description: 
+tags:
+category:
+link:
+description:
 type: text
 ---
 
 This is just a random collection of things about me.
 I guess it's your call which social media profile you choose to find out more about me...
-
 
 ## Core beliefs
 
@@ -29,7 +28,7 @@ I guess it's your call which social media profile you choose to find out more ab
 - rest.
 - be.
 
-> “Champions aren't made in gyms. Champions are made from something they have deep inside them-a desire, a dream, a vision. They have to have the skill, and the will. But the will must be stronger than the skill.” 
+> “Champions aren't made in gyms. Champions are made from something they have deep inside them-a desire, a dream, a vision. They have to have the skill, and the will. But the will must be stronger than the skill.”
 
 ## Things I enjoy
 

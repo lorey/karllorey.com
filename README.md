@@ -7,20 +7,24 @@ Built with minimalism in mind, Next.js, and Taildwind.
 - locally hosted fonts with Fontsource
 
 ## Test it
+
 Run it locally with docker:
+
 ```
 docker-compse build
 docker-compose up
 
-// although dependencies are installed, 
+// although dependencies are installed,
 // this will make sure to add node_modules to your working directory
 // so the IDE and commands work properly
 docker-compose exec app npm install
 ```
 
 ## Deployment
+
 Deployment is done via Github Pages, see .github/workflows.
 To set up:
+
 - point your domain to Github servers
 - set CNAME file in public
 - enable gh-pages deployment

@@ -2,16 +2,16 @@
 title: Inspiration
 slug: human/inspiration
 date: 2020-02-25T11:03:11+01:00
-tags: 
-category: 
-link: 
-description: 
+tags:
+category:
+link:
+description:
 type: text
 ---
 
 Here's a selection of things that inspire me categorized by broad topics.
 
-Note: 
+Note:
 I don't read too many books, mainly because my attention span is quite short when reading.
 Over time I've still accumulated a few favorites.
 You can check out everything I'm reading at [Goodreads](https://www.goodreads.com/karllorey).
@@ -40,6 +40,7 @@ Misc
 - [Brian Chesky](https://mastersofscale.com/brian-chesky-handcrafted/) on Masters of Scale
 
 ## Life
+
 Essentialism
 
 - Essentialism by Greg McKeown
@@ -59,6 +60,7 @@ Communication
 - [dumber phone](https://nomasters.io/posts/dumber-phone/)
 
 ## Tech
+
 - The Pragmatic Programmer by Andy Hunt
 - Refactoring by Martin Fowler
 - Design Patterns by Gamma et al

@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   app:
@@ -6,7 +6,7 @@ services:
       context: .
     tty: True
     ports:
-      - '3000:3000'
+      - "3000:3000"
     volumes:
       - .:/code
     environment:

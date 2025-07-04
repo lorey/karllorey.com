@@ -2,10 +2,10 @@
 title: Talks and workshops
 slug: speaker
 date: 2020-02-25T11:03:11+01:00
-tags: 
-category: 
-link: 
-description: 
+tags:
+category:
+link:
+description:
 type: text
 ---
 

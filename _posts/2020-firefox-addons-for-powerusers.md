@@ -2,10 +2,10 @@
 title: Firefox addons for powerusers
 slug: firefox-addons-for-powerusers
 date: 2020-02-25T10:30:13+01:00
-tags: 
-category: 
-link: 
-description: 
+tags:
+category:
+link:
+description:
 type: text
 status: draft
 ---
@@ -19,4 +19,3 @@ status: draft
 ## Keeping stuff organized: Tree Style Tab
 
 ## Keeping RAM-usage low: Auto Tab Discard
-
