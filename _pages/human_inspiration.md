@@ -9,8 +9,6 @@ description:
 type: text
 ---
 
-# Inspiration
-
 Here's a selection of things that inspire me categorized by broad topics.
 
 Note: 
