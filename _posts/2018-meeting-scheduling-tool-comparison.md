@@ -1,11 +1,11 @@
 ---
-title: "Automate call and meeting scheduling: a tool comparison (Meetingbird, Calendly, G Calendar)"
+title: 'Automate call and meeting scheduling: a tool comparison (Meetingbird, Calendly, G Calendar)'
 slug: meeting-scheduling-tool-comparison
 date: 2020-02-25T10:30:13+01:00
 tags: Automation, Entrepreneurship
 category: Entrepreneurship
-link: 
-description: 
+link:
+description:
 type: text
 status: draft
 ---
@@ -39,6 +39,7 @@ Think of it like using doodle, but with predefined options that match you calend
 While there are many solution to automate scheduling, I have picked three options that have a free tier and thus a startup-friendly pricing.
 
 #### calendly - simple and easy but limited
+
 A simple solution to schedule meetings is calendly.
 calendly allows you to define recurring time slots where you're willing to make meetings.
 It then uses your calendar to check whether you're available at a specific time slot.

@@ -1,11 +1,11 @@
 ---
-title: "Karl Lorey: Founder, Investor, Techie"
-slug: "/"
+title: 'Karl Lorey: Founder, Investor, Techie'
+slug: '/'
 date: 2020-02-25T11:03:11+01:00
-tags: 
-category: 
-link: 
-description: 
+tags:
+category:
+link:
+description:
 type: text
 ---
 

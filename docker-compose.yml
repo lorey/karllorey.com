@@ -11,5 +11,5 @@ services:
       - .:/code
     environment:
       NODE_ENV: development
-    user: "1000" # required for npm
+    user: '1000' # required for npm
     command: npm run dev

@@ -3,9 +3,9 @@ title: Keeping Pandas DataFrames clean when importing JSON (with Context Manager
 slug: keeping-pandas-dataframes-clean-importing-json
 date: 2019-03-03T10:30:13+01:00
 tags: Machine Learning, Pandas, Clean Code, Python, Tech
-category: Tech 
-link: 
-description: 
+category: Tech
+link:
+description:
 type: text
 ---
 
@@ -35,9 +35,11 @@ The json_normalize function generates a clean DataFrame based on the given `data
 This is especially useful for nested dictionaries.
 
 ## Ugly: Keeping imported columns
+
 The problem with json_normalize is that you usually only want a subset of the imported columns,
 mostly with different names or some kind of pre-processing, too.
 So you might be tempted to do something like this:
+
 ```python
 from pandas.io.json import json_normalize
 
@@ -54,10 +56,12 @@ This works, but keeps all the imported columns inplace and might take a lot of s
 So what can you do?
 
 ## Ugly: Dropping columns manually
+
 So after importing, you want to get rid of all temporary columns from the import.
 To do this, you have to either select the columns you want or drop all columns you don't want.
 In both cases, you have to somehow keep track of the temporary columns or the ones you want to keep.
 To deal with this, one solution would be to prefix temporary columns and delete them afterwards:
+
 ```python
 from pandas.io.json import json_normalize
 
@@ -75,6 +79,7 @@ df['domain'] = df['temp_properties.website.value']
 ```
 
 Afterwards, you would then select all desired columns or drop all undesired columns.
+
 ```python
 df.drop([c for c in df.columns if c.startswith('temp_')], axis=1, inplace=True)
 // or
@@ -88,6 +93,7 @@ or the used prefix in different places.
 Just imagine you have to change the prefix `temp_` one day or make the code work with a different prefix.
 
 ## Clean and easy: using a Context Manager
+
 After having used the above methods for some time, it struck me that [Python Context Managers](https://jeffknupp.com/blog/2016/03/07/python-with-context-managers/) might be a cleaner solution.
 You might know them from their most popular application `with open() as file:`.
 If not, please take a few minutes to read more about them.
@@ -112,6 +118,7 @@ print(df)
 The benefit: You don't have to keep track anymore and the context manager handles the deletion of all temporary columns.
 
 ## How it works
+
 You can just copy and paste the following snippet to get going, I'll explain how it works below:
 
 ```python
@@ -139,7 +146,6 @@ and leaves only the newly created columns behind.
 Hope this helps you to create a clean pre-processing pipeline.
 Let me know what you think.
 You can find the [code on GitHub](https://gist.github.com/lorey/2b57b4ebfec4d45221e15a49060f80d2).
-
 
 Further reading:
 
