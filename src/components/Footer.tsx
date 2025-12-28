@@ -73,23 +73,26 @@ export default function Footer() {
         .
       </p>
       <p className="mt-5">
-        © Copyright 2025 Karl Lorey.
+        © Copyright 2025 Karl Lorey.{" "}
+        {process.env.NEXT_PUBLIC_COMMIT_SHA && (
+          <span className="text-xs text-gray-400">
+            Last updated:{" "}
+            {process.env.NEXT_PUBLIC_COMMIT_DATE
+              ? new Date(
+                  process.env.NEXT_PUBLIC_COMMIT_DATE
+                ).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })
+              : "Unknown"}{" "}
+            ({process.env.NEXT_PUBLIC_COMMIT_SHA.slice(0, 7)})
+          </span>
+        )}
         <br />
         <Link href="/legal">Legal/Imprint</Link>.{" "}
         <Link href="/privacy">Privacy Policy</Link>.
       </p>
-      {process.env.NEXT_PUBLIC_COMMIT_SHA && (
-        <p className="mt-2 text-xs text-gray-400">
-          Last updated:{" "}
-          {process.env.NEXT_PUBLIC_COMMIT_DATE
-            ? new Date(process.env.NEXT_PUBLIC_COMMIT_DATE).toLocaleDateString(
-                "en-US",
-                { year: "numeric", month: "short", day: "numeric" }
-              )
-            : "Unknown"}{" "}
-          ({process.env.NEXT_PUBLIC_COMMIT_SHA.slice(0, 7)})
-        </p>
-      )}
     </footer>
   );
 }
