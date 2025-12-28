@@ -46,4 +46,4 @@ Use `@/` for imports from `./src/` (e.g., `import { Header } from "@/components/
 - Next.js 15, React 19, TypeScript 5 (strict mode)
 - Tailwind CSS 4 for styling
 - MDX for content with JSX components
-- GitHub Pages deployment (automated via GitHub Actions on push to master)
+- GitHub Pages deployment (automated via GitHub Actions on push to main)
