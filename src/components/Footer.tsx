@@ -75,7 +75,7 @@ export default function Footer() {
       <p className="mt-5">
         © Copyright 2025 Karl Lorey.{" "}
         {process.env.NEXT_PUBLIC_COMMIT_SHA && (
-          <span className="text-xs text-gray-400">
+          <>
             Last updated:{" "}
             {process.env.NEXT_PUBLIC_COMMIT_DATE
               ? new Date(
@@ -87,7 +87,7 @@ export default function Footer() {
                 })
               : "Unknown"}{" "}
             ({process.env.NEXT_PUBLIC_COMMIT_SHA.slice(0, 7)})
-          </span>
+          </>
         )}
         <br />
         <Link href="/legal">Legal/Imprint</Link>.{" "}
