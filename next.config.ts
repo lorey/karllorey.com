@@ -1,10 +1,7 @@
 import type { NextConfig } from "next";
 import createMDX from "@next/mdx";
-import remarkFrontmatter from "remark-frontmatter";
-import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   output: "export",
   reactStrictMode: true,
   pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
@@ -16,7 +13,8 @@ const nextConfig: NextConfig = {
 const withMDX = createMDX({
   extension: /\.mdx?$/,
   options: {
-    remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
+    // Use string-based plugin names for Turbopack compatibility
+    remarkPlugins: ["remark-frontmatter", "remark-mdx-frontmatter"],
     rehypePlugins: [],
   },
 });
