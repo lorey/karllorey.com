@@ -10,7 +10,7 @@ export default function PageLayout({
     <div className="max-w-xl mx-auto p-5">
       <Header />
       <hr className="mb-16" />
-      {children}
+      <main className="content">{children}</main>
       <hr className="my-16" />
       <Footer />
     </div>

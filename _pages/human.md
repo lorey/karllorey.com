@@ -39,4 +39,4 @@ I guess it's your call which social media profile you choose to find out more ab
 - deep work and focus
 - minimalism/essentialism
 
-You can find technologies I like [here](/src/pages-md/techie.md.md).
+You can find technologies I like [here](/techie).

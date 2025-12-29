@@ -1,7 +1,9 @@
 import { useRouter } from "next/router";
 import ErrorPage from "next/error";
 import { getAllPosts, getPostBySlug } from "../../lib/api";
+import { formatDate } from "../../lib/date";
 import PageLayout from "../../components/PageLayout";
+import SEO from "../../components/SEO";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import remarkFrontmatter from "remark-frontmatter";
@@ -11,6 +13,7 @@ interface PostProps {
     title?: string;
     slug: string;
     date?: string;
+    description?: string;
     content: string;
   };
   mdxSource: MDXRemoteSerializeResult;
@@ -24,10 +27,17 @@ export default function Post({ post, mdxSource }: PostProps) {
 
   return (
     <PageLayout>
+      <SEO
+        title={post.title || "Blog Post"}
+        description={post.description}
+        path={`/posts/${post.slug}`}
+        type="article"
+        publishedDate={post.date}
+      />
       {post.title && <h1>{post.title}</h1>}
       {post.date && (
         <div className="text-gray-400 text-sm mb-8">
-          {new Date(post.date).toLocaleDateString()}
+          {formatDate(post.date)}
         </div>
       )}
       <div className="markdown">

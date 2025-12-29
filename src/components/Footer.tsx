@@ -1,6 +1,9 @@
 import Link from "next/link";
+import { IconType } from "react-icons";
+import { formatDate } from "@/lib/date";
 import {
   FaAngellist,
+  FaBluesky,
   FaCube,
   FaGithub,
   FaGitlab,
@@ -11,88 +14,111 @@ import {
   FaMeetup,
   FaProductHunt,
   FaResearchgate,
-  FaTwitter,
-} from "react-icons/fa";
+  FaXTwitter,
+} from "react-icons/fa6";
+
+interface SocialLink {
+  name: string;
+  url: string;
+  icon: IconType;
+}
+
+const socialLinks: SocialLink[] = [
+  { name: "GitHub", url: "https://github.com/lorey", icon: FaGithub },
+  {
+    name: "LinkedIn",
+    url: "https://www.linkedin.com/in/karllorey",
+    icon: FaLinkedin,
+  },
+  { name: "X", url: "https://x.com/karllorey", icon: FaXTwitter },
+  {
+    name: "Bluesky",
+    url: "https://bsky.app/profile/karllorey.bsky.social",
+    icon: FaBluesky,
+  },
+  {
+    name: "Crunchbase",
+    url: "https://www.crunchbase.com/person/karl-lorey",
+    icon: FaCube,
+  },
+  {
+    name: "Product Hunt",
+    url: "https://www.producthunt.com/@karllorey",
+    icon: FaProductHunt,
+  },
+  { name: "AngelList", url: "https://angel.co/karllorey", icon: FaAngellist },
+  { name: "GitLab", url: "https://gitlab.com/lorey", icon: FaGitlab },
+  {
+    name: "Goodreads",
+    url: "https://www.goodreads.com/karllorey",
+    icon: FaGoodreads,
+  },
+  {
+    name: "Instagram",
+    url: "https://www.instagram.com/karllorey",
+    icon: FaInstagram,
+  },
+  { name: "Medium", url: "https://medium.com/@karllorey", icon: FaMedium },
+  {
+    name: "Meetup",
+    url: "https://www.meetup.com/members/196097665/",
+    icon: FaMeetup,
+  },
+  {
+    name: "ResearchGate",
+    url: "https://www.researchgate.net/profile/Karl_Lorey",
+    icon: FaResearchgate,
+  },
+];
 
 export default function Footer() {
   return (
     <footer className="text-center text-sm py-10">
-      <p className="">
-        I&apos;m Karl Lorey–Techie, Founder, and Investor living in Karlsruhe,
-        Germany.
+      {/* Contact section */}
+      <p>
+        Karl Lorey: founder, builder, investor living in Germany.
         <br />
-        Let&apos;s get in touch.
+        Reach me at mail (at) karllorey (dot) com or find me here:
       </p>
-      <p className="flex justify-center gap-5 flex-wrap text-xl">
-        <a href="https://angel.co/karllorey" target="_blank">
-          <FaAngellist className="inline" />
-        </a>
-        <a href="https://www.crunchbase.com/person/karl-lorey" target="_blank">
-          <FaCube className="inline" />
-        </a>
-        <a href="https://github.com/lorey" target="_blank">
-          <FaGithub className="inline" />
-        </a>
-        <a href="https://gitlab.com/lorey" target="_blank">
-          <FaGitlab className="inline" />
-        </a>
-        <a href="https://www.goodreads.com/karllorey" target="_blank">
-          <FaGoodreads className="inline" />
-        </a>
-        <a href="https://www.instagram.com/karllorey" target="_blank">
-          <FaInstagram className="inline" />
-        </a>
-        <a href="https://www.linkedin.com/in/karllorey" target="_blank">
-          <FaLinkedin className="inline" />
-        </a>
-        <a href="https://medium.com/@karllorey" target="_blank">
-          <FaMedium className="inline" />
-        </a>
-        <a href="https://www.meetup.com/members/196097665/" target="_blank">
-          <FaMeetup className="inline" />
-        </a>
-        <a href="https://www.producthunt.com/@karllorey" target="_blank">
-          <FaProductHunt className="inline" />
-        </a>
-        <a
-          href="https://www.researchgate.net/profile/Karl_Lorey"
-          target="_blank"
-        >
-          <FaResearchgate className="inline" />
-        </a>
-        <a href="https://twitter.com/karllorey" target="_blank">
-          <FaTwitter className="inline" />
-        </a>
+
+      {/* Social links */}
+      <p className="flex justify-center gap-4 flex-wrap text-lg mt-4">
+        {socialLinks.map((link) => (
+          <a
+            key={link.name}
+            href={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={link.name}
+          >
+            <link.icon className="inline" />
+          </a>
+        ))}
       </p>
-      <p className="mt-5">
-        This site does not use cookies or other services to improve your
-        experience. No data is stored. It is released as{" "}
-        <Link href="https://github.com/lorey/karllorey.com">
-          Open Source on Github
-        </Link>
-        .
-      </p>
-      <p className="mt-5">
-        © Copyright 2025 Karl Lorey.{" "}
-        {process.env.NEXT_PUBLIC_COMMIT_SHA && (
-          <>
-            Last updated:{" "}
-            {process.env.NEXT_PUBLIC_COMMIT_DATE
-              ? new Date(
-                  process.env.NEXT_PUBLIC_COMMIT_DATE
-                ).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                })
-              : "Unknown"}{" "}
-            ({process.env.NEXT_PUBLIC_COMMIT_SHA.slice(0, 7)})
-          </>
-        )}
-        <br />
-        <Link href="/legal">Legal/Imprint</Link>.{" "}
-        <Link href="/privacy">Privacy Policy</Link>.
-      </p>
+
+      {/* Meta section */}
+      <div className="mt-10 space-y-2">
+        <p className="pb-0">
+          <Link href="/legal">Legal</Link>
+          {" · "}
+          <Link href="/privacy">Privacy</Link>
+          {" · "}
+          <Link href="https://github.com/lorey/karllorey.com">Source</Link>
+        </p>
+        <p className="pb-0">
+          © 2025 Karl Lorey.
+          {process.env.NEXT_PUBLIC_COMMIT_SHA && (
+            <>
+              {" "}
+              Updated{" "}
+              {process.env.NEXT_PUBLIC_COMMIT_DATE
+                ? formatDate(process.env.NEXT_PUBLIC_COMMIT_DATE)
+                : "Unknown"}{" "}
+              ({process.env.NEXT_PUBLIC_COMMIT_SHA.slice(0, 7)})
+            </>
+          )}
+        </p>
+      </div>
     </footer>
   );
 }

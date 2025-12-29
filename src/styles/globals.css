@@ -12,6 +12,18 @@
     @apply text-gray-700 hover:underline hover:text-gray-900;
   }
 
+  hr {
+    @apply border-gray-200;
+  }
+
+  header .title {
+    @apply text-7xl;
+    font-family: "Playfair Display", serif;
+  }
+}
+
+/* Content area typography - scoped to avoid affecting error pages */
+.content {
   h1,
   h2,
   h3,
@@ -23,44 +35,37 @@
   }
 
   h1 {
-    @apply text-4xl mt-10 mb-3;
+    @apply text-4xl mt-14 mb-6;
   }
 
   h2 {
-    @apply text-3xl mt-5 mb-1;
+    @apply text-2xl mt-14 mb-4;
   }
 
   h3 {
-    @apply text-2xl mt-3 mb-1;
+    @apply text-xl mt-10 mb-3;
   }
 
   h4 {
-    @apply text-xl mt-1 mb-0;
+    @apply text-lg mt-6 mb-2;
   }
 
-  p {
+  p,
+  ul,
+  ol {
     @apply pb-5;
-  }
-
-  hr {
-    @apply border-gray-200;
-  }
-
-  header .title {
-    @apply text-7xl;
-    font-family: "Playfair Display", serif;
   }
 }
 
 /* Scope list styles to markdown content only */
-.markdown ul {
+.content .markdown ul {
   @apply list-disc list-outside;
 }
 
-.markdown ol {
+.content .markdown ol {
   @apply list-decimal list-outside;
 }
 
-.markdown li {
+.content .markdown li {
   @apply ml-5;
 }

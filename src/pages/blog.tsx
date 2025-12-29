@@ -1,12 +1,9 @@
 import { getAllPosts } from "../lib/api";
+import { formatDate } from "../lib/date";
 import PageLayout from "../components/PageLayout";
+import SEO from "../components/SEO";
 import Link from "next/link";
-
-interface Post {
-  title: string;
-  slug: string;
-  date: string;
-}
+import { Post } from "../types";
 
 interface BlogListProps {
   items: Post[];
@@ -15,7 +12,7 @@ interface BlogListProps {
 function BlogList({ items }: BlogListProps) {
   const listItems = items.map((post) => (
     <li key={post.slug} className="py-3">
-      {new Date(post.date).toLocaleDateString()}: <br />
+      {formatDate(post.date)}: <br />
       <Link href={"/posts/" + post.slug}>{post.title}</Link>
     </li>
   ));
@@ -29,6 +26,7 @@ interface BlogProps {
 export default function Blog({ posts }: BlogProps) {
   return (
     <PageLayout>
+      <SEO title="Blog" description="Tech blog by Karl Lorey" path="/blog" />
       <h1>Lorey Ipsum</h1>
       <p>Blogging mostly about tech.</p>
       <BlogList items={posts} />

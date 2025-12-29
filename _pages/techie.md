@@ -13,7 +13,7 @@ I've studied computer science,
 did a lot of research during university in machine learning and databases but also touching psychology,
 and love to build things with the help of technology.
 This page is about my academic and technical background,
-projects [can be found elsewhere](/src/pages-md/founder.md.md).
+projects [can be found elsewhere](/portfolio).
 
 ## Academic background and computer science
 
@@ -61,7 +61,7 @@ My technical focus is build upon the following pillars:
 - data analysis and machine learning to perform automated decisions (natural language processing, classification)
 - web development to build an interface for training data and data exploration
 
-You can find projects I can talk about publicly [in my portfolio](/src/pages-md/founder.md.md).
+You can find projects I can talk about publicly [in my portfolio](/portfolio).
 
 ### Technologies
 

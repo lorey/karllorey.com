@@ -13,6 +13,7 @@ npm run format:check # Check formatting without writing
 ```
 
 Docker development:
+
 ```bash
 docker-compose build && docker-compose up
 docker-compose exec app npm install  # Install node_modules in working dir
@@ -26,9 +27,20 @@ This is a **static site** built with Next.js 15 using static export (`output: "e
 
 - **`_pages/*.md`** - Static pages (homepage, about sections). Rendered via catch-all route `[[...slug]].tsx`
 - **`_posts/*.md`** - Blog posts. Rendered via `posts/[slug].tsx`
+- **`_projects/*.mdx`** - Projects with frontmatter: `title`, `slug`, `description`, `url`, `github`, `type` (venture/product/library/experiment), `launchDate`, `lastUpdated`
 - **Frontmatter**: YAML metadata (slug, date, title, status). Use `status: "draft"` to hide posts
 
 Content is parsed with `gray-matter` and rendered as MDX via `next-mdx-remote`.
+
+### Updating Project Dates from GitHub
+
+To get accurate `lastUpdated` dates for projects, fetch from GitHub API:
+
+```
+https://api.github.com/users/lorey/repos?per_page=100&sort=pushed
+```
+
+Look for `pushed_at` field for each repo and update the corresponding `_projects/*.mdx` file.
 
 ### Key Files
 

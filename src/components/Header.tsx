@@ -15,16 +15,13 @@ export default function Header() {
             <Link href="/founder">Founder</Link>
           </li>
           <li>
-            <Link href="/portfolio">Maker</Link>
+            <Link href="/portfolio">Builder</Link>
           </li>
           <li>
             <Link href="/techie">Techie</Link>
           </li>
           <li>
             <Link href="/vc">Investor</Link>
-          </li>
-          <li>
-            <Link href="/speaker">Speaker</Link>
           </li>
           <li>
             <Link href="/blog">Lorey Ipsum</Link>
