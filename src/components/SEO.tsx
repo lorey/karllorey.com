@@ -31,6 +31,8 @@ export default function SEO({
       <meta property="og:type" content={type || "website"} />
       <meta property="og:url" content={url} />
       <meta property="og:site_name" content={siteName} />
+      <meta property="og:image" content={`${baseUrl}/social-preview.jpg`} />
+      <meta name="twitter:image" content={`${baseUrl}/social-preview.jpg`} />
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:title" content={fullTitle} />
       {description && <meta name="twitter:description" content={description} />}
