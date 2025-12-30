@@ -5,7 +5,7 @@ date: 2019-07-28T10:30:13+01:00
 tags: Python, Black, Docker, Pycharm, IdeaVim, Tech
 category: Tech
 link:
-description:
+description: "Run the Python formatter in Docker and integrate it with your IDE."
 type: text
 ---
 

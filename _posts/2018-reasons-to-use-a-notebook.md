@@ -5,7 +5,7 @@ date: 2018-12-28T10:30:13+01:00
 tags: Notebook, Organization, Entrepreneurship
 category: Entrepreneurship
 link:
-description:
+description: "How I use mine, the benefits, and recommendations for getting started."
 type: text
 ---
 

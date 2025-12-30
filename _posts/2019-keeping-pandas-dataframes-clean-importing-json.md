@@ -5,7 +5,7 @@ date: 2019-03-03T10:30:13+01:00
 tags: Machine Learning, Pandas, Clean Code, Python, Tech
 category: Tech
 link:
-description:
+description: "Use a Python Context Manager to automatically clean up temporary columns."
 type: text
 ---
 

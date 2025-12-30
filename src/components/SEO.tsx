@@ -7,6 +7,7 @@ interface SEOProps {
   type?: "website" | "article";
   publishedDate?: string;
   addSuffix?: boolean;
+  noindex?: boolean;
 }
 
 export default function SEO({
@@ -16,6 +17,7 @@ export default function SEO({
   type,
   publishedDate,
   addSuffix = true,
+  noindex = false,
 }: SEOProps) {
   const siteName = "Karl Lorey";
   const twitterHandle = "@karllorey";
@@ -43,6 +45,7 @@ export default function SEO({
       {publishedDate && (
         <meta property="article:published_time" content={publishedDate} />
       )}
+      {noindex && <meta name="robots" content="noindex, nofollow" />}
     </Head>
   );
 }

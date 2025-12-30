@@ -5,7 +5,7 @@ date: 2019-01-03T10:30:13+01:00
 tags: Entrepreneurship, Year in Review, Venture Capital
 category: Year in Review
 link:
-description:
+description: "Reflections on founding First Momentum and doing our first investments."
 type: text
 ---
 

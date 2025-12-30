@@ -5,7 +5,7 @@ date: 2020-04-29T12:38:37+02:00
 tags: Google, Hosting, Organization, G Suite
 category: Tech
 link:
-description:
+description: "Use Gmail, Calendar, Drive, and other Google tools with your own domain."
 type: text
 ---
 

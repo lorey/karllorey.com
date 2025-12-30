@@ -1,6 +1,7 @@
 import fs from "fs";
 import { join } from "path";
 import matter from "gray-matter";
+import { PostStatus } from "@/types";
 
 const pagesDirectory = join(process.cwd(), "_pages");
 const postsDirectory = join(process.cwd(), "_posts");
@@ -11,6 +12,11 @@ interface MarkdownData {
   date?: string | null;
   content: string;
   slug: string;
+  status?: PostStatus;
+}
+
+function isListedStatus(status?: PostStatus): boolean {
+  return !status || status === "published" || status === "highlighted";
 }
 
 interface MarkdownFilesBySlug {
@@ -76,8 +82,6 @@ export function getAllPosts(): MarkdownData[] {
   const slugs = getPostSlugs();
   const posts = slugs
     .map((slug) => getPostBySlug(slug))
-    // filter out drafts
-    .filter((post) => post.status !== "draft")
     // sort posts by date in descending order
     .sort((post1, post2) => {
       if (!post1.date || !post2.date) return 0;
@@ -86,10 +90,14 @@ export function getAllPosts(): MarkdownData[] {
   return posts;
 }
 
+export function getListedPosts(): MarkdownData[] {
+  return getAllPosts().filter((post) => isListedStatus(post.status));
+}
+
 export function getRecentPosts(months: number = 12): MarkdownData[] {
   const cutoff = new Date();
   cutoff.setMonth(cutoff.getMonth() - months);
-  return getAllPosts().filter(
+  return getListedPosts().filter(
     (post) => post.date && new Date(post.date) >= cutoff
   );
 }

@@ -5,7 +5,7 @@ date: 2020-01-17T10:30:13+01:00
 tags: Django, Python, Docker, Tech
 category: Tech
 link:
-description:
+description: "Run Django with apache2/mod_wsgi in Docker with minimal configuration."
 type: text
 ---
 

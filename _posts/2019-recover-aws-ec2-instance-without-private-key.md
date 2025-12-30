@@ -5,7 +5,7 @@ date: 2019-09-03T10:30:13+01:00
 tags: AWS, Tech
 category: Tech
 link:
-description:
+description: "Mount the volume in a temporary instance and replace the SSH key."
 type: text
 ---
 

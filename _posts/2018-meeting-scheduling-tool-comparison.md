@@ -5,7 +5,7 @@ date: 2020-02-25T10:30:13+01:00
 tags: Automation, Entrepreneurship
 category: Entrepreneurship
 link:
-description:
+description: "Save time with Calendly, Meetingbird, and other scheduling tools."
 type: text
 status: draft
 ---

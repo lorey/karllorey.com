@@ -5,7 +5,7 @@ date: 2020-03-10T17:03:35+01:00
 tags: Python, Lektor, Nikola, Tech
 category: Tech
 link:
-description:
+description: "Why I migrated and what to expect from both Python-based static site generators."
 type: text
 status:
 ---

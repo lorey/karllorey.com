@@ -21,7 +21,10 @@ export default function LatestProjects({
       <h2>Latest Projects</h2>
       <p>
         What I&apos;m working on currently, more at{" "}
-        <Link href="/portfolio" className="whitespace-nowrap">/portfolio</Link>.
+        <Link href="/portfolio" className="whitespace-nowrap">
+          /portfolio
+        </Link>
+        .
       </p>
       <div className="space-y-3 mb-5">
         {displayProjects.map((project) => (

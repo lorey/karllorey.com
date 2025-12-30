@@ -5,7 +5,7 @@ date: 2020-05-03T13:33:57+02:00
 tags: Django, Docker, Python, Tech
 category: Tech
 link:
-description:
+description: "Start a new Django project inside Docker without installing anything on your host."
 type: text
 ---
 

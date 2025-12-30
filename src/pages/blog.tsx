@@ -1,4 +1,4 @@
-import { getAllPosts } from "../lib/api";
+import { getListedPosts } from "../lib/api";
 import { formatDate } from "../lib/date";
 import PageLayout from "../components/PageLayout";
 import SEO from "../components/SEO";
@@ -35,7 +35,7 @@ export default function Blog({ posts }: BlogProps) {
 }
 
 export async function getStaticProps() {
-  const posts = getAllPosts();
+  const posts = getListedPosts();
   return {
     props: {
       posts,

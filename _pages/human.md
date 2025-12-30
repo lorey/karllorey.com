@@ -5,7 +5,7 @@ date: 2020-02-25T11:03:11+01:00
 tags:
 category:
 link:
-description:
+description: "Core beliefs, things I enjoy, and what drives me."
 type: text
 ---
 

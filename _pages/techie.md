@@ -5,7 +5,7 @@ date: 2020-02-25T11:03:11+01:00
 tags:
 category:
 link:
-description:
+description: "Academic research, publications, and the technologies I work with."
 type: text
 ---
 

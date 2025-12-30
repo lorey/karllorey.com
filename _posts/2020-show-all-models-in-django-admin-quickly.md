@@ -5,7 +5,7 @@ date: 2020-03-24T11:01:51+01:00
 tags: Python, Django, Tech, Clean Code
 category: Tech
 link:
-description:
+description: "A one-liner that registers all your models with the admin site."
 type: text
 ---
 

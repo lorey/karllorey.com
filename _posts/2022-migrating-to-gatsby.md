@@ -5,7 +5,7 @@ date: 2022-03-10T17:03:35+01:00
 tags: Python, Lektor, Nikola, Tech, Gatsby, Javascript
 category: Tech
 link:
-description:
+description: "Why I switched from Python-based Nikola to JS-based Gatsby with React and Tailwind."
 type: text
 ---
 
