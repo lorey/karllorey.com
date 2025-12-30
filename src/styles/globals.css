@@ -12,12 +12,18 @@
     @apply text-gray-700 hover:underline hover:text-gray-900;
   }
 
+  @media (hover: none) {
+    a {
+      @apply underline decoration-gray-300;
+    }
+  }
+
   hr {
     @apply border-gray-200;
   }
 
   header .title {
-    @apply text-7xl;
+    @apply text-5xl md:text-7xl;
     font-family: "Playfair Display", serif;
   }
 }

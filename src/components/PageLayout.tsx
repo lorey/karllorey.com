@@ -7,7 +7,7 @@ export default function PageLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="max-w-xl mx-auto p-5">
+    <div className="max-w-xl mx-auto p-8">
       <Header />
       <hr className="mb-16" />
       <main className="content">{children}</main>

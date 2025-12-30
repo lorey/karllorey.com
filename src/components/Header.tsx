@@ -2,12 +2,12 @@ import Link from "next/link";
 
 export default function Header() {
   return (
-    <header className="text-center py-16">
-      <div className="title py-4">
+    <header className="text-left md:text-center py-8 md:py-16">
+      <div className="title py-2 md:py-4 ml-[-0.05em] md:ml-0">
         <Link href="/">Karl Lorey</Link>
       </div>
-      <nav className="my-5">
-        <ul className="md:flex justify-center gap-4">
+      <nav className="my-2 md:my-5">
+        <ul className="flex flex-wrap justify-start md:justify-center gap-4">
           <li>
             <Link href="/human">Human</Link>
           </li>

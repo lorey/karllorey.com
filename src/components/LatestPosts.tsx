@@ -19,7 +19,7 @@ export default function LatestPosts({ posts, limit = 4 }: LatestPostsProps) {
       <h2>Latest Posts</h2>
       <p>
         What I&apos;ve been writing about, more at{" "}
-        <Link href="/blog">/blog</Link>.
+        <Link href="/blog" className="whitespace-nowrap">/blog</Link>.
       </p>
       <div className="space-y-3 mb-5">
         {displayPosts.map((post) => (
