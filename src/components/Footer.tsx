@@ -16,6 +16,7 @@ import {
   FaResearchgate,
   FaXTwitter,
 } from "react-icons/fa6";
+import { SiSubstack } from "react-icons/si";
 
 interface SocialLink {
   name: string;
@@ -59,6 +60,7 @@ const socialLinks: SocialLink[] = [
     icon: FaInstagram,
   },
   { name: "Medium", url: "https://medium.com/@karllorey", icon: FaMedium },
+  { name: "Substack", url: "https://substack.com/@karllorey", icon: SiSubstack },
   {
     name: "Meetup",
     url: "https://www.meetup.com/members/196097665/",
