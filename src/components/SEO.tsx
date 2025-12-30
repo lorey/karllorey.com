@@ -6,6 +6,7 @@ interface SEOProps {
   path?: string;
   type?: "website" | "article";
   publishedDate?: string;
+  addSuffix?: boolean;
 }
 
 export default function SEO({
@@ -14,10 +15,11 @@ export default function SEO({
   path,
   type,
   publishedDate,
+  addSuffix = true,
 }: SEOProps) {
   const siteName = "Karl Lorey";
   const baseUrl = "https://karllorey.com";
-  const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
+  const fullTitle = addSuffix ? `${title} | ${siteName}` : title;
   const url = path ? `${baseUrl}${path}` : baseUrl;
 
   return (

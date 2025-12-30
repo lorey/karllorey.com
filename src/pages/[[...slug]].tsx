@@ -56,6 +56,7 @@ export default function Page({ page, mdxSource, projects, posts }: PageProps) {
         title={page.title || "Karl Lorey"}
         description={page.description}
         path={path}
+        addSuffix={page.slug !== "/"}
       />
       {showTitle && page.title && <h1>{page.title}</h1>}
       <div className="markdown">
