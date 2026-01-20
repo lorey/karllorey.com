@@ -1,15 +1,12 @@
-version: "3"
-
 services:
   app:
     build:
       context: .
-    tty: True
+    tty: true
     ports:
       - "3000:3000"
     volumes:
       - .:/code
     environment:
       NODE_ENV: development
-    user: "1000" # required for npm
     command: npm run dev

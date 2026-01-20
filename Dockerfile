@@ -1,8 +1,11 @@
 FROM node
 
-WORKDIR /code
-COPY package.json .
-COPY package-lock.json .
+# Install dependencies outside of /code so they don't get overwritten by bind mount
+WORKDIR /deps
+COPY package.json package-lock.json ./
 RUN npm install
 
-ENV PATH /code/node_modules/.bin:$PATH
+ENV NODE_PATH=/deps/node_modules
+ENV PATH=/deps/node_modules/.bin:$PATH
+
+WORKDIR /code
