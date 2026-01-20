@@ -1,5 +1,6 @@
 @import "@fontsource/playfair-display";
 @import "@fontsource/lato";
+@import "highlight.js/styles/github.css";
 @import "tailwindcss";
 
 @layer base {
@@ -74,4 +75,24 @@
 
 .content .markdown li {
   @apply ml-5;
+}
+
+.content .markdown blockquote {
+  @apply border-l-2 border-gray-300 pl-4 my-6;
+}
+
+.content .markdown blockquote p {
+  @apply pb-0;
+}
+
+.content .markdown pre {
+  @apply bg-gray-50 rounded py-3 px-2 my-6 overflow-x-auto;
+}
+
+.content .markdown code {
+  @apply text-xs;
+}
+
+.content .markdown :not(pre) > code {
+  @apply bg-gray-100 px-1.5 py-0.5 rounded text-gray-700;
 }

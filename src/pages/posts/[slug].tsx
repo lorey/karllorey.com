@@ -7,7 +7,16 @@ import SEO from "../../components/SEO";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import remarkFrontmatter from "remark-frontmatter";
+import rehypeUnwrapImages from "rehype-unwrap-images";
+import rehypeHighlight from "rehype-highlight";
 import { PostStatus } from "@/types";
+import { Figure } from "../../components/Figure";
+
+const mdxComponents = {
+  img: ({ src, alt }: { src?: string; alt?: string }) => (
+    <Figure src={src || ""} alt={alt} />
+  ),
+};
 
 interface PostProps {
   post: {
@@ -56,7 +65,7 @@ export default function Post({ post, mdxSource }: PostProps) {
         </div>
       )}
       <div className="markdown">
-        <MDXRemote {...mdxSource} />
+        <MDXRemote {...mdxSource} components={mdxComponents} />
       </div>
     </PageLayout>
   );
@@ -74,6 +83,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
   const mdxSource = await serialize(post.content || "", {
     mdxOptions: {
       remarkPlugins: [remarkFrontmatter],
+      rehypePlugins: [rehypeUnwrapImages, rehypeHighlight],
     },
   });
 
