@@ -47,6 +47,7 @@ export default function Post({ post, mdxSource }: PostProps) {
         type="article"
         publishedDate={post.date}
         noindex={isNoindex}
+        image={`/img/og/${post.slug}.jpg`}
       />
       {post.status === "draft" && (
         <div className="bg-yellow-100 border border-yellow-400 text-yellow-800 px-4 py-3 rounded mb-6">

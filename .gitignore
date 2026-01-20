@@ -20,6 +20,9 @@
 # generated post assets (copied from _posts at build time)
 /public/img/posts/
 
+# generated OG images
+/public/img/og/
+
 # production
 /build
 

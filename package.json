@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "copy-post-assets": "node scripts/copy-post-assets.js",
+    "generate-og": "node scripts/generate-og-images.js",
     "dev": "npm run copy-post-assets && next dev",
-    "build": "npm run copy-post-assets && next build",
+    "build": "npm run copy-post-assets && npm run generate-og && next build",
     "start": "next start",
     "lint": "eslint .",
     "format": "prettier --write .",
@@ -25,7 +26,9 @@
     "rehype-highlight": "^7.0.2",
     "rehype-unwrap-images": "^1.0.0",
     "remark-frontmatter": "^5.0.0",
-    "remark-mdx-frontmatter": "^5.2.0"
+    "remark-mdx-frontmatter": "^5.2.0",
+    "satori": "^0.19.1",
+    "sharp": "^0.34.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

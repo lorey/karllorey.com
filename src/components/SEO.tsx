@@ -8,6 +8,7 @@ interface SEOProps {
   publishedDate?: string;
   addSuffix?: boolean;
   noindex?: boolean;
+  image?: string;
 }
 
 export default function SEO({
@@ -18,6 +19,7 @@ export default function SEO({
   publishedDate,
   addSuffix = true,
   noindex = false,
+  image,
 }: SEOProps) {
   const siteName = "Karl Lorey";
   const twitterHandle = "@karllorey";
@@ -26,6 +28,9 @@ export default function SEO({
   const fullTitle = addSuffix ? `${title} | ${siteName}` : title;
   const fullDescription = description || defaultDescription;
   const url = path ? `${baseUrl}${path}` : baseUrl;
+  const imageUrl = image
+    ? `${baseUrl}${image}`
+    : `${baseUrl}/social-preview.jpg`;
 
   return (
     <Head>
@@ -36,12 +41,12 @@ export default function SEO({
       <meta property="og:type" content={type || "website"} />
       <meta property="og:url" content={url} />
       <meta property="og:site_name" content={siteName} />
-      <meta property="og:image" content={`${baseUrl}/social-preview.jpg`} />
+      <meta property="og:image" content={imageUrl} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:site" content={twitterHandle} />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={fullDescription} />
-      <meta name="twitter:image" content={`${baseUrl}/social-preview.jpg`} />
+      <meta name="twitter:image" content={imageUrl} />
       {publishedDate && (
         <meta property="article:published_time" content={publishedDate} />
       )}
