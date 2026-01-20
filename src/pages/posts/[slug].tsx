@@ -61,7 +61,7 @@ export default function Post({ post, mdxSource }: PostProps) {
       )}
       {post.title && <h1>{post.title}</h1>}
       {post.date && (
-        <div className="text-gray-400 text-sm mb-8">
+        <div className="text-gray-500 text-sm mb-8">
           {formatDate(post.date)}
         </div>
       )}

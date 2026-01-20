@@ -25,7 +25,7 @@ export function Figure({ src, alt }: FigureProps) {
         className="border border-gray-200 hover:border-gray-300 transition-colors cursor-zoom-in"
       />
       {alt && (
-        <figcaption className="mt-2 text-center text-sm text-gray-600">
+        <figcaption className="mt-2 text-center text-sm text-gray-700">
           {alt}
         </figcaption>
       )}

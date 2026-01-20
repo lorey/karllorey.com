@@ -5,22 +5,20 @@
 
 @layer base {
   body {
-    @apply bg-white text-gray-400;
+    @apply bg-white text-gray-500;
     font-family: "Lato", sans-serif;
   }
 
   a {
-    @apply text-gray-700 hover:underline hover:text-gray-900;
-  }
-
-  @media (hover: none) {
-    a {
-      @apply underline decoration-gray-300;
-    }
+    @apply text-gray-800 underline decoration-gray-300 hover:decoration-gray-500;
   }
 
   hr {
     @apply border-gray-200;
+  }
+
+  header a {
+    @apply no-underline;
   }
 
   header .title {
@@ -37,7 +35,7 @@
   h4,
   h5,
   h6 {
-    @apply text-gray-700 mt-3;
+    @apply text-gray-800 mt-3;
     font-family: "Playfair Display", serif;
   }
 
