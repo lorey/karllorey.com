@@ -17,6 +17,9 @@
 /.next/
 /out/
 
+# generated post assets (copied from _posts at build time)
+/public/img/posts/
+
 # production
 /build
 

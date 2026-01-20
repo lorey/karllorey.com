@@ -13,6 +13,20 @@ interface MarkdownData {
   content: string;
   slug: string;
   status?: PostStatus;
+  folderName?: string | null;
+}
+
+// Transforms relative image paths (./image.png) to absolute paths (/img/posts/folder/image.png)
+function transformRelativeImagePaths(
+  content: string,
+  folderName: string | null
+): string {
+  if (!folderName) return content;
+
+  // Match markdown images: ![alt](./path) and HTML images: src="./path"
+  return content
+    .replace(/\]\(\.\//g, `](/img/posts/${folderName}/`)
+    .replace(/src="\.\//g, `src="/img/posts/${folderName}/`);
 }
 
 function isListedStatus(status?: PostStatus): boolean {
@@ -23,25 +37,65 @@ interface MarkdownFilesBySlug {
   [slug: string]: MarkdownData;
 }
 
-function getMarkdownFilesBySlug(directory: string): MarkdownFilesBySlug {
-  // read all files
-  const filenames = fs.readdirSync(directory);
+// Finds the markdown file path for an entry (file or folder)
+// Returns null for non-markdown entries (e.g. .DS_Store)
+function findMarkdownFile(
+  directory: string,
+  entry: fs.Dirent
+): { path: string; folderName: string | null } | null {
+  // Folder-based post: _posts/my-post/index.md
+  if (entry.isDirectory()) {
+    const indexMd = join(directory, entry.name, "index.md");
+    const indexMdx = join(directory, entry.name, "index.mdx");
 
-  // create mapping from slug to content
+    if (fs.existsSync(indexMd)) {
+      return { path: indexMd, folderName: entry.name };
+    }
+    if (fs.existsSync(indexMdx)) {
+      return { path: indexMdx, folderName: entry.name };
+    }
+
+    console.warn(
+      `Warning: Folder "${entry.name}" in ${directory} has no index.md or index.mdx`
+    );
+    return null;
+  }
+
+  // Flat file: _posts/my-post.md
+  if (entry.name.match(/\.(md|mdx)$/)) {
+    return { path: join(directory, entry.name), folderName: null };
+  }
+
+  // Non-markdown file, skip silently (e.g. .DS_Store)
+  return null;
+}
+
+function getMarkdownFilesBySlug(directory: string): MarkdownFilesBySlug {
+  const entries = fs.readdirSync(directory, { withFileTypes: true });
   const dataBySlug: MarkdownFilesBySlug = {};
-  filenames.forEach((filename) => {
-    // read file
-    const fileContents = fs.readFileSync(join(directory, filename), "utf8");
+
+  for (const entry of entries) {
+    const markdownFile = findMarkdownFile(directory, entry);
+    if (!markdownFile) continue;
+
+    const fileContents = fs.readFileSync(markdownFile.path, "utf8");
     const { data, content } = matter(fileContents);
-    const slug = data.slug ? data.slug : filename.replace(/\.(md|mdx)$/, "");
-    // store at slug: data
+
+    // Use frontmatter slug, or folder name, or filename (in that order)
+    const slug =
+      data.slug ||
+      markdownFile.folderName ||
+      entry.name.replace(/\.(md|mdx)$/, "");
+
     dataBySlug[slug] = {
       ...data,
-      date: data["date"] ? new Date(data["date"]).toISOString() : null, // manually overwrite
-      content: content, // add raw markdown
+      date: data["date"] ? new Date(data["date"]).toISOString() : null,
+      content: transformRelativeImagePaths(content, markdownFile.folderName),
       slug: slug,
+      folderName: markdownFile.folderName,
     };
-  });
+  }
+
   return dataBySlug;
 }
 
