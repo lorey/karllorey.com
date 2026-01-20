@@ -60,7 +60,11 @@ const socialLinks: SocialLink[] = [
     icon: FaInstagram,
   },
   { name: "Medium", url: "https://medium.com/@karllorey", icon: FaMedium },
-  { name: "Substack", url: "https://substack.com/@karllorey", icon: SiSubstack },
+  {
+    name: "Substack",
+    url: "https://substack.com/@karllorey",
+    icon: SiSubstack,
+  },
   {
     name: "Meetup",
     url: "https://www.meetup.com/members/196097665/",

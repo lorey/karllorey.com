@@ -9,16 +9,16 @@ type: text
 status: published
 ---
 
-Last month I helped a friend cut his LLM API bill by 80%. 
+Last month I helped a friend cut his LLM API bill by 80%.
 
-He's a non-technical founder building an AI-powered business. 
+He's a non-technical founder building an AI-powered business.
 Like most people, he picked GPT-5 because it's the default:
 You have the API already,
-it has solid benchmarks, 
-everyone uses it, 
+it has solid benchmarks,
+everyone uses it,
 why bother?!
 
-But as usage grew, so did his bill. 
+But as usage grew, so did his bill.
 $1,500/month for API calls alone.
 
 So we benchmarked his actual prompts against 100+ models
@@ -33,7 +33,7 @@ Here's how we did it.
 When picking an LLM, most people just choose a model from their favorite provider.
 For me, that's Anthropic, so depending on the task, I pick Opus, Sonnet, or Haiku.
 If you're sophisticated, you might check Artificial Analysis, or LM Arena,
-or whatever benchmark seems relevant: 
+or whatever benchmark seems relevant:
 GPQA Diamond, AIME, SWE Bench, MATH 500, Humanity's Last Exam, ARC-AGI, MMLU...
 
 But let's not fool ourselves here:
@@ -51,13 +51,13 @@ And make a decision considering quality, cost, and latency.
 
 ## Building benchmarks ourselves
 
-So to figure this out, we built our own benchmarks. 
+So to figure this out, we built our own benchmarks.
 Let me walk through one use case: customer support.
 
 ### Step 1: Collect real examples
 
-We extracted actual support chats via [WHAPI](https://whapi.cloud/). 
-Each chat gave us the conversation history, the customer's latest message, and the response my friend actually sent. 
+We extracted actual support chats via [WHAPI](https://whapi.cloud/).
+Each chat gave us the conversation history, the customer's latest message, and the response my friend actually sent.
 My friend also gave me the prompts he used manually and inside this chat tool to generate responses.
 Based on this, we selected around 50 chats.
 A lot with frequently asked questions, but also some edge cases where we wanted the LLM to behave in a certain way.
@@ -66,6 +66,7 @@ A lot with frequently asked questions, but also some edge cases where we wanted 
 
 For each example, we used my friend's actual response as the expected output.
 We also defined some ranking criteria, for example:
+
 > A good answer tells the customer that this product costs 5.99 and offers to take an order right now.
 
 Or:
@@ -75,7 +76,8 @@ Or:
 You get the idea.
 
 ### Step 3: Create the benchmark dataset
-We now had a simple dataset: 
+
+We now had a simple dataset:
 the prompt (conversation + instructions) and the expected response.
 
 As you see, this is a generic format that could be used for all use cases.
@@ -83,6 +85,7 @@ For every prompt, you define the expected response.
 If you know that a specific model works great, you can even use this to generate the response and refine if necessary.
 
 ### Step 4: Run all models
+
 We then ran this dataset across all the LLMs we wanted to benchmark.
 To make implementation as easy as possible, we chose [OpenRouter](https://openrouter.ai/) to get a broad set of LLMs behind the same API.
 The beauty of OpenRouter is that you can use the standard OpenAI SDK and just swap out the model name:
@@ -111,7 +114,7 @@ LLMs to the rescue, again.
 
 ### Step 5: Scoring with LLM-as-judge
 
-Since manually comparing hundreds of responses is not feasible, 
+Since manually comparing hundreds of responses is not feasible,
 we used an [LLM as a judge](https://huggingface.co/learn/cookbook/en/llm_judge).
 For each sample, we used Opus 4.5 to score how well the actual response matched the expected response on a scale of 1-10.
 This is why we set very specific criteria in step 2:
@@ -121,7 +124,7 @@ For example, sometimes imprecision in the expected answer led to the "judge" mod
 So this was more iterative than this list suggests.
 That's why we prompted for not only scores, but also the reasoning behind them.
 
-We used the same approach for his other use cases. 
+We used the same approach for his other use cases.
 Prompt, expected answer, and then one answer per model along with the judge model's evaluation.
 
 ![Dataset creation](./llm-as-judge.png)
@@ -135,6 +138,7 @@ For our customer support case, latency was important. We couldn't wait for GPT-5
 In contrast, for our other use case, damage cost estimation, we wanted the results to be as good as possible for a reasonable cost, however long they take.
 
 This made us realize, we needed to measure both cost and latency, too.
+
 - Cost: For cost, we quickly realized that simply comparing token costs is not enough:
   Since response tokens (thinking + actual answer) are costlier and answers varied significantly in token count,
   we decided to measure overall costs per answer and thus the average costs per use case / benchmark.
