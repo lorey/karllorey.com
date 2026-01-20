@@ -28,6 +28,8 @@ with comparable quality.
 Figuring out which saved him thousands of dollars in the process.
 Here's how we did it.
 
+Discuss: [HN](https://news.ycombinator.com/item?id=46696300) | [X](https://x.com/karllorey/status/2013691168027038056)
+
 ## The Problem: Benchmarks don't predict performance on your task
 
 When picking an LLM, most people just choose a model from their favorite provider.
