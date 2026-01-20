@@ -28,8 +28,6 @@ with comparable quality.
 Figuring out which saved him thousands of dollars in the process.
 Here's how we did it.
 
-Discuss: [HN](https://news.ycombinator.com/item?id=46696300) | [X](https://x.com/karllorey/status/2013691168027038056)
-
 ## The Problem: Benchmarks don't predict performance on your task
 
 When picking an LLM, most people just choose a model from their favorite provider.
@@ -207,3 +205,5 @@ I'm also planning to set up continuous monitoring. So when a better model appear
 So if you're paying for LLM APIs and have never tested alternatives on your actual prompts, you're likely overpaying.
 Give [Evalry](https://evalry.com) a try. It takes 5 minutes to find out if there's a better model for your use case.
 Or if you're short on time, [find the model you're currently using](https://evalry.com/models) and try the five models that have similar performance on average.
+
+Discuss: [HN](https://news.ycombinator.com/item?id=46696300) | [X](https://x.com/karllorey/status/2013691168027038056)
