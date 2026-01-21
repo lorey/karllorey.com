@@ -13,8 +13,8 @@ Last month I helped a friend cut his LLM API bill by 80%.
 
 He's a non-technical founder building an AI-powered business.
 Like most people, he picked GPT-5 because it's the default:
-You have the API already,
-it has solid benchmarks,
+You have the API set up already,
+the model has solid benchmarks,
 everyone uses it,
 why bother?!
 
